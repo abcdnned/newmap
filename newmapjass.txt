@@ -17,7 +17,6 @@ constant boolean LIBRARY_ABC=true
     button array ABC__ButtonKeyA
     button array ABC__ButtonKeyB
     button array ABC__ButtonKeyC
-    
     integer array ABC__TimerValueA
     integer array ABC__TimerValueB
     integer array ABC__TimerValueC
