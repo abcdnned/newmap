@@ -182,8 +182,8 @@ constant boolean LIBRARY_EffectString=true
 //endglobals from EffectString
 //globals from EffectZ:
 constant boolean LIBRARY_EffectZ=true
-        destructable EffectZ___D
-        effect EffectZ___E
+        destructable EffectZ__D
+        effect EffectZ__E
 //endglobals from EffectZ
 //globals from Event:
 constant boolean LIBRARY_Event=true
@@ -240,6 +240,9 @@ constant boolean LIBRARY_OrderId=true
     integer OI_STOP = 851972
     integer OI_JUST_MOVE = 851986
 //endglobals from OrderId
+//globals from PlayerHero:
+constant boolean LIBRARY_PlayerHero=true
+//endglobals from PlayerHero
 //globals from RegisterSpell:
 constant boolean LIBRARY_RegisterSpell=true
     integer kRegistedSpell
@@ -308,6 +311,7 @@ constant boolean LIBRARY_TechUnit=true
     trigger techUnit
     trigger techUnit2
     unit array bigU
+    unit array health
 //endglobals from TechUnit
 //globals from Text:
 constant boolean LIBRARY_Text=true
@@ -387,10 +391,10 @@ constant boolean LIBRARY_YDWETriggerEvent=true
 //endglobals from YDWETriggerEvent
 //globals from YDWETriggerRegisterEnterRectSimpleNull:
 constant boolean LIBRARY_YDWETriggerRegisterEnterRectSimpleNull=true
-    region yd_NullTempRegion
 //endglobals from YDWETriggerRegisterEnterRectSimpleNull
 //globals from YDWETriggerRegisterLeaveRectSimpleNull:
 constant boolean LIBRARY_YDWETriggerRegisterLeaveRectSimpleNull=true
+    region yd_NullTempRegion
 //endglobals from YDWETriggerRegisterLeaveRectSimpleNull
 //globals from AutoIndex:
 constant boolean LIBRARY_AutoIndex=true
@@ -528,22 +532,25 @@ constant boolean LIBRARY_Move=true
 //globals from PUI:
 constant boolean LIBRARY_PUI=true
 //endglobals from PUI
+//globals from Revive:
+constant boolean LIBRARY_Revive=true
+//endglobals from Revive
 //globals from SpellStruct:
 constant boolean LIBRARY_SpellStruct=true
-        constant real SpellStruct___MAX_UNIT_COLLISION_SIZE=256.0
-        group SpellStruct___GROUP=CreateGroup()
-        hashtable SpellStruct___STORE=InitHashtable() // attaches to:
+        constant real SpellStruct__MAX_UNIT_COLLISION_SIZE=256.0
+        group SpellStruct__GROUP=CreateGroup()
+        hashtable SpellStruct__STORE=InitHashtable() // attaches to:
 // abilid, methodkey
 // abilid, unit
 // timer, key
 // trigger, key
 // spellstruct, method (timer)
 // spellstruct, method (trigger)
-        constant key SpellStruct___ALLOCATOR
-        SpellStruct___DefaultsInterface SpellStruct___ThisCastData
-        integer SpellStruct___CastingAbility
-        constant key SpellStruct___TIMER_DATA
-        constant key SpellStruct___TRIGGER_DATA
+        constant key SpellStruct__ALLOCATOR
+        SpellStruct__DefaultsInterface SpellStruct__ThisCastData
+        integer SpellStruct__CastingAbility
+        constant key SpellStruct__TIMER_DATA
+        constant key SpellStruct__TRIGGER_DATA
 //endglobals from SpellStruct
 //globals from Status:
 constant boolean LIBRARY_Status=true
@@ -793,6 +800,8 @@ constant boolean LIBRARY_Velocity=true
     sound gg_snd_clipempty = null
     sound gg_snd_togglemeele = null
     sound gg_snd_reload = null
+    sound gg_snd_equip2 = null
+    sound gg_snd_equip1 = null
     trigger gg_trg_Stage1 = null
     trigger gg_trg_Stage1T = null
     trigger gg_trg_PickHero = null
@@ -802,6 +811,7 @@ constant boolean LIBRARY_Velocity=true
     trigger gg_trg_InitJobData = null
     trigger gg_trg_Save = null
     trigger gg_trg_Strong = null
+    trigger gg_trg_DawnHammer = null
     trigger gg_trg_NetGun = null
     trigger gg_trg_ShootBost = null
     trigger gg_trg_PowerPunch = null
@@ -833,6 +843,7 @@ constant boolean LIBRARY_Velocity=true
     trigger gg_trg_TeckLock = null
     trigger gg_trg_Register = null
     trigger gg_trg_RegisterFly = null
+    trigger gg_trg_Revive = null
     trigger gg_trg_ManaChange = null
     trigger gg_trg_ManaGrow = null
     trigger gg_trg_TechUnit = null
@@ -941,10 +952,10 @@ constant boolean LIBRARY_Velocity=true
     trigger gg_trg_ItmTest = null
     trigger gg_trg_CreateItem = null
     trigger gg_trg_cantmove = null
-    trigger gg_trg_3________4_______u = null
-    trigger gg_trg_3________4________2 = null
-    trigger gg_trg_3________4________3 = null
     trigger gg_trg_3________4________4 = null
+    trigger gg_trg_3________4________4_______u = null
+    trigger gg_trg_3________4________4________2 = null
+    trigger gg_trg_3________4________4________3 = null
     trigger gg_trg_InitFloatText = null
     trigger gg_trg_Demo_Usage = null
     trigger gg_trg_eventtest = null
@@ -960,6 +971,7 @@ constant boolean LIBRARY_Velocity=true
     trigger gg_trg_inittest = null
     trigger gg_trg____________________001_______u = null
     trigger gg_trg_Zero_Damage_All = null
+    trigger gg_trg_ReviveSpell = null
 constant integer kdamage=0
 constant integer ksteps=4
 constant integer ktex=13
@@ -973,6 +985,8 @@ constant integer ktex=13
     real g_gy2
     ResourceManager gResourceManager
     trigger gResourcePickTrigger
+    group revgro
+    trigger revtrg
     region g_cur_region
     integer cur_player = 0
     integer act1 = 0
@@ -1057,6 +1071,7 @@ constant integer ktex=13
     integer picked_hero = 0
     integer array herosType
     unit array techs
+    integer array mode_tip
     integer SHOOT_GUN=5
     integer SNAKE_GUN=1
     integer MACHINE_GUN=2
@@ -2886,17 +2901,17 @@ endfunction
 // +-----------------------------------------+
 //  藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟藟
     function AddSpecialEffectZ takes string modelName, real x, real y, real z returns effect
-        set EffectZ___D = CreateDestructableZ( 'OTip', x, y, z, 0., 1., 0)
-        set EffectZ___E = AddSpecialEffect(modelName, x, y)
-        call RemoveDestructable(EffectZ___D)
-        return EffectZ___E
+        set EffectZ__D = CreateDestructableZ( 'OTip', x, y, z, 0., 1., 0)
+        set EffectZ__E = AddSpecialEffect(modelName, x, y)
+        call RemoveDestructable(EffectZ__D)
+        return EffectZ__E
     endfunction
     
     function AddSpecialEffectLocZ takes string modelName, location where, real z returns effect
-        set EffectZ___D = CreateDestructableZ( 'OTip', GetLocationX(where), GetLocationY(where), z, 0., 1., 0)
-        set EffectZ___E = AddSpecialEffectLoc(modelName, where)
-        call RemoveDestructable(EffectZ___D)
-        return EffectZ___E
+        set EffectZ__D = CreateDestructableZ( 'OTip', GetLocationX(where), GetLocationY(where), z, 0., 1., 0)
+        set EffectZ__E = AddSpecialEffectLoc(modelName, where)
+        call RemoveDestructable(EffectZ__D)
+        return EffectZ__E
     endfunction
 
 //library EffectZ ends
@@ -3067,6 +3082,20 @@ function DisplayFloatText takes real x, real y, string msg, real life returns no
     call SetTextTagLifespan( GetLastCreatedTextTag(), life )
     set p = null
 endfunction
+function DisplayManaCost takes unit u, integer l returns nothing
+    local location p = Location(GetUnitX(u), GetUnitY(u))
+    call CreateTextTagLocBJ( "-" + I2S(l), p, 100, 10, 70, 70, 100, 0 )
+    call SetTextTagPermanent( GetLastCreatedTextTag(), false )
+    call SetTextTagLifespan( GetLastCreatedTextTag(), 1 )
+    set p = null
+endfunction
+function DisplayManaCostSmall takes unit u, real l returns nothing
+    local location p = Location(GetUnitX(u), GetUnitY(u))
+    call CreateTextTagLocBJ( "-" + R2S(l), p, 100, 6, 70, 70, 100, 0 )
+    call SetTextTagPermanent( GetLastCreatedTextTag(), false )
+    call SetTextTagLifespan( GetLastCreatedTextTag(), 1 )
+    set p = null
+endfunction
 
 //library FloatText ends
 //library HashKeyManager:
@@ -3172,8 +3201,10 @@ struct IHeroData
     integer clip_size
     integer melee_cooldown
     integer melee_interval
+    integer reload_cost
     real stx
     real sty
+    real energy_consum
 endstruct
 
 //library HeroData ends
@@ -3462,14 +3493,14 @@ struct SmartDartsFactory extends IMissleFactory
         return m
     endmethod
 endstruct
-//textmacro instance: MissleFactory("DefaultMissleFactory","Missle")
+//textmacro instance: MissleFactory("DefaultMissleFactory","TroughMissle")
 struct DefaultMissleFactory extends IMissleFactory
     method createMissle takes unit owner returns IMissle
-        local IMissle m=Missle.create(owner)
+        local IMissle m=TroughMissle.create(owner)
         return m
     endmethod
 endstruct
-//end of: MissleFactory("DefaultMissleFactory","Missle")
+//end of: MissleFactory("DefaultMissleFactory","TroughMissle")
 //textmacro instance: MissleFactory("ShootGunMissleFactory","ShootGunMissle")
 struct ShootGunMissleFactory extends IMissleFactory
     method createMissle takes unit owner returns IMissle
@@ -3720,6 +3751,35 @@ endfunction
 //library OrderId:
 
 //library OrderId ends
+//library PlayerHero:
+function CreateHero takes integer pid, real x, real y returns unit
+    local unit hero = CreateUnit(Player(pid),HERO,x,y,0)
+    //local unit tech = CreateUnit(Player(pid),TECH_UNIT,x,y,0)
+    call UnitAddAbility(hero, SHOOT_SPEED)
+    call SetUnitAbilityLevel(hero, SHOOT_SPEED, 21)
+    set heros[pid] = hero
+    set mode_tip[pid] = 3
+    //set techs[pid] = tech
+    //set tech = null
+    return hero
+endfunction
+function CurrentPlaying takes player p returns boolean
+    return (GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING) and (GetPlayerController(p) == MAP_CONTROL_USER)
+endfunction
+function CurrentPlayerCount takes nothing returns integer
+    local integer i = 0
+    local integer r = 0
+    loop
+        exitwhen i >= PLAYER_COUNT
+        if CurrentPlaying(Player(i)) then
+            set r = r + 1
+        endif
+        set i = i + 1
+    endloop
+    return r
+endfunction
+
+//library PlayerHero ends
 //library RegisterSpell:
 function InitRegisterSpell takes nothing returns nothing
     set kRegistedSpell=GetNewKey()
@@ -5366,6 +5426,18 @@ function InitTechUnit takes nothing returns nothing
     call TriggerRegisterPlayerStateEvent( techUnit2, Player(1), PLAYER_STATE_RESOURCE_LUMBER, LESS_THAN, 5.00 )
     call TriggerRegisterPlayerStateEvent( techUnit2, Player(2), PLAYER_STATE_RESOURCE_LUMBER, LESS_THAN, 5.00 )
     call TriggerAddCondition(techUnit2, function TechUnitCondition2)
+endfunction
+function NotHealth takes integer i returns nothing
+    call KillUnit(health[i])
+    set EquipmentData[GetTriggerUnit()].heroData.shoot_buffer = 0
+    set health[i] = null
+endfunction
+function BeHealth takes integer i returns nothing
+    set health[i] = CreateUnit(Player(i), 'h00F', GetRectCenterX(gg_rct_tech),GetRectCenterY(gg_rct_tech),0)
+    call UnitRemoveAbility(heros[i], 'Avul')
+    call UnitRemoveAbility(heros[i], 'A02H')
+    call SetUnitState(heros[i], UNIT_STATE_LIFE, 100.0)
+    call SetUnitState(heros[i], UNIT_STATE_MANA, 100.0)
 endfunction
 
 //library TechUnit ends
@@ -8291,17 +8363,19 @@ function storeJumpFacing takes nothing returns nothing
     local real tx = GetOrderPointX()
     local real ty = GetOrderPointY()
     local unit tu = GetOrderTargetUnit()
-    local real dir = getDir(sx, sy, tx, ty)
+    local real dir
     if IsHero(GetTriggerUnit()) and GetIssuedOrderId() == OI_RIGHT_CLICK_MOVE then
         if tu != null and IsUnitAliveBJ(tu) then
             set tx = GetUnitX(tu)
             set ty = GetUnitY(tu)
-            call BJDebugMsg("jump target")
+            //call BJDebugMsg("jump target")
         endif
+        set dir = getDir(sx, sy, tx, ty)
         set EquipmentData[GetTriggerUnit()].heroData.jump_direction = dir
-        if EquipmentData[GetTriggerUnit()].heroData.aimu != null then
+        if EquipmentData[GetTriggerUnit()].heroData.aimu != null and GetUnitAbilityLevel(GetTriggerUnit(), 'A02H') == 0 then
             set EquipmentData[GetTriggerUnit()].heroData.stx = tx
             set EquipmentData[GetTriggerUnit()].heroData.sty = ty
+            set EquipmentData[GetTriggerUnit()].heroData.stz = GetUnit
             call SetUnitFacing(GetTriggerUnit(), dir * bj_RADTODEG)
         endif
     endif
@@ -8809,6 +8883,66 @@ endfunction
     //===========================================================================
 
 //library PUI ends
+//library Revive:
+function LayDown takes nothing returns nothing
+    local real dam=GetEventDamage()
+    local unit u=GetTriggerUnit()
+    local real l= GetUnitState(u, UNIT_STATE_LIFE)
+    if dam + 1 >= l then
+        call BJDebugMsg(R2S(dam))
+        set l=dam + 1
+        call UnitAddAbilityBJ('A02I', u)
+        call SetUnitLifeBJ(u, l)
+        call GroupAddUnitSimple(u, revgro)
+        call EnableTrigger(revtrg)
+    endif
+    set u=null
+endfunction
+function LifeLow takes nothing returns nothing
+    local unit u = GetTriggerUnit()
+    if GetUnitAbilityLevel(u, 'A02H') == 0 then
+        call UnitAddAbility(u, 'Avul')
+        call NotHealth(GetPlayerId(GetOwningPlayer(u)))
+        call UnitAddAbility(u, 'A02H')
+        call SetUnitManaBJ(u, 60.0)
+        call PauseUnit(u, true)
+        call SetUnitAnimationByIndex(u, 3)
+        call PauseUnit(u, false)
+        set u = null
+    endif
+endfunction
+function RegisterReviveSystem takes unit u returns nothing
+    local trigger trg=CreateTrigger()
+    local trigger trg2 = CreateTrigger()
+    call TriggerRegisterUnitEvent(trg, u, EVENT_UNIT_DAMAGED)
+    call TriggerRegisterUnitLifeEvent(trg2, u, LESS_THAN, 2)
+    call TriggerAddCondition(trg2, function LifeLow)
+    call TriggerRegisterUnitEvent(gg_trg_cantmove, u, EVENT_UNIT_ISSUED_TARGET_ORDER)
+    call TriggerRegisterUnitEvent(gg_trg_cantmove, u, EVENT_UNIT_ISSUED_POINT_ORDER)
+    call TriggerAddCondition(trg, Condition(function LayDown))
+    set trg=null
+    set trg2 = null
+endfunction
+function RemoveNineLifeGroupAction takes nothing returns nothing
+    local unit u=GetEnumUnit()
+    local real l= GetUnitStateSwap(UNIT_STATE_LIFE, u)
+    call UnitRemoveAbilityBJ('A02I', u)
+    call SetUnitLifeBJ(u, l)
+    call GroupRemoveUnitSimple(u, revgro)
+    set u=null
+endfunction
+function RemoveNineLife takes nothing returns nothing
+    call DisableTrigger(GetTriggeringTrigger())
+    call ForGroupBJ(revgro, function RemoveNineLifeGroupAction)
+endfunction
+function InitReviveSystem takes nothing returns nothing
+    set revgro=CreateGroup()
+    set revtrg=CreateTrigger()
+    call TriggerAddAction(revtrg, function RemoveNineLife)
+    call TriggerRegisterTimerEventPeriodic(revtrg, 0.00)
+endfunction
+
+//library Revive ends
 //library SpellStruct:
     //===========================================================================
     // Configurables
@@ -8818,15 +8952,15 @@ endfunction
     // Header Declarations
     //
     
-    function interface SpellStruct___Method takes integer this returns nothing
-    function interface SpellStruct___UnitMethodFilter takes integer this, unit u returns boolean
-    function interface SpellStruct___UnitMethod takes integer this, unit u returns nothing
-    function interface SpellStruct___Allocator takes nothing returns integer
+    function interface SpellStruct__Method takes integer this returns nothing
+    function interface SpellStruct__UnitMethodFilter takes integer this, unit u returns boolean
+    function interface SpellStruct__UnitMethod takes integer this, unit u returns nothing
+    function interface SpellStruct__Allocator takes nothing returns integer
     
     //===========================================================================
     // Recursion stack
     //
-    module SpellStruct___Stack
+    module SpellStruct__Stack
         static thistype top=0 // thistype(0) throws a syntax error, does not compile
 static method increment takes nothing returns nothing
             set thistype.top=thistype(thistype.top+1)
@@ -8839,7 +8973,7 @@ static method increment takes nothing returns nothing
     //===========================================================================
     // Defaults
     //
-    interface SpellStruct___DefaultsInterface
+    interface SpellStruct__DefaultsInterface
         // For methods that are not implemented.
         // In order of firing.
         method onCreate takes nothing returns nothing defaults nothing
@@ -8858,115 +8992,115 @@ method onStopCast takes nothing returns nothing defaults nothing // Blizzard's e
     
     
 //textmacro instance: SpellStruct__EventResponse("onChannel","OnChannel","true","false")
-        function SpellStruct___OnChannel takes nothing returns boolean
-            set SpellStruct___CastingAbility=GetSpellAbilityId()
+        function SpellStruct__OnChannel takes nothing returns boolean
+            set SpellStruct__CastingAbility=GetSpellAbilityId()
             static if true then
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,SpellStruct___ALLOCATOR))
-                if SpellStruct___ThisCastData==0 then
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,SpellStruct__ALLOCATOR))
+                if SpellStruct__ThisCastData==0 then
                     return false
                 endif
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(SpellStruct___Allocator(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,SpellStruct___ALLOCATOR)).evaluate())
-                call SaveInteger(SpellStruct___STORE,SpellStruct___CastingAbility,GetHandleId(GetTriggerUnit()),SpellStruct___ThisCastData)
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(SpellStruct__Allocator(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,SpellStruct__ALLOCATOR)).evaluate())
+                call SaveInteger(SpellStruct__STORE,SpellStruct__CastingAbility,GetHandleId(GetTriggerUnit()),SpellStruct__ThisCastData)
             else
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,GetHandleId(GetTriggerUnit())))
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,GetHandleId(GetTriggerUnit())))
             endif
             //call BJDebugMsg("OnChannel - Method: "+I2S(LoadInteger(STORE,CastingAbility,$METHOD_KEY$))+" for struct "+I2S(ThisCastData))
-            if SpellStruct___ThisCastData!=0 then
-                call SpellStruct___ThisCastData.onChannel.execute()
+            if SpellStruct__ThisCastData!=0 then
+                call SpellStruct__ThisCastData.onChannel.execute()
                 static if false then
-                    call SpellStruct___ThisCastData.cleanup.evaluate()
+                    call SpellStruct__ThisCastData.cleanup.evaluate()
                 endif
             endif
             return false
         endfunction
 //end of: SpellStruct__EventResponse("onChannel","OnChannel","true","false")
 //textmacro instance: SpellStruct__EventResponse("onStartCast","OnStartCast","false","false")
-        function SpellStruct___OnStartCast takes nothing returns boolean
-            set SpellStruct___CastingAbility=GetSpellAbilityId()
+        function SpellStruct__OnStartCast takes nothing returns boolean
+            set SpellStruct__CastingAbility=GetSpellAbilityId()
             static if false then
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,SpellStruct___ALLOCATOR))
-                if SpellStruct___ThisCastData==0 then
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,SpellStruct__ALLOCATOR))
+                if SpellStruct__ThisCastData==0 then
                     return false
                 endif
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(SpellStruct___Allocator(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,SpellStruct___ALLOCATOR)).evaluate())
-                call SaveInteger(SpellStruct___STORE,SpellStruct___CastingAbility,GetHandleId(GetTriggerUnit()),SpellStruct___ThisCastData)
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(SpellStruct__Allocator(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,SpellStruct__ALLOCATOR)).evaluate())
+                call SaveInteger(SpellStruct__STORE,SpellStruct__CastingAbility,GetHandleId(GetTriggerUnit()),SpellStruct__ThisCastData)
             else
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,GetHandleId(GetTriggerUnit())))
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,GetHandleId(GetTriggerUnit())))
             endif
             //call BJDebugMsg("OnStartCast - Method: "+I2S(LoadInteger(STORE,CastingAbility,$METHOD_KEY$))+" for struct "+I2S(ThisCastData))
-            if SpellStruct___ThisCastData!=0 then
-                call SpellStruct___ThisCastData.onStartCast.execute()
+            if SpellStruct__ThisCastData!=0 then
+                call SpellStruct__ThisCastData.onStartCast.execute()
                 static if false then
-                    call SpellStruct___ThisCastData.cleanup.evaluate()
+                    call SpellStruct__ThisCastData.cleanup.evaluate()
                 endif
             endif
             return false
         endfunction
 //end of: SpellStruct__EventResponse("onStartCast","OnStartCast","false","false")
 //textmacro instance: SpellStruct__EventResponse("onEffect","OnEffect","false","false")
-        function SpellStruct___OnEffect takes nothing returns boolean
-            set SpellStruct___CastingAbility=GetSpellAbilityId()
+        function SpellStruct__OnEffect takes nothing returns boolean
+            set SpellStruct__CastingAbility=GetSpellAbilityId()
             static if false then
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,SpellStruct___ALLOCATOR))
-                if SpellStruct___ThisCastData==0 then
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,SpellStruct__ALLOCATOR))
+                if SpellStruct__ThisCastData==0 then
                     return false
                 endif
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(SpellStruct___Allocator(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,SpellStruct___ALLOCATOR)).evaluate())
-                call SaveInteger(SpellStruct___STORE,SpellStruct___CastingAbility,GetHandleId(GetTriggerUnit()),SpellStruct___ThisCastData)
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(SpellStruct__Allocator(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,SpellStruct__ALLOCATOR)).evaluate())
+                call SaveInteger(SpellStruct__STORE,SpellStruct__CastingAbility,GetHandleId(GetTriggerUnit()),SpellStruct__ThisCastData)
             else
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,GetHandleId(GetTriggerUnit())))
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,GetHandleId(GetTriggerUnit())))
             endif
             //call BJDebugMsg("OnEffect - Method: "+I2S(LoadInteger(STORE,CastingAbility,$METHOD_KEY$))+" for struct "+I2S(ThisCastData))
-            if SpellStruct___ThisCastData!=0 then
-                call SpellStruct___ThisCastData.onEffect.execute()
+            if SpellStruct__ThisCastData!=0 then
+                call SpellStruct__ThisCastData.onEffect.execute()
                 static if false then
-                    call SpellStruct___ThisCastData.cleanup.evaluate()
+                    call SpellStruct__ThisCastData.cleanup.evaluate()
                 endif
             endif
             return false
         endfunction
 //end of: SpellStruct__EventResponse("onEffect","OnEffect","false","false")
 //textmacro instance: SpellStruct__EventResponse("onFinish","OnFinish","false","false")
-        function SpellStruct___OnFinish takes nothing returns boolean
-            set SpellStruct___CastingAbility=GetSpellAbilityId()
+        function SpellStruct__OnFinish takes nothing returns boolean
+            set SpellStruct__CastingAbility=GetSpellAbilityId()
             static if false then
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,SpellStruct___ALLOCATOR))
-                if SpellStruct___ThisCastData==0 then
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,SpellStruct__ALLOCATOR))
+                if SpellStruct__ThisCastData==0 then
                     return false
                 endif
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(SpellStruct___Allocator(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,SpellStruct___ALLOCATOR)).evaluate())
-                call SaveInteger(SpellStruct___STORE,SpellStruct___CastingAbility,GetHandleId(GetTriggerUnit()),SpellStruct___ThisCastData)
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(SpellStruct__Allocator(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,SpellStruct__ALLOCATOR)).evaluate())
+                call SaveInteger(SpellStruct__STORE,SpellStruct__CastingAbility,GetHandleId(GetTriggerUnit()),SpellStruct__ThisCastData)
             else
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,GetHandleId(GetTriggerUnit())))
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,GetHandleId(GetTriggerUnit())))
             endif
             //call BJDebugMsg("OnFinish - Method: "+I2S(LoadInteger(STORE,CastingAbility,$METHOD_KEY$))+" for struct "+I2S(ThisCastData))
-            if SpellStruct___ThisCastData!=0 then
-                call SpellStruct___ThisCastData.onFinish.execute()
+            if SpellStruct__ThisCastData!=0 then
+                call SpellStruct__ThisCastData.onFinish.execute()
                 static if false then
-                    call SpellStruct___ThisCastData.cleanup.evaluate()
+                    call SpellStruct__ThisCastData.cleanup.evaluate()
                 endif
             endif
             return false
         endfunction
 //end of: SpellStruct__EventResponse("onFinish","OnFinish","false","false")
 //textmacro instance: SpellStruct__EventResponse("onStopCast","OnStopCast","false","true")
-        function SpellStruct___OnStopCast takes nothing returns boolean
-            set SpellStruct___CastingAbility=GetSpellAbilityId()
+        function SpellStruct__OnStopCast takes nothing returns boolean
+            set SpellStruct__CastingAbility=GetSpellAbilityId()
             static if false then
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,SpellStruct___ALLOCATOR))
-                if SpellStruct___ThisCastData==0 then
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,SpellStruct__ALLOCATOR))
+                if SpellStruct__ThisCastData==0 then
                     return false
                 endif
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(SpellStruct___Allocator(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,SpellStruct___ALLOCATOR)).evaluate())
-                call SaveInteger(SpellStruct___STORE,SpellStruct___CastingAbility,GetHandleId(GetTriggerUnit()),SpellStruct___ThisCastData)
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(SpellStruct__Allocator(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,SpellStruct__ALLOCATOR)).evaluate())
+                call SaveInteger(SpellStruct__STORE,SpellStruct__CastingAbility,GetHandleId(GetTriggerUnit()),SpellStruct__ThisCastData)
             else
-                set SpellStruct___ThisCastData=SpellStruct___DefaultsInterface(LoadInteger(SpellStruct___STORE,SpellStruct___CastingAbility,GetHandleId(GetTriggerUnit())))
+                set SpellStruct__ThisCastData=SpellStruct__DefaultsInterface(LoadInteger(SpellStruct__STORE,SpellStruct__CastingAbility,GetHandleId(GetTriggerUnit())))
             endif
             //call BJDebugMsg("OnStopCast - Method: "+I2S(LoadInteger(STORE,CastingAbility,$METHOD_KEY$))+" for struct "+I2S(ThisCastData))
-            if SpellStruct___ThisCastData!=0 then
-                call SpellStruct___ThisCastData.onStopCast.execute()
+            if SpellStruct__ThisCastData!=0 then
+                call SpellStruct__ThisCastData.onStopCast.execute()
                 static if true then
-                    call SpellStruct___ThisCastData.cleanup.evaluate()
+                    call SpellStruct__ThisCastData.cleanup.evaluate()
                 endif
             endif
             return false
@@ -8976,11 +9110,11 @@ method onStopCast takes nothing returns nothing defaults nothing // Blizzard's e
     //===========================================================================
     // Attachment.
     //
-    struct SpellStruct___ChainAttach
+    struct SpellStruct__ChainAttach
         trigger trigger
         timer timer
         integer instance
-        SpellStruct___Method callback
+        SpellStruct__Method callback
         thistype next
         thistype prev
     endstruct
@@ -8988,36 +9122,36 @@ method onStopCast takes nothing returns nothing defaults nothing // Blizzard's e
     //===========================================================================
     // Timers (requires Attachment).
     //
-    function SpellStruct___SetTimerStruct takes timer t, integer data returns nothing
+    function SpellStruct__SetTimerStruct takes timer t, integer data returns nothing
         static if LIBRARY_TimerUtils then
             call SetTimerData(t,data)
         else
-            call SaveInteger(SpellStruct___STORE,GetHandleId(t),SpellStruct___TIMER_DATA,data)
+            call SaveInteger(SpellStruct__STORE,GetHandleId(t),SpellStruct__TIMER_DATA,data)
         endif
     endfunction
-    function SpellStruct___GetTimerStruct takes timer t returns integer
+    function SpellStruct__GetTimerStruct takes timer t returns integer
         static if LIBRARY_TimerUtils then
             return GetTimerData(t)
         else
-            return LoadInteger(SpellStruct___STORE,GetHandleId(t),SpellStruct___TIMER_DATA)
+            return LoadInteger(SpellStruct__STORE,GetHandleId(t),SpellStruct__TIMER_DATA)
         endif
     endfunction
     
     //===========================================================================
     // Triggers (requires Attachment).
     //
-    function SpellStruct___SetTriggerStruct takes trigger t, integer data returns nothing
-        call SaveInteger(SpellStruct___STORE,GetHandleId(t),SpellStruct___TRIGGER_DATA,data)
+    function SpellStruct__SetTriggerStruct takes trigger t, integer data returns nothing
+        call SaveInteger(SpellStruct__STORE,GetHandleId(t),SpellStruct__TRIGGER_DATA,data)
     endfunction
-    function SpellStruct___GetTriggerStruct takes trigger t returns integer
-        return LoadInteger(SpellStruct___STORE,GetHandleId(t),SpellStruct___TRIGGER_DATA)
+    function SpellStruct__GetTriggerStruct takes trigger t returns integer
+        return LoadInteger(SpellStruct__STORE,GetHandleId(t),SpellStruct__TRIGGER_DATA)
     endfunction
     
     //===========================================================================
     // AoE enumeration.
     //
-    struct SpellStruct___EnumStack extends array
-        implement SpellStruct___Stack
+    struct SpellStruct__EnumStack extends array
+        implement SpellStruct__Stack
         integer instance
         real x
         real y
@@ -9025,20 +9159,20 @@ method onStopCast takes nothing returns nothing defaults nothing // Blizzard's e
         integer callback
         group for
     endstruct
-    function SpellStruct___InternalEnum takes nothing returns boolean // Could be recursive.
+    function SpellStruct__InternalEnum takes nothing returns boolean // Could be recursive.
 local unit u=GetFilterUnit() // can't be a global due to recursion.
-if IsUnitInRangeXY(u,SpellStruct___EnumStack.top.x,SpellStruct___EnumStack.top.y,SpellStruct___EnumStack.top.range) then // Factors in collision sizes.
-if SpellStruct___UnitMethodFilter(SpellStruct___EnumStack.top.callback).evaluate(SpellStruct___EnumStack.top.instance,u) then
-                call GroupAddUnit(SpellStruct___EnumStack.top.for,u)
+if IsUnitInRangeXY(u,SpellStruct__EnumStack.top.x,SpellStruct__EnumStack.top.y,SpellStruct__EnumStack.top.range) then // Factors in collision sizes.
+if SpellStruct__UnitMethodFilter(SpellStruct__EnumStack.top.callback).evaluate(SpellStruct__EnumStack.top.instance,u) then
+                call GroupAddUnit(SpellStruct__EnumStack.top.for,u)
             endif
         endif
         set u=null
         return false
     endfunction
-    function SpellStruct___InternalFor takes nothing returns boolean // Could be recursive.
+    function SpellStruct__InternalFor takes nothing returns boolean // Could be recursive.
 local unit u=GetFilterUnit() // can't be a global due to recursion.
-if IsUnitInRangeXY(u,SpellStruct___EnumStack.top.x,SpellStruct___EnumStack.top.y,SpellStruct___EnumStack.top.range) then // Factors in collision sizes.
-call SpellStruct___UnitMethod(SpellStruct___EnumStack.top.callback).execute(SpellStruct___EnumStack.top.instance,u)
+if IsUnitInRangeXY(u,SpellStruct__EnumStack.top.x,SpellStruct__EnumStack.top.y,SpellStruct__EnumStack.top.range) then // Factors in collision sizes.
+call SpellStruct__UnitMethod(SpellStruct__EnumStack.top.callback).execute(SpellStruct__EnumStack.top.instance,u)
         endif
         set u=null
         return false
@@ -9047,7 +9181,7 @@ call SpellStruct___UnitMethod(SpellStruct___EnumStack.top.callback).execute(Spel
     //===========================================================================
     // Exposed Interface - SpellStruct
     //
-    struct SpellStruct extends SpellStruct___DefaultsInterface
+    struct SpellStruct extends SpellStruct__DefaultsInterface
         //===========================================================================
         // Various Spell-based Methods.
         //
@@ -9072,14 +9206,14 @@ return Atan2(this.targetY-this.casterY,this.targetX-this.casterX)
         // ForGroup.
         //
         private static method forGroupCallback takes nothing returns nothing
-            call SpellStruct___UnitMethod(SpellStruct___EnumStack.top.callback).execute(SpellStruct___EnumStack.top.instance,GetEnumUnit()) // bigger crimes have been committed, but not much bigger.
+            call SpellStruct__UnitMethod(SpellStruct__EnumStack.top.callback).execute(SpellStruct__EnumStack.top.instance,GetEnumUnit()) // bigger crimes have been committed, but not much bigger.
 endmethod
-        method forGroup takes group g, SpellStruct___UnitMethod callback returns nothing
-            call SpellStruct___EnumStack.increment() // just borrowing that stack... would break if event reponses accessed the stack directly, but they don't.
-set SpellStruct___EnumStack.top.instance=this
-            set SpellStruct___EnumStack.top.callback=callback
+        method forGroup takes group g, SpellStruct__UnitMethod callback returns nothing
+            call SpellStruct__EnumStack.increment() // just borrowing that stack... would break if event reponses accessed the stack directly, but they don't.
+set SpellStruct__EnumStack.top.instance=this
+            set SpellStruct__EnumStack.top.callback=callback
             call ForGroup(g,function thistype.forGroupCallback)
-            call SpellStruct___EnumStack.decrement()
+            call SpellStruct__EnumStack.decrement()
         endmethod
         
         //===========================================================================
@@ -9087,73 +9221,73 @@ set SpellStruct___EnumStack.top.instance=this
         //
         real aoe
         
-        method enumUnitsInAoE takes group whichGroup, SpellStruct___UnitMethodFilter filter returns nothing 
-            call SpellStruct___EnumStack.increment()
-            set SpellStruct___EnumStack.top.instance=this
-            set SpellStruct___EnumStack.top.x=this.targetX
-            set SpellStruct___EnumStack.top.y=this.targetY
-            set SpellStruct___EnumStack.top.range=this.aoe
-            set SpellStruct___EnumStack.top.callback=filter
-            set SpellStruct___EnumStack.top.for=whichGroup
-            call GroupEnumUnitsInRange(SpellStruct___GROUP,SpellStruct___EnumStack.top.x,SpellStruct___EnumStack.top.y,SpellStruct___EnumStack.top.range+SpellStruct___MAX_UNIT_COLLISION_SIZE,Filter(function SpellStruct___InternalEnum))
-            call SpellStruct___EnumStack.decrement()
+        method enumUnitsInAoE takes group whichGroup, SpellStruct__UnitMethodFilter filter returns nothing 
+            call SpellStruct__EnumStack.increment()
+            set SpellStruct__EnumStack.top.instance=this
+            set SpellStruct__EnumStack.top.x=this.targetX
+            set SpellStruct__EnumStack.top.y=this.targetY
+            set SpellStruct__EnumStack.top.range=this.aoe
+            set SpellStruct__EnumStack.top.callback=filter
+            set SpellStruct__EnumStack.top.for=whichGroup
+            call GroupEnumUnitsInRange(SpellStruct__GROUP,SpellStruct__EnumStack.top.x,SpellStruct__EnumStack.top.y,SpellStruct__EnumStack.top.range+SpellStruct__MAX_UNIT_COLLISION_SIZE,Filter(function SpellStruct__InternalEnum))
+            call SpellStruct__EnumStack.decrement()
         endmethod
         
-        method enumUnitsInAoETarget takes group whichGroup, SpellStruct___UnitMethodFilter filter returns nothing 
-            call SpellStruct___EnumStack.increment()
-            set SpellStruct___EnumStack.top.instance=this
-            set SpellStruct___EnumStack.top.x=GetWidgetX(this.targetWidget)
-            set SpellStruct___EnumStack.top.y=GetWidgetY(this.targetWidget)
-            set SpellStruct___EnumStack.top.range=this.aoe
-            set SpellStruct___EnumStack.top.callback=filter
-            set SpellStruct___EnumStack.top.for=whichGroup
-            call GroupEnumUnitsInRange(SpellStruct___GROUP,SpellStruct___EnumStack.top.x,SpellStruct___EnumStack.top.y,SpellStruct___EnumStack.top.range+SpellStruct___MAX_UNIT_COLLISION_SIZE,Filter(function SpellStruct___InternalEnum))
-            call SpellStruct___EnumStack.decrement()
+        method enumUnitsInAoETarget takes group whichGroup, SpellStruct__UnitMethodFilter filter returns nothing 
+            call SpellStruct__EnumStack.increment()
+            set SpellStruct__EnumStack.top.instance=this
+            set SpellStruct__EnumStack.top.x=GetWidgetX(this.targetWidget)
+            set SpellStruct__EnumStack.top.y=GetWidgetY(this.targetWidget)
+            set SpellStruct__EnumStack.top.range=this.aoe
+            set SpellStruct__EnumStack.top.callback=filter
+            set SpellStruct__EnumStack.top.for=whichGroup
+            call GroupEnumUnitsInRange(SpellStruct__GROUP,SpellStruct__EnumStack.top.x,SpellStruct__EnumStack.top.y,SpellStruct__EnumStack.top.range+SpellStruct__MAX_UNIT_COLLISION_SIZE,Filter(function SpellStruct__InternalEnum))
+            call SpellStruct__EnumStack.decrement()
         endmethod
         
-        method enumUnitsInAoECaster takes group whichGroup, SpellStruct___UnitMethodFilter filter returns nothing 
-            call SpellStruct___EnumStack.increment()
-            set SpellStruct___EnumStack.top.instance=this
-            set SpellStruct___EnumStack.top.x=GetUnitX(this.caster)
-            set SpellStruct___EnumStack.top.y=GetUnitY(this.caster)
-            set SpellStruct___EnumStack.top.range=this.aoe
-            set SpellStruct___EnumStack.top.callback=filter
-            set SpellStruct___EnumStack.top.for=whichGroup
-            call GroupEnumUnitsInRange(SpellStruct___GROUP,SpellStruct___EnumStack.top.x,SpellStruct___EnumStack.top.y,SpellStruct___EnumStack.top.range+SpellStruct___MAX_UNIT_COLLISION_SIZE,Filter(function SpellStruct___InternalEnum))
-            call SpellStruct___EnumStack.decrement()
+        method enumUnitsInAoECaster takes group whichGroup, SpellStruct__UnitMethodFilter filter returns nothing 
+            call SpellStruct__EnumStack.increment()
+            set SpellStruct__EnumStack.top.instance=this
+            set SpellStruct__EnumStack.top.x=GetUnitX(this.caster)
+            set SpellStruct__EnumStack.top.y=GetUnitY(this.caster)
+            set SpellStruct__EnumStack.top.range=this.aoe
+            set SpellStruct__EnumStack.top.callback=filter
+            set SpellStruct__EnumStack.top.for=whichGroup
+            call GroupEnumUnitsInRange(SpellStruct__GROUP,SpellStruct__EnumStack.top.x,SpellStruct__EnumStack.top.y,SpellStruct__EnumStack.top.range+SpellStruct__MAX_UNIT_COLLISION_SIZE,Filter(function SpellStruct__InternalEnum))
+            call SpellStruct__EnumStack.decrement()
         endmethod
         
-        method forUnitsInAoE takes SpellStruct___UnitMethod callback returns nothing 
-            call SpellStruct___EnumStack.increment()
-            set SpellStruct___EnumStack.top.instance=this
-            set SpellStruct___EnumStack.top.x=this.targetX
-            set SpellStruct___EnumStack.top.y=this.targetY
-            set SpellStruct___EnumStack.top.range=this.aoe
-            set SpellStruct___EnumStack.top.callback=callback
-            call GroupEnumUnitsInRange(SpellStruct___GROUP,SpellStruct___EnumStack.top.x,SpellStruct___EnumStack.top.y,SpellStruct___EnumStack.top.range+SpellStruct___MAX_UNIT_COLLISION_SIZE,Filter(function SpellStruct___InternalFor))
-            call SpellStruct___EnumStack.decrement()
+        method forUnitsInAoE takes SpellStruct__UnitMethod callback returns nothing 
+            call SpellStruct__EnumStack.increment()
+            set SpellStruct__EnumStack.top.instance=this
+            set SpellStruct__EnumStack.top.x=this.targetX
+            set SpellStruct__EnumStack.top.y=this.targetY
+            set SpellStruct__EnumStack.top.range=this.aoe
+            set SpellStruct__EnumStack.top.callback=callback
+            call GroupEnumUnitsInRange(SpellStruct__GROUP,SpellStruct__EnumStack.top.x,SpellStruct__EnumStack.top.y,SpellStruct__EnumStack.top.range+SpellStruct__MAX_UNIT_COLLISION_SIZE,Filter(function SpellStruct__InternalFor))
+            call SpellStruct__EnumStack.decrement()
         endmethod
         
-        method forUnitsInAoETarget takes SpellStruct___UnitMethod callback returns nothing 
-            call SpellStruct___EnumStack.increment()
-            set SpellStruct___EnumStack.top.instance=this
-            set SpellStruct___EnumStack.top.x=GetWidgetX(this.targetWidget)
-            set SpellStruct___EnumStack.top.y=GetWidgetY(this.targetWidget)
-            set SpellStruct___EnumStack.top.range=this.aoe
-            set SpellStruct___EnumStack.top.callback=callback
-            call GroupEnumUnitsInRange(SpellStruct___GROUP,SpellStruct___EnumStack.top.x,SpellStruct___EnumStack.top.y,SpellStruct___EnumStack.top.range+SpellStruct___MAX_UNIT_COLLISION_SIZE,Filter(function SpellStruct___InternalFor))
-            call SpellStruct___EnumStack.decrement()
+        method forUnitsInAoETarget takes SpellStruct__UnitMethod callback returns nothing 
+            call SpellStruct__EnumStack.increment()
+            set SpellStruct__EnumStack.top.instance=this
+            set SpellStruct__EnumStack.top.x=GetWidgetX(this.targetWidget)
+            set SpellStruct__EnumStack.top.y=GetWidgetY(this.targetWidget)
+            set SpellStruct__EnumStack.top.range=this.aoe
+            set SpellStruct__EnumStack.top.callback=callback
+            call GroupEnumUnitsInRange(SpellStruct__GROUP,SpellStruct__EnumStack.top.x,SpellStruct__EnumStack.top.y,SpellStruct__EnumStack.top.range+SpellStruct__MAX_UNIT_COLLISION_SIZE,Filter(function SpellStruct__InternalFor))
+            call SpellStruct__EnumStack.decrement()
         endmethod
         
-        method forUnitsInAoECaster takes SpellStruct___UnitMethod callback returns nothing 
-            call SpellStruct___EnumStack.increment()
-            set SpellStruct___EnumStack.top.instance=this
-            set SpellStruct___EnumStack.top.x=GetUnitX(this.caster)
-            set SpellStruct___EnumStack.top.y=GetUnitY(this.caster)
-            set SpellStruct___EnumStack.top.range=this.aoe
-            set SpellStruct___EnumStack.top.callback=callback
-            call GroupEnumUnitsInRange(SpellStruct___GROUP,SpellStruct___EnumStack.top.x,SpellStruct___EnumStack.top.y,SpellStruct___EnumStack.top.range+SpellStruct___MAX_UNIT_COLLISION_SIZE,Filter(function SpellStruct___InternalFor))
-            call SpellStruct___EnumStack.decrement()
+        method forUnitsInAoECaster takes SpellStruct__UnitMethod callback returns nothing 
+            call SpellStruct__EnumStack.increment()
+            set SpellStruct__EnumStack.top.instance=this
+            set SpellStruct__EnumStack.top.x=GetUnitX(this.caster)
+            set SpellStruct__EnumStack.top.y=GetUnitY(this.caster)
+            set SpellStruct__EnumStack.top.range=this.aoe
+            set SpellStruct__EnumStack.top.callback=callback
+            call GroupEnumUnitsInRange(SpellStruct__GROUP,SpellStruct__EnumStack.top.x,SpellStruct__EnumStack.top.y,SpellStruct__EnumStack.top.range+SpellStruct__MAX_UNIT_COLLISION_SIZE,Filter(function SpellStruct__InternalFor))
+            call SpellStruct__EnumStack.decrement()
         endmethod
         
         method isUnitInAoE takes unit u returns boolean
@@ -9211,8 +9345,8 @@ call this.destroy()
         //===========================================================================
         // Attachment.
         //
-        private static SpellStruct___ChainAttach attachNode
-        private static SpellStruct___ChainAttach attachHead
+        private static SpellStruct__ChainAttach attachNode
+        private static SpellStruct__ChainAttach attachHead
         
         
         
@@ -9220,17 +9354,17 @@ call this.destroy()
         //===========================================================================
         // Timers (requires Locking).
         //
-        private SpellStruct___ChainAttach timerAttachments
+        private SpellStruct__ChainAttach timerAttachments
         private static method timerCallback takes nothing returns nothing
-            set thistype.attachNode=SpellStruct___GetTimerStruct(GetExpiredTimer()) // first time since h2i/gamecache I've needed this.
+            set thistype.attachNode=SpellStruct__GetTimerStruct(GetExpiredTimer()) // first time since h2i/gamecache I've needed this.
 call thistype.attachNode.callback.execute(thistype.attachNode.instance) // good reason to use T32 instead.
 // cannot use thistype.attachNode anymore, value may have changed.
 endmethod
-        method startTimer takes SpellStruct___Method callback, real period returns nothing
+        method startTimer takes SpellStruct__Method callback, real period returns nothing
             // Make node and attach data.
 //textmacro instance: SpellStruct__CreateAttachmentNode("this.timerAttachments")
             // Create node.
-            set thistype.attachNode=SpellStruct___ChainAttach.create()
+            set thistype.attachNode=SpellStruct__ChainAttach.create()
             // Link node (at end of list).
             set thistype.attachHead=this.timerAttachments
             set thistype.attachHead.prev.next=thistype.attachNode
@@ -9250,15 +9384,15 @@ endmethod
             set thistype.attachNode.timer=CreateTimer()
         endif
 //end of: SpellStruct__GetTimer("thistype.attachNode.timer")
-            call SpellStruct___SetTimerStruct(thistype.attachNode.timer,thistype.attachNode)
+            call SpellStruct__SetTimerStruct(thistype.attachNode.timer,thistype.attachNode)
             // Attach node to struct/method.
-            call SaveInteger(SpellStruct___STORE,this,callback,thistype.attachNode)
+            call SaveInteger(SpellStruct__STORE,this,callback,thistype.attachNode)
             // Start timer.
             call TimerStart(thistype.attachNode.timer,period,true,function thistype.timerCallback)
             call this.addLock()
         endmethod
-        method stopTimer takes SpellStruct___Method callback returns nothing
-            set thistype.attachNode=SpellStruct___ChainAttach(LoadInteger(SpellStruct___STORE,this,callback))
+        method stopTimer takes SpellStruct__Method callback returns nothing
+            set thistype.attachNode=SpellStruct__ChainAttach(LoadInteger(SpellStruct__STORE,this,callback))
             // Unchain attachment
             set thistype.attachNode.next.prev=thistype.attachNode.prev
             set thistype.attachNode.prev.next=thistype.attachNode.next
@@ -9267,34 +9401,34 @@ endmethod
         static if LIBRARY_TimerUtils then
             call ReleaseTimer(thistype.attachNode.timer)
         elseif LIBRARY_Recycle then
-            call RemoveSavedInteger(SpellStruct___STORE,GetHandleId(thistype.attachNode.timer),SpellStruct___TIMER_DATA)
+            call RemoveSavedInteger(SpellStruct__STORE,GetHandleId(thistype.attachNode.timer),SpellStruct__TIMER_DATA)
             call Timer.release(thistype.attachNode.timer)
         else
-            call RemoveSavedInteger(SpellStruct___STORE,GetHandleId(thistype.attachNode.timer),SpellStruct___TIMER_DATA)
+            call RemoveSavedInteger(SpellStruct__STORE,GetHandleId(thistype.attachNode.timer),SpellStruct__TIMER_DATA)
             call PauseTimer(thistype.attachNode.timer)
             call DestroyTimer(thistype.attachNode.timer)
             //set thistype.attachNode.timer=null // using globals, unnecessary.
         endif
 //end of: SpellStruct__ReleaseTimer("thistype.attachNode.timer")
-            call RemoveSavedInteger(SpellStruct___STORE,this,callback)
+            call RemoveSavedInteger(SpellStruct__STORE,this,callback)
             call this.removeLock()
         endmethod
         
         //===========================================================================
         // Triggers (requires Locking).
         //
-        private SpellStruct___ChainAttach triggerAttachments
+        private SpellStruct__ChainAttach triggerAttachments
         private static method triggerCallback takes nothing returns boolean
-            set thistype.attachNode=SpellStruct___GetTriggerStruct(GetTriggeringTrigger()) // first time since h2i/gamecache I've needed this.
+            set thistype.attachNode=SpellStruct__GetTriggerStruct(GetTriggeringTrigger()) // first time since h2i/gamecache I've needed this.
 call thistype.attachNode.callback.execute(thistype.attachNode.instance) // good reason to use T32 instead.
 // cannot use thistype.attachNode anymore, value may have changed.
 return false
         endmethod
-        method createTrigger takes SpellStruct___Method callback returns trigger
+        method createTrigger takes SpellStruct__Method callback returns trigger
             // Make node and attach data.
 //textmacro instance: SpellStruct__CreateAttachmentNode("this.triggerAttachments")
             // Create node.
-            set thistype.attachNode=SpellStruct___ChainAttach.create()
+            set thistype.attachNode=SpellStruct__ChainAttach.create()
             // Link node (at end of list).
             set thistype.attachHead=this.triggerAttachments
             set thistype.attachHead.prev.next=thistype.attachNode
@@ -9306,25 +9440,25 @@ return false
             set thistype.attachNode.callback=callback
             // Create timer and attach data.
             set thistype.attachNode.trigger=CreateTrigger()
-            call SpellStruct___SetTriggerStruct(thistype.attachNode.trigger,thistype.attachNode)
+            call SpellStruct__SetTriggerStruct(thistype.attachNode.trigger,thistype.attachNode)
             // Attach node to struct/method.
-            call SaveInteger(SpellStruct___STORE,this,callback,thistype.attachNode)
+            call SaveInteger(SpellStruct__STORE,this,callback,thistype.attachNode)
             // Init trigger.
             call TriggerAddCondition(thistype.attachNode.trigger,Filter(function thistype.triggerCallback))
             call this.addLock()
             return thistype.attachNode.trigger
         endmethod
-        method destroyTrigger takes SpellStruct___Method callback returns nothing
-            set thistype.attachNode=SpellStruct___ChainAttach(LoadInteger(SpellStruct___STORE,this,callback))
+        method destroyTrigger takes SpellStruct__Method callback returns nothing
+            set thistype.attachNode=SpellStruct__ChainAttach(LoadInteger(SpellStruct__STORE,this,callback))
             // Unchain attachment
             set thistype.attachNode.next.prev=thistype.attachNode.prev
             set thistype.attachNode.prev.next=thistype.attachNode.next
             // Destroy trigger
 //textmacro instance: SpellStruct__FlushTrigger("thistype.attachNode.trigger")
-        call RemoveSavedInteger(SpellStruct___STORE,GetHandleId(thistype.attachNode.trigger),SpellStruct___TRIGGER_DATA)
+        call RemoveSavedInteger(SpellStruct__STORE,GetHandleId(thistype.attachNode.trigger),SpellStruct__TRIGGER_DATA)
 //end of: SpellStruct__FlushTrigger("thistype.attachNode.trigger")
             call DestroyTrigger(thistype.attachNode.trigger)
-            call RemoveSavedInteger(SpellStruct___STORE,this,callback)
+            call RemoveSavedInteger(SpellStruct__STORE,this,callback)
             call this.removeLock()
         endmethod
         
@@ -9404,13 +9538,13 @@ set this.targetY=GetWidgetY(this.targetDest)
             // Attachment (timer & trigger).
             //
 //textmacro instance: SpellStruct__CreateAttachmentHead()
-            set thistype.attachHead=SpellStruct___ChainAttach.create()
+            set thistype.attachHead=SpellStruct__ChainAttach.create()
             set thistype.attachHead.next=thistype.attachHead
             set thistype.attachHead.prev=thistype.attachHead
 //end of: SpellStruct__CreateAttachmentHead()
             set this.timerAttachments=thistype.attachHead
 //textmacro instance: SpellStruct__CreateAttachmentHead()
-            set thistype.attachHead=SpellStruct___ChainAttach.create()
+            set thistype.attachHead=SpellStruct__ChainAttach.create()
             set thistype.attachHead.next=thistype.attachHead
             set thistype.attachHead.prev=thistype.attachHead
 //end of: SpellStruct__CreateAttachmentHead()
@@ -9423,7 +9557,7 @@ set this.targetY=GetWidgetY(this.targetDest)
             if this.hasStoppedCasting then
                 set this.hasStoppedCasting=false // random double free protection on autoDestroy stuff.
 else
-                call RemoveSavedInteger(SpellStruct___STORE,this.abilId,GetHandleId(this.caster))
+                call RemoveSavedInteger(SpellStruct__STORE,this.abilId,GetHandleId(this.caster))
             endif
             
             //===========================================================================
@@ -9439,16 +9573,16 @@ else
         static if LIBRARY_TimerUtils then
             call ReleaseTimer(thistype.attachNode.timer)
         elseif LIBRARY_Recycle then
-            call RemoveSavedInteger(SpellStruct___STORE,GetHandleId(thistype.attachNode.timer),SpellStruct___TIMER_DATA)
+            call RemoveSavedInteger(SpellStruct__STORE,GetHandleId(thistype.attachNode.timer),SpellStruct__TIMER_DATA)
             call Timer.release(thistype.attachNode.timer)
         else
-            call RemoveSavedInteger(SpellStruct___STORE,GetHandleId(thistype.attachNode.timer),SpellStruct___TIMER_DATA)
+            call RemoveSavedInteger(SpellStruct__STORE,GetHandleId(thistype.attachNode.timer),SpellStruct__TIMER_DATA)
             call PauseTimer(thistype.attachNode.timer)
             call DestroyTimer(thistype.attachNode.timer)
             //set thistype.attachNode.timer=null // using globals, unnecessary.
         endif
 //end of: SpellStruct__ReleaseTimer("thistype.attachNode.timer")
-                call RemoveSavedInteger(SpellStruct___STORE,this,thistype.attachNode.callback)
+                call RemoveSavedInteger(SpellStruct__STORE,this,thistype.attachNode.callback)
 //textmacro instance: SpellStruct__AttachmentChainEndloop()
                 set thistype.attachNode=thistype.attachNode.next
             endloop
@@ -9465,10 +9599,10 @@ else
                 exitwhen thistype.attachNode==thistype.attachHead
 //end of: SpellStruct__AttachmentChainLoop("this.triggerAttachments")
 //textmacro instance: SpellStruct__FlushTrigger("thistype.attachNode.trigger")
-        call RemoveSavedInteger(SpellStruct___STORE,GetHandleId(thistype.attachNode.trigger),SpellStruct___TRIGGER_DATA)
+        call RemoveSavedInteger(SpellStruct__STORE,GetHandleId(thistype.attachNode.trigger),SpellStruct__TRIGGER_DATA)
 //end of: SpellStruct__FlushTrigger("thistype.attachNode.trigger")
                 call DestroyTrigger(thistype.attachNode.trigger)
-                call RemoveSavedInteger(SpellStruct___STORE,this,thistype.attachNode.callback)
+                call RemoveSavedInteger(SpellStruct__STORE,this,thistype.attachNode.callback)
 //textmacro instance: SpellStruct__AttachmentChainEndloop()
                 set thistype.attachNode=thistype.attachNode.next
             endloop
@@ -9494,11 +9628,11 @@ else
         private static integer currentAbil=0
         static method operator abil= takes integer abilId returns nothing
             if thistype.currentAbil!=0 then
-                call RemoveSavedInteger(SpellStruct___STORE,thistype.currentAbil,SpellStruct___ALLOCATOR)
+                call RemoveSavedInteger(SpellStruct__STORE,thistype.currentAbil,SpellStruct__ALLOCATOR)
             endif
             set thistype.currentAbil=abilId
             if abilId!=0 then
-                call SaveInteger(SpellStruct___STORE,abilId,SpellStruct___ALLOCATOR,thistype.create)
+                call SaveInteger(SpellStruct__STORE,abilId,SpellStruct__ALLOCATOR,thistype.create)
             endif
         endmethod
         static method operator abil takes nothing returns integer
@@ -9516,7 +9650,7 @@ else
             return thistype.doAutoDestroyDefault
         endmethod
         method cleanup takes nothing returns nothing // only runs if not destroyed
-call RemoveSavedInteger(SpellStruct___STORE,this.abilId,GetHandleId(this.caster))
+call RemoveSavedInteger(SpellStruct__STORE,this.abilId,GetHandleId(this.caster))
             set this.hasStoppedCasting=true // can't be readonly because of this.
 if this.autoDestroy and this.isNotLocked then
                 call SpellStruct(this).destroy() // Jasshelper bug? Had to typecast "this".
@@ -9542,7 +9676,7 @@ return this
     //===========================================================================
     // Init
     //
-    struct SpellStruct___Init extends array
+    struct SpellStruct__Init extends array
         private static method onInit takes nothing returns nothing
             //===========================================================================
             // Event Responses
@@ -9552,27 +9686,27 @@ return this
 //textmacro instance: SpellStruct__RegisterEvent("EVENT_PLAYER_UNIT_SPELL_CHANNEL","OnChannel")
                 set t=CreateTrigger()
                 call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_CHANNEL)
-                call TriggerAddCondition(t,Filter(function SpellStruct___OnChannel))
+                call TriggerAddCondition(t,Filter(function SpellStruct__OnChannel))
 //end of: SpellStruct__RegisterEvent("EVENT_PLAYER_UNIT_SPELL_CHANNEL","OnChannel")
 //textmacro instance: SpellStruct__RegisterEvent("EVENT_PLAYER_UNIT_SPELL_CAST","OnStartCast")
                 set t=CreateTrigger()
                 call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_CAST)
-                call TriggerAddCondition(t,Filter(function SpellStruct___OnStartCast))
+                call TriggerAddCondition(t,Filter(function SpellStruct__OnStartCast))
 //end of: SpellStruct__RegisterEvent("EVENT_PLAYER_UNIT_SPELL_CAST","OnStartCast")
 //textmacro instance: SpellStruct__RegisterEvent("EVENT_PLAYER_UNIT_SPELL_EFFECT","OnEffect")
                 set t=CreateTrigger()
                 call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_EFFECT)
-                call TriggerAddCondition(t,Filter(function SpellStruct___OnEffect))
+                call TriggerAddCondition(t,Filter(function SpellStruct__OnEffect))
 //end of: SpellStruct__RegisterEvent("EVENT_PLAYER_UNIT_SPELL_EFFECT","OnEffect")
 //textmacro instance: SpellStruct__RegisterEvent("EVENT_PLAYER_UNIT_SPELL_FINISH","OnFinish")
                 set t=CreateTrigger()
                 call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_FINISH)
-                call TriggerAddCondition(t,Filter(function SpellStruct___OnFinish))
+                call TriggerAddCondition(t,Filter(function SpellStruct__OnFinish))
 //end of: SpellStruct__RegisterEvent("EVENT_PLAYER_UNIT_SPELL_FINISH","OnFinish")
 //textmacro instance: SpellStruct__RegisterEvent("EVENT_PLAYER_UNIT_SPELL_ENDCAST","OnStopCast")
                 set t=CreateTrigger()
                 call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_ENDCAST)
-                call TriggerAddCondition(t,Filter(function SpellStruct___OnStopCast))
+                call TriggerAddCondition(t,Filter(function SpellStruct__OnStopCast))
 //end of: SpellStruct__RegisterEvent("EVENT_PLAYER_UNIT_SPELL_ENDCAST","OnStopCast")
             
             set t=null
@@ -11241,7 +11375,7 @@ endif
 set ds = null
 endfunction
 function ShootMove takes nothing returns boolean
-if GetUnitTypeId(GetTriggerUnit()) == HERO and GetUnitAbilityLevel(GetTriggerUnit(), 'A025') > 0 and (GetIssuedOrderId() == OI_RIGHT_CLICK_MOVE or GetIssuedOrderId() == 851990) then
+if GetUnitTypeId(GetTriggerUnit()) == HERO and GetUnitAbilityLevel(GetTriggerUnit(), 'A025') > 0 and (GetIssuedOrderId() == OI_RIGHT_CLICK_MOVE or GetIssuedOrderId() == 851990) and GetUnitAbilityLevel(GetTriggerUnit(), 'A02H') == 0 then
     call IssueImmediateOrder( GetTriggerUnit(), "stop" )
     call PauseUnit(GetTriggerUnit(), true)
     call PauseUnit(GetTriggerUnit(), false)
@@ -11273,6 +11407,10 @@ function Change takes nothing returns nothing
         call UnitRemoveAbility(u, meeler)
         call UnitAddAbility(u, ranger)
         set EquipmentData[GetTriggerUnit()].heroData.aimu = CreateUnit(GetOwningPlayer(GetTriggerUnit()), 'e00K', GetUnitX(GetTriggerUnit())+10, GetUnitY(GetTriggerUnit())+10, 0)
+        if mode_tip[GetPlayerId(GetOwningPlayer(u))] > 0 then
+            set mode_tip[GetPlayerId(GetOwningPlayer(u))] = mode_tip[GetPlayerId(GetOwningPlayer(u))] - 1
+            call DisplayInfo(GetOwningPlayer(u), "褰撳墠涓哄皠鍑绘ā寮忥紝鍙抽敭鏃犳硶绉诲姩锛屾寜Z鍒囨崲鍒版満鍔ㄦā寮忓彲鎭㈠绉诲姩")
+        endif
     endif
     set u=null
 endfunction
@@ -11281,8 +11419,8 @@ set gtrgShootTarget=CreateTrigger()
 set gtrgShootMove=CreateTrigger()
 set gtrgShootChange=CreateTrigger()
 //all Damage_RegisterEvent( gtrgShootTarget)
-call TriggerRegisterAnyUnitEventBJ( gtrgShootTarget, EVENT_PLAYER_UNIT_ATTACKED )
-call TriggerAddCondition(gtrgShootTarget,function ShootEnergy)
+//call TriggerRegisterAnyUnitEventBJ( gtrgShootTarget, EVENT_PLAYER_UNIT_ATTACKED )
+//call TriggerAddCondition(gtrgShootTarget,function ShootEnergy)
 call TriggerRegisterAnyUnitEventBJ( gtrgShootMove, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER )
 call TriggerRegisterAnyUnitEventBJ( gtrgShootMove, EVENT_PLAYER_UNIT_ISSUED_UNIT_ORDER )
 call TriggerAddCondition(gtrgShootMove,function ShootMove)
@@ -13055,14 +13193,50 @@ endfunction
 function SetupStage1 takes nothing returns nothing
 endfunction
 function Stage1Mission takes nothing returns nothing
+    local integer i = 0
+    local location l 
+    local unit hero
+    loop
+        exitwhen i >= PLAYER_COUNT
+        if CurrentPlaying(Player(i)) then
+            set l = GetRandomLocInRect(gg_rct_stage1_start)
+            set hero = CreateUnit(Player(i),HERO,GetLocationX(l), GetLocationY(l),0)
+            call RegisterReviveSystem(hero)
+            call BeHealth(GetPlayerId(GetOwningPlayer(hero)))
+            call DestroyEffect(AddSpecialEffectLoc("Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl", l))
+            set heros[i] = hero
+            set mode_tip[i] = 3
+            if herosType[i] == 'H00B' then
+                call UnitAddAbility(hero, 'A028')
+                call UnitAddAbility(hero, 'A029')
+            else
+                call UnitAddAbility(hero, 'A02E')
+                call UnitAddAbility(hero, 'A02F')
+            endif
+            call BeMonsterTarget(hero)
+            call EquipGunV2(hero)
+            call SetCameraBoundsToRectForPlayerBJ( Player(i), gg_rct_stage1)
+            call PanCameraToTimedForPlayer(Player(i), GetLocationX(l), GetLocationY(l), 0)
+        endif
+        set i = i + 1
+    endloop
+    set hero = null
+    set l = null
     call PlaySoundBJ( gg_snd_alicebeep )
     call DisplayInfoAll("鏂颁换鍔★細娓呯悊鍖哄煙")
-    call CinematicFadeBJ( bj_CINEFADETYPE_FADEOUT, 2, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 0 )
+    call CinematicFadeBJ( bj_CINEFADETYPE_FADEIN, 2, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 0 )
+endfunction
+function EquipSound takes nothing returns nothing
+    call PlaySoundBJ( gg_snd_equip1 )
+endfunction
+function EquipSound2 takes nothing returns nothing
+    call PlaySoundBJ( gg_snd_equip2 )
 endfunction
 function StartStage1 takes nothing returns nothing
-    call CinematicFadeBJ( bj_CINEFADETYPE_FADEIN, 2, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 0 )
-    set tim = CreateTimer()
-    call TimerStart(tim, 10, false, function Stage1Mission)
+    call CinematicFadeBJ( bj_CINEFADETYPE_FADEOUT, 2, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 0 )
+    call TimerStart(CreateTimer(), 3, false, function EquipSound)
+    call TimerStart(CreateTimer(), 5, false, function EquipSound2)
+    call TimerStart(CreateTimer(), 10, false, function Stage1Mission)
 endfunction
 function InitStage1 takes nothing returns nothing
     local trigger trg = CreateTrigger()
@@ -13082,9 +13256,9 @@ function InitStage1 takes nothing returns nothing
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n001', GetRectCenterX(gg_rct_pow1), GetRectCenterY(gg_rct_pow1), 0)
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n001', GetRectCenterX(gg_rct_pow2), GetRectCenterY(gg_rct_pow2), 0)
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n001', GetRectCenterX(gg_rct_pow3), GetRectCenterY(gg_rct_pow3), 0)
-    set t = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h00D', GetRectCenterX(gg_rct_stage1_tlcannon), GetRectCenterY(gg_rct_stage1_tlcannon), 0)
-    call TriggerRegisterUnitManaEvent( gg_trg_ManaChange, t, LESS_THAN, 0.50 )
-    call TriggerRegisterUnitManaEvent( gg_trg_ManaGrow, t, GREATER_THAN, 2)
+    //set t = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h00D', GetRectCenterX(gg_rct_stage1_tlcannon), GetRectCenterY(gg_rct_stage1_tlcannon), 0)
+    //call TriggerRegisterUnitManaEvent( gg_trg_ManaChange, t, LESS_THAN, 0.50 )
+    //call TriggerRegisterUnitManaEvent( gg_trg_ManaGrow, t, GREATER_THAN, 2)
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'H00B', 5626, 6151, -pi/2 * bj_RADTODEG)
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'H00C', 6142, 6151, -pi/2 * bj_RADTODEG)
     call SetCameraBoundsToRectForPlayerBJ( Player(0), gg_rct_pick_hero )
@@ -13278,6 +13452,8 @@ struct EquipmentData extends array
         set this.heroData.shoot_tick = 4
         set this.heroData.clip_size = 60
         set this.heroData.melee_interval = 40
+        set this.heroData.reload_cost = 6
+        set this.heroData.energy_consum = 0.5
         loop
             exitwhen i >=5
             set this.heroData.smartDarts[i] = 0
@@ -13308,9 +13484,9 @@ struct EquipmentData extends array
         local real x
         local real y
         local unit ydl_unit
-        if GetUnitAbilityLevel(.unit, 'A026') > 0 and IsUnitAliveBJ(.unit) then
+        if GetUnitAbilityLevel(.unit, 'A026') > 0 and IsUnitAliveBJ(.unit) and GetUnitAbilityLevel(.unit, 'A02H') == 0 then
             if EquipmentData[.unit].heroData.melee_cooldown <= 0 then
-                set target = GetNearestEnemy(.unit, 400)
+                set target = GetNearestEnemy(.unit, 350)
                 if target != null then
                     set dir=Atan2(GetUnitY(target) - GetUnitY(.unit), GetUnitX(target) - GetUnitX(.unit))
                     set x=GetUnitX(.unit) + 100 * Cos(dir)
@@ -13318,15 +13494,15 @@ struct EquipmentData extends array
                     call KillUnit(CreateUnit(GetOwningPlayer(.unit), 'e00L', x, y, dir*bj_RADTODEG))
                     set EquipmentData[.unit].heroData.melee_cooldown = EquipmentData[.unit].heroData.melee_interval
                     //damage
-                    call GroupEnumUnitsInRange(ENUM_GROUP, x, y, 350,null) 
+                    call GroupEnumUnitsInRange(ENUM_GROUP, x, y, 300,null) 
                     loop
                         set ydl_unit = FirstOfGroup(ENUM_GROUP)
                         exitwhen ydl_unit == null
                         call GroupRemoveUnit(ENUM_GROUP, ydl_unit) 
                         if IsLiveEnemyUnit(.unit,ydl_unit) then
-                            call Push(ydl_unit, getTargetDir(.unit, ydl_unit), 2.5, 0, 5)
+                            call Push(ydl_unit, getTargetDir(.unit, ydl_unit), 3, 0, 5)
                             //call PlaySoundOnUnitBJ(gg_snd_togglemeele, 100, .unit)
-                            call AbliDamage(.unit, ydl_unit, 160, BLADE_BLOOD)
+                            call AbliDamage(.unit, ydl_unit, 120, BLADE_BLOOD)
                         endif
                     endloop
                 endif
@@ -13343,12 +13519,15 @@ struct EquipmentData extends array
                 call DestroyEffect(this.heroData.ee)
                 set this.heroData.ee = null
             endif
-            if ModuloInteger(Tick,200) == 0 and GetUnitState(.unit, UNIT_STATE_MANA) <= 0 then
-                set this.heroData.ee = AddSpecialEffectTarget("Abilities\\Spells\\Orc\\Purge\\PurgeBuffTarget.mdl",.unit,"origin")
-                call SetUnitLifeBJ(.unit, GetUnitState(.unit, UNIT_STATE_LIFE) - GetHeroStr(.unit, false))
-                call DisplayWarning(GetOwningPlayer(.unit), "鑳介噺鑰楀敖锛岀淮鐢熺郴缁熷凡鍋滄杩愪綔锛岃灏藉揩琛ュ厖鑳介噺")
-            else
-                call SetUnitManaBJ(.unit, GetUnitState(.unit, UNIT_STATE_MANA) - 0.2)
+            if GetUnitAbilityLevel(.unit, 'A02H') == 0 then
+                if ModuloInteger(Tick,200) == 0 and GetUnitState(.unit, UNIT_STATE_MANA) <= 0 then
+                    set this.heroData.ee = AddSpecialEffectTarget("Abilities\\Spells\\Orc\\Purge\\PurgeBuffTarget.mdl",.unit,"origin")
+                    call SetUnitLifeBJ(.unit, RMaxBJ(1, GetUnitState(.unit, UNIT_STATE_LIFE) - 10))
+                    call DisplayWarning(GetOwningPlayer(.unit), "缁寸敓绯荤粺宸插仠姝㈣繍浣滐紝璇峰敖蹇ˉ鍏呰兘閲?)
+                else
+                    call SetUnitManaBJ(.unit, GetUnitState(.unit, UNIT_STATE_MANA) - EquipmentData[.unit].heroData.energy_consum)
+                    //call DisplayManaCostSmall(.unit, EquipmentData[.unit].heroData.energy_consum)
+                endif
             endif
         endif
     endmethod
@@ -13395,11 +13574,13 @@ struct EquipmentData extends array
         if reload and c < max then
             set this.heroData.shoot_energy = n
             if n == max then
-                if IsHero(.unit) then
+                if IsHero(.unit) and GetUnitState(.unit, UNIT_STATE_MANA) >= EquipmentData[.unit].heroData.reload_cost then
                     set this.heroData.reload = false
                     call UnitRemoveAbility(.unit, 'Abun')
+                    call SetUnitState(.unit, UNIT_STATE_MANA, GetUnitState(.unit, UNIT_STATE_MANA) - EquipmentData[.unit].heroData.reload_cost)
                     call SetPlayerState(GetOwningPlayer(.unit),PLAYER_STATE_RESOURCE_FOOD_USED, EquipmentData[.unit].heroData.clip_size)
-                    call DisplayFloatText(GetUnitX(.unit),GetUnitY(.unit),"瑁呭脊瀹屾垚锛?,1)
+                    call DisplayManaCost(.unit, EquipmentData[.unit].heroData.reload_cost)
+                    //call DisplayFloatText(GetUnitX(.unit),GetUnitY(.unit),"瑁呭脊瀹屾垚锛?"+I2S(EquipmentData[.unit].heroData.reload_cost),1)
                     call PlaySoundOnUnitBJ( gg_snd_clipin1, 100,.unit)
                     //call SetSoundPosition( gg_snd_clipin1, GetUnitX(.unit), GetUnitY(.unit), 0 )
                     //call SetSoundPosition( gg_snd_clipin1, 0,0, 0 )
@@ -13948,7 +14129,7 @@ struct GuardDarts extends TroughMissle
         call DestroyEffect( AddSpecialEffect(BLADE_BLOOD, GetUnitX(target), GetUnitY(target)) )
     endmethod
     method getFinalDamage takes nothing returns real
-        return 100.0
+        return 600.0
     endmethod
     method troughDamage takes unit target returns nothing
         call BladeDamage(owner, target, getFinalDamage())
@@ -15111,7 +15292,7 @@ endstruct
 // 
 //   Warcraft III map script
 //   Generated by the Warcraft III World Editor
-//   Date: Thu Oct 01 20:51:13 2020
+//   Date: Sun Oct 04 14:51:35 2020
 //   Map Author: 鏈煡
 // 
 //===========================================================================
@@ -15182,6 +15363,16 @@ function InitSounds takes nothing returns nothing
     call SetSoundDistanceCutoff( gg_snd_reload, 3000.0 )
     call SetSoundConeAngles( gg_snd_reload, 0.0, 0.0, 127 )
     call SetSoundConeOrientation( gg_snd_reload, 0.0, 0.0, 0.0 )
+    set gg_snd_equip2 = CreateSound( "war3mapImported\\plasmariflereload.mp3", false, false, false, 10, 10, "DefaultEAXON" )
+    call SetSoundDuration( gg_snd_equip2, 3456 )
+    call SetSoundChannel( gg_snd_equip2, 0 )
+    call SetSoundVolume( gg_snd_equip2, 127 )
+    call SetSoundPitch( gg_snd_equip2, 1.0 )
+    set gg_snd_equip1 = CreateSound( "war3mapImported\\equip_armor.mp3", false, false, false, 10, 10, "DefaultEAXON" )
+    call SetSoundDuration( gg_snd_equip1, 1314 )
+    call SetSoundChannel( gg_snd_equip1, 0 )
+    call SetSoundVolume( gg_snd_equip1, 127 )
+    call SetSoundPitch( gg_snd_equip1, 1.0 )
 endfunction
 //***************************************************************************
 //*
@@ -15190,30 +15381,74 @@ endfunction
 //***************************************************************************
 function CreateAllItems takes nothing returns nothing
     local integer itemID
-    call CreateItem( 'gold', 189.5, -708.3 )
-    call CreateItem( 'gold', 174.2, -795.4 )
-    call CreateItem( 'gold', 276.0, -708.3 )
-    call CreateItem( 'gold', 232.4, -806.2 )
-    call CreateItem( 'gold', 233.2, -907.5 )
-    call CreateItem( 'gold', 320.2, -763.1 )
-    call CreateItem( 'gold', 369.3, -697.2 )
-    call CreateItem( 'gold', 348.4, -823.9 )
+    call CreateItem( 'I00T', 660.6, -861.5 )
+    call CreateItem( 'I00T', 652.2, -779.4 )
+    call CreateItem( 'I00T', 652.4, -709.8 )
+    call CreateItem( 'I00T', 727.4, -785.5 )
+    call CreateItem( 'I00T', 728.3, -847.8 )
+    call CreateItem( 'I00T', 709.3, -701.2 )
+    call CreateItem( 'I015', 847.6, -683.8 )
+    call CreateItem( 'I015', 856.0, -775.2 )
+    call CreateItem( 'I015', 851.1, -859.5 )
+    call CreateItem( 'I015', 928.5, -696.8 )
+    call CreateItem( 'I015', 948.3, -809.9 )
+    call CreateItem( 'I015', 962.9, -898.0 )
     call CreateItem( 'gold', 331.9, -852.1 )
+    call CreateItem( 'gold', 348.4, -823.9 )
+    call CreateItem( 'gold', 369.3, -697.2 )
+    call CreateItem( 'gold', 189.5, -708.3 )
+    call CreateItem( 'gold', 320.2, -763.1 )
+    call CreateItem( 'gold', 233.2, -907.5 )
+    call CreateItem( 'gold', 232.4, -806.2 )
+    call CreateItem( 'gold', 276.0, -708.3 )
+    call CreateItem( 'gold', 174.2, -795.4 )
     call CreateItem( 'gold', 165.7, -866.0 )
-    call CreateItem( 'lmbr', 2324.8, -653.3 )
-    call CreateItem( 'lmbr', 2243.9, -604.1 )
-    call CreateItem( 'lmbr', 2237.1, -762.3 )
-    call CreateItem( 'lmbr', 2326.4, -850.9 )
-    call CreateItem( 'lmbr', 2414.1, -749.4 )
     call CreateItem( 'lmbr', 2358.3, -753.7 )
-    call CreateItem( 'lmbr', 2443.7, -572.4 )
+    call CreateItem( 'lmbr', 2326.4, -850.9 )
+    call CreateItem( 'lmbr', 2237.1, -762.3 )
+    call CreateItem( 'lmbr', 2243.9, -604.1 )
+    call CreateItem( 'lmbr', 2324.8, -653.3 )
     call CreateItem( 'lmbr', 2175.4, -653.3 )
+    call CreateItem( 'lmbr', 2414.1, -749.4 )
+    call CreateItem( 'lmbr', 2443.7, -572.4 )
 endfunction
 //***************************************************************************
 //*
 //*  Unit Creation
 //*
 //***************************************************************************
+//===========================================================================
+function CreateUnitsForPlayer11 takes nothing returns nothing
+    local player p = Player(11)
+    local unit u
+    local integer unitID
+    local trigger t
+    local real life
+    set u = CreateUnit( p, 'u000', -1732.5, -98.0, 200.573 )
+    set u = CreateUnit( p, 'u000', -1645.2, -279.8, 98.814 )
+    set u = CreateUnit( p, 'u000', -1598.9, -379.0, 161.910 )
+    set u = CreateUnit( p, 'u000', -1555.6, -448.1, 226.864 )
+    set u = CreateUnit( p, 'u000', -1485.7, -524.8, 51.615 )
+    set u = CreateUnit( p, 'u000', -1428.0, -560.4, 246.035 )
+    set u = CreateUnit( p, 'u000', -2015.6, -197.4, 139.981 )
+    set u = CreateUnit( p, 'u000', -1871.8, -475.4, 254.023 )
+    set u = CreateUnit( p, 'u000', -1801.4, -586.8, 54.076 )
+    set u = CreateUnit( p, 'u000', -1737.8, -690.3, 24.599 )
+    set u = CreateUnit( p, 'u000', -1674.5, -766.0, 94.397 )
+    set u = CreateUnit( p, 'u000', -1627.6, -819.5, 66.239 )
+    set u = CreateUnit( p, 'u000', -1564.9, -884.3, 203.616 )
+    set u = CreateUnit( p, 'u000', -1955.3, -332.1, 327.425 )
+    set u = CreateUnit( p, 'u000', -2335.3, -338.9, 39.552 )
+    set u = CreateUnit( p, 'u000', -2196.9, -615.7, 235.148 )
+    set u = CreateUnit( p, 'u000', -2148.1, -709.2, 229.434 )
+    set u = CreateUnit( p, 'u000', -2075.5, -800.1, 72.677 )
+    set u = CreateUnit( p, 'u000', -2007.7, -876.1, 247.079 )
+    set u = CreateUnit( p, 'u000', -1953.8, -942.2, 355.342 )
+    set u = CreateUnit( p, 'u000', -1873.3, -1038.9, 325.996 )
+    set u = CreateUnit( p, 'u000', -1820.2, -1094.0, 318.328 )
+    set u = CreateUnit( p, 'u000', -1769.7, -1140.5, 1.340 )
+    set u = CreateUnit( p, 'u000', -2262.8, -473.0, 228.160 )
+endfunction
 //===========================================================================
 function CreateNeutralPassiveBuildings takes nothing returns nothing
     local player p = Player(PLAYER_NEUTRAL_PASSIVE)
@@ -15243,6 +15478,7 @@ function CreatePlayerBuildings takes nothing returns nothing
 endfunction
 //===========================================================================
 function CreatePlayerUnits takes nothing returns nothing
+    call CreateUnitsForPlayer11( )
 endfunction
 //===========================================================================
 function CreateAllUnits takes nothing returns nothing
@@ -15371,7 +15607,7 @@ endfunction
 //
 // Abilities\Spells\Items\TomeOfRetraining\TomeOfRetrainingCaster.mdl
 //===========================================================================
-//TESH.scrollpos=0
+//TESH.scrollpos=3
 //TESH.alwaysfold=0
 function Trig_Stage1TActions takes nothing returns nothing
     local unit tg = GetTriggerUnit()
@@ -15440,6 +15676,32 @@ endfunction
 //===========================================================================
 //TESH.scrollpos=4
 //TESH.alwaysfold=0
+//===========================================================================
+// Trigger: DawnHammer
+//
+//     local unit dummy
+//     set dummy = CreateUnit(GetOwningPlayer(s),MAGIC,GetUnitX(target),GetUnitY(target),0)
+//     call IssueTargetOrderById( dummy, 852226,target )
+//     set dummy = null
+//===========================================================================
+//TESH.scrollpos=0
+//TESH.alwaysfold=0
+struct DawnHammer extends SpellStruct
+    implement SpellStruct
+    
+    private static method onInit takes nothing returns nothing
+        set thistype.abil='A02F'
+    endmethod
+    
+    method onEffect takes nothing returns nothing
+        local unit dummy
+        set dummy = CreateUnit(GetOwningPlayer(caster),MAGIC,targetX,targetY,0)
+        call IssuePointOrderById( dummy, 852591, targetX, targetY )
+        set dummy = null
+        call SetPlayerState(GetOwningPlayer(caster), PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(GetOwningPlayer(caster), PLAYER_STATE_RESOURCE_LUMBER) - 5)
+    endmethod
+    
+endstruct
 //===========================================================================
 // Trigger: NetGun
 //===========================================================================
@@ -15529,16 +15791,8 @@ struct PowerPunchSpell extends SpellStruct
 endstruct
 //===========================================================================
 // Trigger: SelectHero
-//
-//             set l = GetRandomLocInRect(gg_rct_stage1_start)
-//             set hero = CreateUnit(Player(pi),HERO,GetLocationX(l), GetLocationY(l),0)
-//             set heros[pi] = hero
-//             call BeMonsterTarget(hero)
-//             call EquipGunV2(hero)
-//             call SetCameraBoundsToRectForPlayerBJ( p, gg_rct_stage1)
-//             call PanCameraToTimedForPlayer(p, GetLocationX(l), GetLocationY(l), 0)
 //===========================================================================
-//TESH.scrollpos=0
+//TESH.scrollpos=12
 //TESH.alwaysfold=0
 struct SelectHero extends SpellStruct
     implement SpellStruct
@@ -15556,9 +15810,7 @@ struct SelectHero extends SpellStruct
         local integer i = 0
         local boolean f = true
         local unit hero
-        call BJDebugMsg("select ")
         if (ut == 'H00B' or ut == 'H00C') and heros[pi] == null then
-            call BJDebugMsg("id " + I2S(pi))
             set herosType[pi] = ut
             call DisplayInfoAll(GetPlayerName(p) + " 閫夋嫨浜?" + GetUnitName(targetUnit))
             call RemoveUnit(caster)
@@ -15586,7 +15838,7 @@ endstruct
 //                         set EquipmentData[owner].heroData.reload = true
 //                     endif
 //===========================================================================
-//TESH.scrollpos=1
+//TESH.scrollpos=0
 //TESH.alwaysfold=0
 struct Reload extends SpellStruct
     implement SpellStruct
@@ -15663,11 +15915,14 @@ struct Jump extends SpellStruct
         local unit u
         local vector v = vector.create(d*Cos(facing),d*Sin(facing),h)
         //call IssueImmediateOrder( caster, "stop" )
-        set u = CreateUnit(GetOwningPlayer(caster), 'e00N', casterX, casterY, 0)
-        call SetUnitFlyHeight(u, GetUnitFlyHeight(caster),0)
-        call KillUnit(u)
-        call AddVelocity(caster, v)
-        call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) - 3)
+        if GetUnitState(caster, UNIT_STATE_MANA) >= 3 then
+            set u = CreateUnit(GetOwningPlayer(caster), 'e00N', casterX, casterY, 0)
+            call SetUnitFlyHeight(u, GetUnitFlyHeight(caster),0)
+            call KillUnit(u)
+            call AddVelocity(caster, v)
+            call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) - 3)
+            call DisplayManaCost(caster, 3)
+        endif
         set u = null
     endmethod
     
@@ -15695,7 +15950,7 @@ endstruct
 //     call TriggerAddAction(gg_trg_fd________4_______u, function Trig_fd________4_______uActions)
 // endfunction
 //===========================================================================
-//TESH.scrollpos=5
+//TESH.scrollpos=7
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: InjectionSpeedUp
@@ -15966,7 +16221,7 @@ struct LeaveDartsSpell extends SpellStruct
 endstruct//===========================================================================
 // Trigger: DartsStorm
 //===========================================================================
-//TESH.scrollpos=1
+//TESH.scrollpos=5
 //TESH.alwaysfold=0
 struct DartsStormSpell extends SpellStruct
     implement SpellStruct
@@ -16292,6 +16547,23 @@ function InitTrig_RegisterFly takes nothing returns nothing
     call TriggerAddAction(gg_trg_RegisterFly, function Trig_RegisterFlyActions)
 endfunction
 //===========================================================================
+// Trigger: Revive
+//
+// function Revive takes nothing returns nothing
+//     local unit u
+//     if GetSpellAbilityId() == revive then
+//         set u=GetTriggerUnit()
+//         call UnitRemoveAbility(u, 'Avul')
+//         call UnitRemoveAbility(u, revive)
+//         call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", GetUnitX(u), GetUnitY(u)))
+//         call RemoveLayDowmState(u)
+//     endif
+//     set u=null
+// endfunction
+//===========================================================================
+//TESH.scrollpos=0
+//TESH.alwaysfold=0
+//===========================================================================
 // Trigger: ManaChange
 //===========================================================================
 //TESH.scrollpos=0
@@ -16320,7 +16592,7 @@ endfunction
 //===========================================================================
 // Trigger: TechUnit
 //===========================================================================
-//TESH.scrollpos=10
+//TESH.scrollpos=6
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: Effect
@@ -17094,33 +17366,8 @@ endstruct//=====================================================================
 // endfunction
 // endlibrary
 //===========================================================================
-//TESH.scrollpos=0
+//TESH.scrollpos=16
 //TESH.alwaysfold=0
-function CreateHero takes integer pid, real x, real y returns unit
-    local unit hero = CreateUnit(Player(pid),HERO,x,y,0)
-    //local unit tech = CreateUnit(Player(pid),TECH_UNIT,x,y,0)
-    call UnitAddAbility(hero, SHOOT_SPEED)
-    call SetUnitAbilityLevel(hero, SHOOT_SPEED, 21)
-    set heros[pid] = hero
-    //set techs[pid] = tech
-    //set tech = null
-    return hero
-endfunction
-function CurrentPlayerCount takes nothing returns integer
-    local integer i = 0
-    local r = 0
-    loop
-        exitwhen i >= PLAYER_COUNT
-        if GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING then
-            set r = r + 1
-        endif
-        set i = i + 1
-    endloop
-    return r
-endfunction
-function CurrentPlaying takes player p returns boolean
-    return GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING
-endfunction
 //===========================================================================
 // Trigger: FocuseHero
 //===========================================================================
@@ -17205,7 +17452,7 @@ endfunction
 //
 //  and GetIssuedOrderId() == OI_JUST_MOVE and UnitHasBuffBJ(GetTriggerUnit(), 'B006')
 //===========================================================================
-//TESH.scrollpos=40
+//TESH.scrollpos=51
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: MonsterTypeData
@@ -17265,16 +17512,16 @@ endfunction
 //             endif
 // function rangeExplodeDamage takes unit source ,real x ,real y ,real radius, real damage returns nothing
 //===========================================================================
-//TESH.scrollpos=541
+//TESH.scrollpos=213
 //TESH.alwaysfold=0
 // Trigger: MissleFactory
 //===========================================================================
-//TESH.scrollpos=11
+//TESH.scrollpos=23
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: Gun
 //===========================================================================
-//TESH.scrollpos=44
+//TESH.scrollpos=41
 //TESH.alwaysfold=0
         
         
@@ -17330,12 +17577,12 @@ endfunction
 //         endif
 //     endmethod
 //===========================================================================
-//TESH.scrollpos=282
+//TESH.scrollpos=322
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: HeroData
 //===========================================================================
-//TESH.scrollpos=39
+//TESH.scrollpos=45
 //TESH.alwaysfold=0
         
         
@@ -17373,7 +17620,7 @@ endfunction
 //     set t=null
 // endfunction
 //===========================================================================
-//TESH.scrollpos=51
+//TESH.scrollpos=66
 //TESH.alwaysfold=0
     
 //===========================================================================
@@ -17405,7 +17652,7 @@ endfunction
 //
 // //! textmacro RegisterMaterial takes ID,CLAZZ,HARDNESS,BOUNCE,VOLUME,WEIGHT,AIRK,FKL,GOUND_ACTION
 //===========================================================================
-//TESH.scrollpos=104
+//TESH.scrollpos=93
 //TESH.alwaysfold=0
     
 //===========================================================================
@@ -18505,7 +18752,7 @@ endfunction
 //     //local real colf2 = Material[u2].colf
 // (1 - colris2) * (pvd * (1 + coldmg1))
 //===========================================================================
-//TESH.scrollpos=107
+//TESH.scrollpos=74
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: Custom Congregation
@@ -18577,7 +18824,7 @@ endfunction
 // Trigger: cantmove
 //===========================================================================
 function Trig_cantmoveConditions takes nothing returns boolean
-    return (((GetIssuedOrderIdBJ() == String2OrderIdBJ("smart")) or (GetIssuedOrderIdBJ() == String2OrderIdBJ("move")) or (GetIssuedOrderIdBJ() == String2OrderIdBJ("patrol"))) and (GetUnitAbilityLevel(GetTriggerUnit(), 'A008') >= 1))
+    return (((GetIssuedOrderIdBJ() == String2OrderIdBJ("smart")) or (GetIssuedOrderIdBJ() == String2OrderIdBJ("move")) or (GetIssuedOrderIdBJ() == String2OrderIdBJ("patrol"))) and (GetUnitAbilityLevel(GetTriggerUnit(), 'A02H') >= 1))
 endfunction
 function Trig_cantmoveActions takes nothing returns nothing
     call IssueImmediateOrderById( GetTriggerUnit(), 851972 )
@@ -18587,46 +18834,8 @@ endfunction
 //===========================================================================
 function InitTrig_cantmove takes nothing returns nothing
     set gg_trg_cantmove = CreateTrigger()
-    call DisableTrigger(gg_trg_cantmove)
     call TriggerAddCondition(gg_trg_cantmove, Condition(function Trig_cantmoveConditions))
     call TriggerAddAction(gg_trg_cantmove, function Trig_cantmoveActions)
-endfunction
-//===========================================================================
-// Trigger: 3 澶嶅埗 4 澶嶅埗
-//===========================================================================
-function Trig_3________4_______uActions takes nothing returns nothing
-    call CinematicFadeBJ( bj_CINEFADETYPE_FADEIN, 2, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 0 )
-    call CinematicFadeBJ( bj_CINEFADETYPE_FADEOUT, 2, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 0 )
-    call CinematicFadeBJ( bj_CINEFADETYPE_FADEOUTIN, 2, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 0 )
-endfunction
-//===========================================================================
-function InitTrig_3________4_______u takes nothing returns nothing
-    set gg_trg_3________4_______u = CreateTrigger()
-    call TriggerAddAction(gg_trg_3________4_______u, function Trig_3________4_______uActions)
-endfunction
-//===========================================================================
-// Trigger: 3 澶嶅埗 4 澶嶅埗 2
-//===========================================================================
-function Trig_3________4________2Conditions takes nothing returns boolean
-    return ((GetPlayerSlotState(Player(0)) == PLAYER_SLOT_STATE_PLAYING))
-endfunction
-function Trig_3________4________2Actions takes nothing returns nothing
-endfunction
-//===========================================================================
-function InitTrig_3________4________2 takes nothing returns nothing
-    set gg_trg_3________4________2 = CreateTrigger()
-    call TriggerAddCondition(gg_trg_3________4________2, Condition(function Trig_3________4________2Conditions))
-    call TriggerAddAction(gg_trg_3________4________2, function Trig_3________4________2Actions)
-endfunction
-//===========================================================================
-// Trigger: 3 澶嶅埗 4 澶嶅埗 3
-//===========================================================================
-function Trig_3________4________3Actions takes nothing returns nothing
-endfunction
-//===========================================================================
-function InitTrig_3________4________3 takes nothing returns nothing
-    set gg_trg_3________4________3 = CreateTrigger()
-    call TriggerAddAction(gg_trg_3________4________3, function Trig_3________4________3Actions)
 endfunction
 //===========================================================================
 // Trigger: 3 澶嶅埗 4 澶嶅埗 4
@@ -18637,6 +18846,37 @@ endfunction
 function InitTrig_3________4________4 takes nothing returns nothing
     set gg_trg_3________4________4 = CreateTrigger()
     call TriggerAddAction(gg_trg_3________4________4, function Trig_3________4________4Actions)
+endfunction
+//===========================================================================
+// Trigger: 3 澶嶅埗 4 澶嶅埗 4 澶嶅埗
+//===========================================================================
+function Trig_3________4________4_______uActions takes nothing returns nothing
+endfunction
+//===========================================================================
+function InitTrig_3________4________4_______u takes nothing returns nothing
+    set gg_trg_3________4________4_______u = CreateTrigger()
+    call TriggerAddAction(gg_trg_3________4________4_______u, function Trig_3________4________4_______uActions)
+endfunction
+//===========================================================================
+// Trigger: 3 澶嶅埗 4 澶嶅埗 4 澶嶅埗 2
+//===========================================================================
+function Trig_3________4________4________2Actions takes nothing returns nothing
+endfunction
+//===========================================================================
+function InitTrig_3________4________4________2 takes nothing returns nothing
+    set gg_trg_3________4________4________2 = CreateTrigger()
+    call TriggerAddAction(gg_trg_3________4________4________2, function Trig_3________4________4________2Actions)
+endfunction
+//===========================================================================
+// Trigger: 3 澶嶅埗 4 澶嶅埗 4 澶嶅埗 3
+//===========================================================================
+function Trig_3________4________4________3Actions takes nothing returns nothing
+    call IssuePointOrderById( GetTriggerUnit(), 852591, 0, 0 )
+endfunction
+//===========================================================================
+function InitTrig_3________4________4________3 takes nothing returns nothing
+    set gg_trg_3________4________4________3 = CreateTrigger()
+    call TriggerAddAction(gg_trg_3________4________4________3, function Trig_3________4________4________3Actions)
 endfunction
 //===========================================================================
 // Trigger: InitFloatText
@@ -18672,7 +18912,7 @@ endfunction
 //     call CreateUnit( Player(11), 'u000', 950, 1350, bj_UNIT_FACING )
 //     call CreateUnit( Player(11), 'u000', 950, 1340, bj_UNIT_FACING )
 //===========================================================================
-//TESH.scrollpos=31
+//TESH.scrollpos=12
 //TESH.alwaysfold=0
 function Trig_inittestActions takes nothing returns nothing
     local unit u
@@ -18702,7 +18942,7 @@ function Trig_inittestActions takes nothing returns nothing
     loop
         exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
         call CreateUnit( Player(11), 'u000', GetRandomReal(-3000.00, 5000.00), GetRandomReal(-6000.00, 2500.00), bj_UNIT_FACING )
-        call CreateUnit( Player(11), 'z000', GetRandomReal(-3000.00, 5000.00), GetRandomReal(-6000.00, 2500.00), bj_UNIT_FACING )
+        //call CreateUnit( Player(11), 'z000', GetRandomReal(-3000.00, 5000.00), GetRandomReal(-6000.00, 2500.00), bj_UNIT_FACING )
         set bj_forLoopAIndex = bj_forLoopAIndex + 1
     endloop
     //set boss1 = CreateUnit(Player(11), 'u002', 2300, -40,0)
@@ -18728,6 +18968,7 @@ function Trig_inittestActions takes nothing returns nothing
     //call StartItmTest()
     call InitStage1()
     call InitDisplayDamageSystem()
+    call InitReviveSystem()
 endfunction
 //===========================================================================
 function InitTrig_inittest takes nothing returns nothing
@@ -18735,12 +18976,33 @@ function InitTrig_inittest takes nothing returns nothing
     call TriggerAddAction(gg_trg_inittest, function Trig_inittestActions)
 endfunction
 //===========================================================================
+// Trigger: ReviveSpell
+//===========================================================================
+//TESH.scrollpos=0
+//TESH.alwaysfold=0
+struct ReviveSpell extends SpellStruct
+    implement SpellStruct
+    
+    private static method onInit takes nothing returns nothing
+        set thistype.abil='A02H'
+    endmethod
+    
+    method onFinish takes nothing returns nothing
+        call BeHealth(GetPlayerId(GetOwningPlayer(caster)))
+        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", GetUnitX(caster), GetUnitY(caster)))
+        call PauseUnit(caster, true)
+        call SetUnitAnimationByIndex(caster, 0)
+        call PauseUnit(caster, false)
+    endmethod
+endstruct
+//===========================================================================
 function InitCustomTriggers takes nothing returns nothing
     call InitTrig_Stage1( )
     call InitTrig_Stage1T( )
     call InitTrig_Resources( )
     call InitTrig_InitJobData( )
     call InitTrig_Strong( )
+    call InitTrig_DawnHammer( )
     call InitTrig_NetGun( )
     call InitTrig_ShootBost( )
     call InitTrig_PowerPunch( )
@@ -18772,6 +19034,7 @@ function InitCustomTriggers takes nothing returns nothing
     call InitTrig_TeckLock( )
     call InitTrig_Register( )
     call InitTrig_RegisterFly( )
+    call InitTrig_Revive( )
     call InitTrig_ManaChange( )
     call InitTrig_ManaGrow( )
     call InitTrig_TechUnit( )
@@ -18874,13 +19137,14 @@ function InitCustomTriggers takes nothing returns nothing
     call InitTrig_ItmTest( )
     call InitTrig_CreateItem( )
     call InitTrig_cantmove( )
-    call InitTrig_3________4_______u( )
-    call InitTrig_3________4________2( )
-    call InitTrig_3________4________3( )
     call InitTrig_3________4________4( )
+    call InitTrig_3________4________4_______u( )
+    call InitTrig_3________4________4________2( )
+    call InitTrig_3________4________4________3( )
     call InitTrig_InitFloatText( )
     call InitTrig_camera( )
     call InitTrig_inittest( )
+    call InitTrig_ReviveSpell( )
 endfunction
 //===========================================================================
 function RunInitializationTriggers takes nothing returns nothing
@@ -19048,11 +19312,13 @@ function config takes nothing returns nothing
     call InitCustomTeams( )
     call InitAllyPriorities( )
 endfunction
+//===========================================================================
+//系统-TimerSystem
+//===========================================================================
 //===========================================================================  
 //===========================================================================  
 //自定义事件 
 //===========================================================================
 //===========================================================================   
-//===========================================================================
-//系统-TimerSystem
-//===========================================================================
+
+
