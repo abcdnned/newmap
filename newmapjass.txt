@@ -169,8 +169,8 @@ constant boolean LIBRARY_DummyCaster=true
         constant player DUMMY_OWNER=Player(PLAYER_NEUTRAL_AGGRESSIVE)
         
         // Just because these belong here:
-        constant real DummyCaster__CREATED_AT_X=0.0
-        constant real DummyCaster__CREATED_AT_Y=0.0
+        constant real DummyCaster___CREATED_AT_X=0.0
+        constant real DummyCaster___CREATED_AT_Y=0.0
 //=====================================================================================
         unit DUMMY=null
 //endglobals from DummyCaster
@@ -349,11 +349,11 @@ constant boolean LIBRARY_Vector=true
 //endglobals from Vector
 //globals from YDTriggerSaveLoadSystem:
 constant boolean LIBRARY_YDTriggerSaveLoadSystem=true
+       hashtable YDHT
 //endglobals from YDTriggerSaveLoadSystem
 //globals from YDWEBase:
 constant boolean LIBRARY_YDWEBase=true
 //全局哈希表 
-	hashtable YDHT = null
 	string bj_AllString=".................................!.#$%&'()*+,-./0123456789:;<=>.@ABCDEFGHIJKLMNOPQRSTUVWXYZ[.]^_`abcdefghijklmnopqrstuvwxyz{|}~................................................................................................................................"
 //鍏ㄥ眬绯荤粺鍙橀噺
     unit bj_lastAbilityCastingUnit=null
@@ -394,10 +394,10 @@ constant boolean LIBRARY_YDWETriggerEvent=true
 //endglobals from YDWETriggerEvent
 //globals from YDWETriggerRegisterEnterRectSimpleNull:
 constant boolean LIBRARY_YDWETriggerRegisterEnterRectSimpleNull=true
+    region yd_NullTempRegion
 //endglobals from YDWETriggerRegisterEnterRectSimpleNull
 //globals from YDWETriggerRegisterLeaveRectSimpleNull:
 constant boolean LIBRARY_YDWETriggerRegisterLeaveRectSimpleNull=true
-    region yd_NullTempRegion
 //endglobals from YDWETriggerRegisterLeaveRectSimpleNull
 //globals from AutoIndex:
 constant boolean LIBRARY_AutoIndex=true
@@ -531,6 +531,7 @@ constant boolean LIBRARY_Move=true
     real rx
     real lz
     real rz
+    region playable_region
 //endglobals from Move
 //globals from PUI:
 constant boolean LIBRARY_PUI=true
@@ -557,81 +558,84 @@ constant boolean LIBRARY_SpellStruct=true
 //endglobals from SpellStruct
 //globals from Status:
 constant boolean LIBRARY_Status=true
-        constant real Status__PERIOD=0.1 // for regen effects.
-constant player Status__DUMMY_CASTER_OWNER=Player(PLAYER_NEUTRAL_PASSIVE)
-        constant boolean Status__PERMENANTLY_REVEAL=true // reveal all units always, or only during dummy spells
+        constant real Status___PERIOD=0.1 // for regen effects.
+constant player Status___DUMMY_CASTER_OWNER=Player(PLAYER_NEUTRAL_PASSIVE)
+        constant boolean Status___PERMENANTLY_REVEAL=true // reveal all units always, or only during dummy spells
 
         // To change these, change them also in the externalblock before executing it.
-        constant integer Status__ABIL_STUN='A500'
-        constant integer Status__ABIL_SILENCE='A501'
-        constant integer Status__ABIL_DISARM_BOTH='A502'
-        constant integer Status__ABIL_DISARM_MELEE='A503'
-        constant integer Status__ABIL_DISARM_RANGE='A504'
-        constant integer Status__ABIL_IMMOBOLISE='A505'
-        constant integer Status__ABIL_INVISIBLE='A507'
-        constant integer Status__ABIL_GHOST='A508'
-        constant integer Status__ABIL_DOOM='A509'
-        constant integer Status__ABIL_IMMUNITY='A50B'
-        constant integer Status__ABIL_HEX='A50C'
-        constant integer Status__ABIL_UNLOCUST='A50D'
-        constant integer Status__ABIL_NEVER_MISS='A50F'
-        constant integer Status__ABIL_ALWAYS_MISS='A50H'
-        constant integer Status__ABIL_UNTOUCHABLE='A50J'
-        constant integer Status__ABIL_BANISH='A50K'
-        constant integer Status__ABIL_PHASE='A50L'
+        constant integer Status___ABIL_STUN='A500'
+        constant integer Status___ABIL_SILENCE='A501'
+        constant integer Status___ABIL_DISARM_BOTH='A502'
+        constant integer Status___ABIL_DISARM_MELEE='A503'
+        constant integer Status___ABIL_DISARM_RANGE='A504'
+        constant integer Status___ABIL_IMMOBOLISE='A505'
+        constant integer Status___ABIL_INVISIBLE='A507'
+        constant integer Status___ABIL_GHOST='A508'
+        constant integer Status___ABIL_DOOM='A509'
+        constant integer Status___ABIL_IMMUNITY='A50B'
+        constant integer Status___ABIL_HEX='A50C'
+        constant integer Status___ABIL_UNLOCUST='A50D'
+        constant integer Status___ABIL_NEVER_MISS='A50F'
+        constant integer Status___ABIL_ALWAYS_MISS='A50H'
+        constant integer Status___ABIL_UNTOUCHABLE='A50J'
+        constant integer Status___ABIL_BANISH='A50K'
+        constant integer Status___ABIL_PHASE='A50L'
         //private constant integer ABIL_DOUBLE_ATTACK='A50O'
-        constant integer Status__ABIL_RESISTANT_SKIN='A50Q'
-        constant integer Status__ABIL_REFLECT_PIERCING='A50S'
-        constant integer Status__ABIL_DISABLE='A50T'
+        constant integer Status___ABIL_RESISTANT_SKIN='A50Q'
+        constant integer Status___ABIL_REFLECT_PIERCING='A50S'
+        constant integer Status___ABIL_DISABLE='A50T'
         
-        constant integer Status__ABIL_ARMOR='A5A@'
-        constant integer Status__ABIL_DAMAGE='A5B@'
-        constant integer Status__ABIL_STR='A5C@'
-        constant integer Status__ABIL_AGI='A5D@'
-        constant integer Status__ABIL_INT='A5E@'
-        constant integer Status__ABIL_ATTACK_SPEED='A5F@'
-        constant integer Status__ABIL_HEALTH='A5G@'
-        constant integer Status__ABIL_MANA='A5H@'
+        constant integer Status___ABIL_ARMOR='A5A@'
+        constant integer Status___ABIL_DAMAGE='A5B@'
+        constant integer Status___ABIL_STR='A5C@'
+        constant integer Status___ABIL_AGI='A5D@'
+        constant integer Status___ABIL_INT='A5E@'
+        constant integer Status___ABIL_ATTACK_SPEED='A5F@'
+        constant integer Status___ABIL_HEALTH='A5G@'
+        constant integer Status___ABIL_MANA='A5H@'
         
-        constant integer Status__LEVELS_ARMOR=10
-        constant integer Status__LEVELS_DAMAGE=15
-        constant integer Status__LEVELS_STR=10
-        constant integer Status__LEVELS_AGI=10
-        constant integer Status__LEVELS_INT=10
-        constant integer Status__LEVELS_ATTACK_SPEED=9
-        constant integer Status__LEVELS_HEALTH=20
-        constant integer Status__LEVELS_MANA=20
+        constant integer Status___LEVELS_ARMOR=10
+        constant integer Status___LEVELS_DAMAGE=15
+        constant integer Status___LEVELS_STR=10
+        constant integer Status___LEVELS_AGI=10
+        constant integer Status___LEVELS_INT=10
+        constant integer Status___LEVELS_ATTACK_SPEED=9
+        constant integer Status___LEVELS_HEALTH=20
+        constant integer Status___LEVELS_MANA=20
         
         // To change these, change them also in the externalblock before executing it.
-        constant integer Status__BUFF_STUN='B500'
-        constant integer Status__BUFF_SILENCE='B501'
-        constant integer Status__BUFF_DOOM='B509'
-        constant integer Status__BUFF_DISARM_MELEE='B503'
-        constant integer Status__BUFF_DISARM_RANGE='B504'
-        constant integer Status__BUFF_DISARM_BOTH='B502'
-        constant integer Status__BUFF_IMMOBOLISE_GROUND='B505'
-        constant integer Status__BUFF_IMMOBOLISE_AIR='B506'
-        constant integer Status__BUFF_HEX='B50C'
-        constant integer Status__BUFF_BANISH='B50K'
-        constant integer Status__BUFF_PHASE='B50L'
-        constant integer Status__BUFF_DISABLE='B50T'
+        constant integer Status___BUFF_STUN='B500'
+        constant integer Status___BUFF_SILENCE='B501'
+        constant integer Status___BUFF_DOOM='B509'
+        constant integer Status___BUFF_DISARM_MELEE='B503'
+        constant integer Status___BUFF_DISARM_RANGE='B504'
+        constant integer Status___BUFF_DISARM_BOTH='B502'
+        constant integer Status___BUFF_IMMOBOLISE_GROUND='B505'
+        constant integer Status___BUFF_IMMOBOLISE_AIR='B506'
+        constant integer Status___BUFF_HEX='B50C'
+        constant integer Status___BUFF_BANISH='B50K'
+        constant integer Status___BUFF_PHASE='B50L'
+        constant integer Status___BUFF_DISABLE='B50T'
         
-        constant integer Status__OID_STOP=851972 //stop
-constant integer Status__OID_STUN=852231 //firebolt
-constant integer Status__OID_SILENCE=852668 //soulburn
-constant integer Status__OID_DISARM=852585 //drunkenhaze
-constant integer Status__OID_IMMOBOLISE=852106 //ensnare
-constant integer Status__OID_DOOM=852583 //doom
-constant integer Status__OID_HEX=852502 //hex
-constant integer Status__OID_UNLOCUST=852155 //ravenform
-constant integer Status__OID_BANISH=852486 //banish
-constant integer Status__OID_PHASE=852129 //windwalk
-constant integer Status__OID_DISABLE=852252 //creepthunderbolt (hurlboulder)
+        constant integer Status___OID_STOP=851972 //stop
+constant integer Status___OID_STUN=852231 //firebolt
+constant integer Status___OID_SILENCE=852668 //soulburn
+constant integer Status___OID_DISARM=852585 //drunkenhaze
+constant integer Status___OID_IMMOBOLISE=852106 //ensnare
+constant integer Status___OID_DOOM=852583 //doom
+constant integer Status___OID_HEX=852502 //hex
+constant integer Status___OID_UNLOCUST=852155 //ravenform
+constant integer Status___OID_BANISH=852486 //banish
+constant integer Status___OID_PHASE=852129 //windwalk
+constant integer Status___OID_DISABLE=852252 //creepthunderbolt (hurlboulder)
 
-        unit Status__CASTER_DISARM_BOTH=null
-        unit Status__CASTER_DISARM_MELEE=null
-        unit Status__CASTER_DISARM_RANGE=null
+        unit Status___CASTER_DISARM_BOTH=null
+        unit Status___CASTER_DISARM_MELEE=null
+        unit Status___CASTER_DISARM_RANGE=null
 //endglobals from Status
+//globals from TransportBuffer:
+constant boolean LIBRARY_TransportBuffer=true
+//endglobals from TransportBuffer
 //globals from VectorLib:
 constant boolean LIBRARY_VectorLib=true
 //endglobals from VectorLib
@@ -743,8 +747,8 @@ constant boolean LIBRARY_Radiation=true
 //endglobals from Radiation
 //globals from Stage1:
 constant boolean LIBRARY_Stage1=true
-    integer s1w1c = 1
-    integer s1w2c = 0
+    integer s1w1c = 50
+    integer s1w2c = 100
     integer s1w3c = 3
     boolean test = true
 //endglobals from Stage1
@@ -799,6 +803,52 @@ constant boolean LIBRARY_Velocity=true
     rect gg_rct_stage1_tlcannon = null
     rect gg_rct_mancome = null
     rect gg_rct_stage1_hero = null
+    rect gg_rct_stag1_speed1 = null
+    rect gg_rct_stag1_speed2 = null
+    rect gg_rct_stag1_speed3 = null
+    rect gg_rct_stage1_wall1 = null
+    rect gg_rct_stage2_start = null
+    rect gg_rct_stage1_exit = null
+    rect gg_rct_stage2_1 = null
+    rect gg_rct_stage2_2 = null
+    rect gg_rct_stage2_3 = null
+    rect gg_rct_stage2_jump1 = null
+    rect gg_rct_stage2_fire1 = null
+    rect gg_rct_stage2_fire2 = null
+    rect gg_rct_stage2_fire3 = null
+    rect gg_rct_stage2_refresh1 = null
+    rect gg_rct_stage2_refresh2 = null
+    rect gg_rct_stage2_refresh3 = null
+    rect gg_rct_stage2_refresh4 = null
+    rect gg_rct_stage2_refresh5 = null
+    rect gg_rct_stage2_refresh6 = null
+    rect gg_rct_stage2_refresh7 = null
+    rect gg_rct_stage2_refresh8 = null
+    rect gg_rct_stage2_refresh9 = null
+    rect gg_rct_stage2_4 = null
+    rect gg_rct_stage2_5 = null
+    rect gg_rct_stage2_6 = null
+    rect gg_rct_stage2_speed1 = null
+    rect gg_rct_stage2_speed2 = null
+    rect gg_rct_stage2_speed3 = null
+    rect gg_rct_stage2_speed4 = null
+    rect gg_rct_stage2_7 = null
+    rect gg_rct_stage2_8 = null
+    rect gg_rct_stage2_gate = null
+    rect gg_rct_stage2_9 = null
+    rect gg_rct_stage3_jump_up = null
+    rect gg_rct_stage3_jump_down = null
+    rect gg_rct_stage3_jump_right = null
+    rect gg_rct_stage3_jump_left = null
+    rect gg_rct_stage3_start = null
+    rect gg_rct_stage3 = null
+    rect gg_rct_stage3_pow_ul = null
+    rect gg_rct_stage3_pow_ur = null
+    rect gg_rct_stage3_pow_dr = null
+    rect gg_rct_stage3_pow_dl = null
+    rect gg_rct_stage3_center = null
+    rect gg_rct_stage3_way = null
+    rect gg_rct_stage3_end = null
     camerasetup gg_cam_lv1 = null
     sound gg_snd_clipin1 = null
     sound gg_snd_WindWalk = null
@@ -810,6 +860,9 @@ constant boolean LIBRARY_Velocity=true
     sound gg_snd_reload = null
     sound gg_snd_equip2 = null
     sound gg_snd_equip1 = null
+    sound gg_snd_transport = null
+    sound gg_snd_opengate = null
+    trigger gg_trg_Stage2Gate = null
     trigger gg_trg_Stage1 = null
     trigger gg_trg_Stage1T = null
     trigger gg_trg_PickHero = null
@@ -819,6 +872,7 @@ constant boolean LIBRARY_Velocity=true
     trigger gg_trg_InitJobData = null
     trigger gg_trg_Save = null
     trigger gg_trg_Strong = null
+    trigger gg_trg_TransportEnergy = null
     trigger gg_trg_HolyLight = null
     trigger gg_trg_ReviveSpell = null
     trigger gg_trg_DawnHammer = null
@@ -853,6 +907,8 @@ constant boolean LIBRARY_Velocity=true
     trigger gg_trg_TeckLock = null
     trigger gg_trg_Register = null
     trigger gg_trg_RegisterFly = null
+    trigger gg_trg_FireRegion = null
+    trigger gg_trg_SpeedUp = null
     trigger gg_trg_SummonUtil = null
     trigger gg_trg_Revive = null
     trigger gg_trg_ManaChange = null
@@ -881,6 +937,8 @@ constant boolean LIBRARY_Velocity=true
     trigger gg_trg_ChangeAbility = null
     trigger gg_trg_DialogSystem = null
     trigger gg_trg_Buffer = null
+    trigger gg_trg_TransportBuffer = null
+    trigger gg_trg_SpeedStateBuffer = null
     trigger gg_trg_NetBuffer = null
     trigger gg_trg_ShootBostBuffer = null
     trigger gg_trg_SpeedColBuffer = null
@@ -963,11 +1021,8 @@ constant boolean LIBRARY_Velocity=true
     trigger gg_trg_ItmTest = null
     trigger gg_trg_CreateItem = null
     trigger gg_trg_cantmove = null
-    trigger gg_trg_3________4________4 = null
-    trigger gg_trg_3________4________4_______u = null
-    trigger gg_trg_3________4________4________2 = null
-    trigger gg_trg_3________4________4________3 = null
     trigger gg_trg_InitFloatText = null
+    trigger gg_trg_3 = null
     trigger gg_trg_Demo_Usage = null
     trigger gg_trg_eventtest = null
     trigger gg_trg_AIListRunner = null
@@ -982,6 +1037,21 @@ constant boolean LIBRARY_Velocity=true
     trigger gg_trg_inittest = null
     trigger gg_trg____________________001_______u = null
     trigger gg_trg_Zero_Damage_All = null
+    unit gg_unit_h00G_0050 = null
+    destructable gg_dest_DTg5_0047 = null
+    rect gg_rct_stage3_speeddown = null
+    rect gg_rct_stage3_speedright = null
+    rect gg_rct_stage3_speedup = null
+    rect gg_rct_stage3_speedleft = null
+    rect gg_rct_stage3_sr2 = null
+    rect gg_rct_stage3_sr1 = null
+    rect gg_rct_stage3_sr3 = null
+    rect gg_rct_stage3_sr4 = null
+    rect gg_rct_stage3_hide5 = null
+    rect gg_rct_stage3_hide4 = null
+    rect gg_rct_stage3_hide1 = null
+    rect gg_rct_stage3_hide2 = null
+    rect gg_rct_stage3_hide3 = null
 constant integer kdamage=0
 constant integer ksteps=4
 constant integer ktex=13
@@ -995,6 +1065,7 @@ constant integer ktex=13
     real g_gy2
     ResourceManager gResourceManager
     trigger gResourcePickTrigger
+    region fire_region
     group revgro
     trigger revtrg
     region g_cur_region
@@ -1082,6 +1153,7 @@ constant integer ktex=13
     integer array herosType
     unit array techs
     integer array mode_tip
+    boolean array refresh_tip
     integer SHOOT_GUN=5
     integer SNAKE_GUN=1
     integer MACHINE_GUN=2
@@ -2368,7 +2440,7 @@ set AIDS__ARStackIndex[AIDS__ARStackLevel]=AIDS__RecycledIndex[AIDS__MaxRecycled
 
 //library AIDS ends
 //library AIDriver:
-function AIDriver__GetStrategy takes unit u returns IAIStrategy
+function AIDriver___GetStrategy takes unit u returns IAIStrategy
 return AIData[u].strategy
 endfunction
 function TargetInRange takes unit u, unit tu ,real r returns nothing
@@ -2853,13 +2925,13 @@ endfunction
     // in the object merger line at the end of "How to implement?" in the above
     // documentation.
     
-    struct DummyCaster__Initializer extends array // "extends array" removes
+    struct DummyCaster___Initializer extends array // "extends array" removes
 // create/destoy methods.
 // The initialisation is done this way because struct initialisers are
 // called before library initialisers, making this important for adding
 // abilities on map initialisation.
 private static method onInit takes nothing returns nothing
-            set DUMMY=CreateUnit(DUMMY_OWNER,DUMMY_TYPE,DummyCaster__CREATED_AT_X,DummyCaster__CREATED_AT_Y,0)
+            set DUMMY=CreateUnit(DUMMY_OWNER,DUMMY_TYPE,DummyCaster___CREATED_AT_X,DummyCaster___CREATED_AT_Y,0)
         endmethod
     endstruct
 
@@ -3196,6 +3268,7 @@ struct IHeroData
     integer array equips[20]
     effect reloade
     effect ee
+    effect fe
     real mx
     real my
     real mdir
@@ -3216,6 +3289,9 @@ struct IHeroData
     real sty
     real stz
     real energy_consum
+    boolean speedup
+    boolean jump_refresh
+    boolean transport
 endstruct
 
 //library HeroData ends
@@ -3504,14 +3580,14 @@ struct SmartDartsFactory extends IMissleFactory
         return m
     endmethod
 endstruct
-//textmacro instance: MissleFactory("DefaultMissleFactory","TroughMissle")
+//textmacro instance: MissleFactory("DefaultMissleFactory","Missle")
 struct DefaultMissleFactory extends IMissleFactory
     method createMissle takes unit owner returns IMissle
-        local IMissle m=TroughMissle.create(owner)
+        local IMissle m=Missle.create(owner)
         return m
     endmethod
 endstruct
-//end of: MissleFactory("DefaultMissleFactory","TroughMissle")
+//end of: MissleFactory("DefaultMissleFactory","Missle")
 //textmacro instance: MissleFactory("ShootGunMissleFactory","ShootGunMissle")
 struct ShootGunMissleFactory extends IMissleFactory
     method createMissle takes unit owner returns IMissle
@@ -3770,6 +3846,7 @@ function CreateHero takes integer pid, real x, real y returns unit
     call SetUnitAbilityLevel(hero, SHOOT_SPEED, 21)
     set heros[pid] = hero
     set mode_tip[pid] = 3
+    set refresh_tip[pid] = false
     //set techs[pid] = tech
     //set tech = null
     return hero
@@ -6043,6 +6120,7 @@ return false
 //library Vector ends
 //library YDTriggerSaveLoadSystem:
 	function YDTriggerSaveLoadSystem__Init takes nothing returns nothing
+		set YDHT = InitHashtable() 
 	endfunction
 
 //library YDTriggerSaveLoadSystem ends
@@ -6738,7 +6816,6 @@ function YDWEVersion_Init takes nothing returns nothing
     set t = null
 endfunction
 function InitializeYD takes nothing returns nothing
-     set YDHT=InitHashtable() 
 	//=================璁剧疆鍙橀噺=====================
 	set yd_MapMinX = GetCameraBoundMinX() - GetCameraMargin(CAMERA_MARGIN_LEFT)
 	set yd_MapMinY = GetCameraBoundMinY() - GetCameraMargin(CAMERA_MARGIN_BOTTOM)
@@ -8522,11 +8599,13 @@ real hardness
     real last_fire
     integer last_issue
     integer nocollision
+    integer nohitwall
     real colris
     real coldmg
     real colf
     real g
     integer deadcnt
+    real pushris
     
     static method AIDS_filter takes unit u returns boolean
         return true
@@ -8553,9 +8632,11 @@ real hardness
         set this.last_issue = 0
         set this.g = -2
         set this.nocollision = 0
+        set this.nohitwall = 0
         set this.colris = 0
         set this.coldmg = 0
         set this.colf = 0
+        set this.pushris = 0
         if ut == ONE_WALL or ut == ONE_WALL_BREAKABLE or ut == 'h008' then
             set this.clazz = MC_WALL
         elseif ut == 'ncop' or ut == 'ncp2' or ut == 'ncp3' then
@@ -8863,10 +8944,49 @@ elseif ut == 'n001' then
     set this.ground_action = GROUND_DESTROY
     
 //end of: RegisterMaterial("'n001'","MC_EFFECT","100","0.5","50","0.01","0","LV_ACTIVE","GROUND_DESTROY")
+//textmacro instance: RegisterMaterial("'h00G'","MC_EFFECT","100","0.5","50","0.01","0","LV_ACTIVE","GROUND_DESTROY")
+elseif ut == 'h00G' then
+    set this.clazz = MC_EFFECT
+    set this.hardness = 100
+    set this.bounce = 0.5
+    set this.volume = 50
+    set this.weight = 0.01
+    set this.airk = 0
+    set this.fakelv = LV_ACTIVE
+    set this.ground_action = GROUND_DESTROY
+    
+//end of: RegisterMaterial("'h00G'","MC_EFFECT","100","0.5","50","0.01","0","LV_ACTIVE","GROUND_DESTROY")
+//textmacro instance: RegisterMaterial("'h009'","MC_EFFECT","100","0.5","50","0.01","0","LV_ACTIVE","GROUND_DESTROY")
+elseif ut == 'h009' then
+    set this.clazz = MC_EFFECT
+    set this.hardness = 100
+    set this.bounce = 0.5
+    set this.volume = 50
+    set this.weight = 0.01
+    set this.airk = 0
+    set this.fakelv = LV_ACTIVE
+    set this.ground_action = GROUND_DESTROY
+    
+//end of: RegisterMaterial("'h009'","MC_EFFECT","100","0.5","50","0.01","0","LV_ACTIVE","GROUND_DESTROY")
+//textmacro instance: RegisterMaterial("'nwgt'","MC_EFFECT","100","0.5","50","0.01","0","LV_ACTIVE","GROUND_DESTROY")
+elseif ut == 'nwgt' then
+    set this.clazz = MC_EFFECT
+    set this.hardness = 100
+    set this.bounce = 0.5
+    set this.volume = 50
+    set this.weight = 0.01
+    set this.airk = 0
+    set this.fakelv = LV_ACTIVE
+    set this.ground_action = GROUND_DESTROY
+    
+//end of: RegisterMaterial("'nwgt'","MC_EFFECT","100","0.5","50","0.01","0","LV_ACTIVE","GROUND_DESTROY")
         endif
         if ut == 'u005' then
             set this.volume = 200
             set this.hardness = 20
+        endif
+        if ut == 'u006' then
+            set this.pushris = 0.5
         endif
         if this.clazz == MC_UNIT then
             set this.deadcnt = 120
@@ -8889,6 +9009,15 @@ local player p=GetOwningPlayer(GetKillingUnitBJ())
 local IMonsterTypeData data=DefaultTypeData.findTypeData(typeId)
 call AdjustPlayerStateBJ( data.getDeadGold(), p, PLAYER_STATE_RESOURCE_GOLD )
 call AdjustPlayerStateBJ( data.getDeadWood(), p, PLAYER_STATE_RESOURCE_LUMBER )
+if typeId == 'u007' or typeId == 'u009' then
+    call AdjustPlayerStateBJ( 1, p, PLAYER_STATE_RESOURCE_GOLD )
+elseif typeId == 'u006' then
+    call AdjustPlayerStateBJ( 2, p, PLAYER_STATE_RESOURCE_GOLD )
+elseif typeId == 'z002' then
+    call AdjustPlayerStateBJ( 1, p, PLAYER_STATE_RESOURCE_GOLD )
+elseif typeId == 'z001' then
+    call AdjustPlayerStateBJ( 5, p, PLAYER_STATE_RESOURCE_GOLD )
+endif
 endfunction
 function InitMonsterBonus takes nothing returns nothing
 call TriggerAddCondition(gtrgMonsterDead,function MonsterBonus)
@@ -8920,12 +9049,11 @@ function MoveUnit takes unit u, real tx, real ty, real tz returns nothing
     endif
     if tx >= rx or tx <= lx or ty >= ry or ty <= ly or tz > rz or z < 0 then
     else
-        call SetUnitX(u, tx)
-        call SetUnitY(u, ty)
-        call SetUnitFlyHeight(u, z, 0)
-        //if z == 0 then
-            //call BJDebugMsg("set fly height zero")
-        //endif
+        if IsPointInRegion(playable_region, tx, ty) then
+            call SetUnitX(u, tx)
+            call SetUnitY(u, ty)
+            call SetUnitFlyHeight(u, z, 0)
+        endif
     endif
 endfunction
 
@@ -9777,82 +9905,82 @@ return this
     
     native UnitAlive takes unit id returns boolean
     
-    module Status__PreloadModule
+    module Status___PreloadModule
         private static method onInit takes nothing returns nothing
-            local unit u=CreateUnit(Status__DUMMY_CASTER_OWNER,DUMMY_TYPE,0,0,0)
+            local unit u=CreateUnit(Status___DUMMY_CASTER_OWNER,DUMMY_TYPE,0,0,0)
             local integer abil
-            call UnitAddAbility(u,Status__ABIL_INVISIBLE)
-            call UnitAddAbility(u,Status__ABIL_GHOST)
-            call UnitAddAbility(u,Status__ABIL_IMMUNITY)
-            call UnitAddAbility(u,Status__ABIL_UNLOCUST)
-            call UnitAddAbility(u,Status__ABIL_NEVER_MISS)
-            call UnitAddAbility(u,Status__ABIL_ALWAYS_MISS)
-            call UnitAddAbility(u,Status__ABIL_UNTOUCHABLE)
-            call UnitAddAbility(u,Status__ABIL_PHASE)
+            call UnitAddAbility(u,Status___ABIL_INVISIBLE)
+            call UnitAddAbility(u,Status___ABIL_GHOST)
+            call UnitAddAbility(u,Status___ABIL_IMMUNITY)
+            call UnitAddAbility(u,Status___ABIL_UNLOCUST)
+            call UnitAddAbility(u,Status___ABIL_NEVER_MISS)
+            call UnitAddAbility(u,Status___ABIL_ALWAYS_MISS)
+            call UnitAddAbility(u,Status___ABIL_UNTOUCHABLE)
+            call UnitAddAbility(u,Status___ABIL_PHASE)
             call UnitAddAbility(u,ABIL_DOUBLE_ATTACK)
-            call UnitAddAbility(u,Status__ABIL_RESISTANT_SKIN)
-            call UnitAddAbility(u,Status__ABIL_REFLECT_PIERCING)
+            call UnitAddAbility(u,Status___ABIL_RESISTANT_SKIN)
+            call UnitAddAbility(u,Status___ABIL_REFLECT_PIERCING)
 //textmacro instance: Status__PreloadBonus("ARMOR")
-                set abil=Status__ABIL_ARMOR+Status__LEVELS_ARMOR
+                set abil=Status___ABIL_ARMOR+Status___LEVELS_ARMOR
                 loop
                     call UnitAddAbility(u,abil)
-                    exitwhen abil==Status__ABIL_ARMOR
+                    exitwhen abil==Status___ABIL_ARMOR
                     set abil=abil-1
                 endloop
 //end of: Status__PreloadBonus("ARMOR")
 //textmacro instance: Status__PreloadBonus("DAMAGE")
-                set abil=Status__ABIL_DAMAGE+Status__LEVELS_DAMAGE
+                set abil=Status___ABIL_DAMAGE+Status___LEVELS_DAMAGE
                 loop
                     call UnitAddAbility(u,abil)
-                    exitwhen abil==Status__ABIL_DAMAGE
+                    exitwhen abil==Status___ABIL_DAMAGE
                     set abil=abil-1
                 endloop
 //end of: Status__PreloadBonus("DAMAGE")
 //textmacro instance: Status__PreloadBonus("STR")
-                set abil=Status__ABIL_STR+Status__LEVELS_STR
+                set abil=Status___ABIL_STR+Status___LEVELS_STR
                 loop
                     call UnitAddAbility(u,abil)
-                    exitwhen abil==Status__ABIL_STR
+                    exitwhen abil==Status___ABIL_STR
                     set abil=abil-1
                 endloop
 //end of: Status__PreloadBonus("STR")
 //textmacro instance: Status__PreloadBonus("AGI")
-                set abil=Status__ABIL_AGI+Status__LEVELS_AGI
+                set abil=Status___ABIL_AGI+Status___LEVELS_AGI
                 loop
                     call UnitAddAbility(u,abil)
-                    exitwhen abil==Status__ABIL_AGI
+                    exitwhen abil==Status___ABIL_AGI
                     set abil=abil-1
                 endloop
 //end of: Status__PreloadBonus("AGI")
 //textmacro instance: Status__PreloadBonus("INT")
-                set abil=Status__ABIL_INT+Status__LEVELS_INT
+                set abil=Status___ABIL_INT+Status___LEVELS_INT
                 loop
                     call UnitAddAbility(u,abil)
-                    exitwhen abil==Status__ABIL_INT
+                    exitwhen abil==Status___ABIL_INT
                     set abil=abil-1
                 endloop
 //end of: Status__PreloadBonus("INT")
 //textmacro instance: Status__PreloadBonus("ATTACK_SPEED")
-                set abil=Status__ABIL_ATTACK_SPEED+Status__LEVELS_ATTACK_SPEED
+                set abil=Status___ABIL_ATTACK_SPEED+Status___LEVELS_ATTACK_SPEED
                 loop
                     call UnitAddAbility(u,abil)
-                    exitwhen abil==Status__ABIL_ATTACK_SPEED
+                    exitwhen abil==Status___ABIL_ATTACK_SPEED
                     set abil=abil-1
                 endloop
 //end of: Status__PreloadBonus("ATTACK_SPEED")
 //textmacro instance: Status__PreloadBonus("HEALTH")
-                set abil=Status__ABIL_HEALTH+Status__LEVELS_HEALTH
+                set abil=Status___ABIL_HEALTH+Status___LEVELS_HEALTH
                 loop
                     call UnitAddAbility(u,abil)
-                    exitwhen abil==Status__ABIL_HEALTH
+                    exitwhen abil==Status___ABIL_HEALTH
                     set abil=abil-1
                 endloop
 //end of: Status__PreloadBonus("HEALTH")
 //textmacro instance: Status__PreloadBonus("MANA")
-                set abil=Status__ABIL_MANA+Status__LEVELS_MANA
+                set abil=Status___ABIL_MANA+Status___LEVELS_MANA
                 loop
                     call UnitAddAbility(u,abil)
-                    exitwhen abil==Status__ABIL_MANA
+                    exitwhen abil==Status___ABIL_MANA
                     set abil=abil-1
                 endloop
 //end of: Status__PreloadBonus("MANA")
@@ -9862,47 +9990,47 @@ return this
         endmethod
     endmodule
     
-    module Status__StaticPeriodic
+    module Status___StaticPeriodic
         private static method onInit takes nothing returns nothing
-            call TimerStart(CreateTimer(),Status__PERIOD,true,function thistype.periodicLink)
+            call TimerStart(CreateTimer(),Status___PERIOD,true,function thistype.periodicLink)
         endmethod
     endmodule
     
-    module Status__StatusInit
+    module Status___StatusInit
         private static method onInit takes nothing returns nothing
             local integer i
-            set thistype.dummyCaster=CreateUnit(Status__DUMMY_CASTER_OWNER,DUMMY_TYPE,0,0,0)
-            set thistype.dummyCaster2=CreateUnit(Status__DUMMY_CASTER_OWNER,DUMMY_TYPE,0,0,0)
-            set thistype.dummyCaster3=CreateUnit(Status__DUMMY_CASTER_OWNER,DUMMY_TYPE,0,0,0)
-            call UnitAddAbility(thistype.dummyCaster,Status__ABIL_STUN)
-            call UnitAddAbility(thistype.dummyCaster,Status__ABIL_DISABLE)
-            call UnitAddAbility(thistype.dummyCaster,Status__ABIL_SILENCE)
-            set Status__CASTER_DISARM_BOTH=thistype.dummyCaster
-            set Status__CASTER_DISARM_MELEE=thistype.dummyCaster2
-            set Status__CASTER_DISARM_RANGE=thistype.dummyCaster3
-            call UnitAddAbility(Status__CASTER_DISARM_BOTH,Status__ABIL_DISARM_BOTH)
-            call UnitAddAbility(Status__CASTER_DISARM_MELEE,Status__ABIL_DISARM_MELEE)
-            call UnitAddAbility(Status__CASTER_DISARM_RANGE,Status__ABIL_DISARM_RANGE)
-            call UnitAddAbility(thistype.dummyCaster,Status__ABIL_IMMOBOLISE)
-            call UnitAddAbility(thistype.dummyCaster,Status__ABIL_DOOM)
-            call UnitAddAbility(thistype.dummyCaster,Status__ABIL_HEX)
-            call UnitAddAbility(thistype.dummyCaster,Status__ABIL_BANISH)
+            set thistype.dummyCaster=CreateUnit(Status___DUMMY_CASTER_OWNER,DUMMY_TYPE,0,0,0)
+            set thistype.dummyCaster2=CreateUnit(Status___DUMMY_CASTER_OWNER,DUMMY_TYPE,0,0,0)
+            set thistype.dummyCaster3=CreateUnit(Status___DUMMY_CASTER_OWNER,DUMMY_TYPE,0,0,0)
+            call UnitAddAbility(thistype.dummyCaster,Status___ABIL_STUN)
+            call UnitAddAbility(thistype.dummyCaster,Status___ABIL_DISABLE)
+            call UnitAddAbility(thistype.dummyCaster,Status___ABIL_SILENCE)
+            set Status___CASTER_DISARM_BOTH=thistype.dummyCaster
+            set Status___CASTER_DISARM_MELEE=thistype.dummyCaster2
+            set Status___CASTER_DISARM_RANGE=thistype.dummyCaster3
+            call UnitAddAbility(Status___CASTER_DISARM_BOTH,Status___ABIL_DISARM_BOTH)
+            call UnitAddAbility(Status___CASTER_DISARM_MELEE,Status___ABIL_DISARM_MELEE)
+            call UnitAddAbility(Status___CASTER_DISARM_RANGE,Status___ABIL_DISARM_RANGE)
+            call UnitAddAbility(thistype.dummyCaster,Status___ABIL_IMMOBOLISE)
+            call UnitAddAbility(thistype.dummyCaster,Status___ABIL_DOOM)
+            call UnitAddAbility(thistype.dummyCaster,Status___ABIL_HEX)
+            call UnitAddAbility(thistype.dummyCaster,Status___ABIL_BANISH)
             set i=bj_MAX_PLAYERS
             loop
                 set i=i-1
-                call SetPlayerAbilityAvailable(Player(i),Status__ABIL_IMMUNITY,false)
-                call SetPlayerAbilityAvailable(Player(i),Status__ABIL_NEVER_MISS,false)
-                call SetPlayerAbilityAvailable(Player(i),Status__ABIL_ALWAYS_MISS,false)
-                call SetPlayerAbilityAvailable(Player(i),Status__ABIL_UNTOUCHABLE,false)
+                call SetPlayerAbilityAvailable(Player(i),Status___ABIL_IMMUNITY,false)
+                call SetPlayerAbilityAvailable(Player(i),Status___ABIL_NEVER_MISS,false)
+                call SetPlayerAbilityAvailable(Player(i),Status___ABIL_ALWAYS_MISS,false)
+                call SetPlayerAbilityAvailable(Player(i),Status___ABIL_UNTOUCHABLE,false)
                 //call SetPlayerAbilityAvailable(Player(i),ABIL_DOUBLE_ATTACK,false)
-                call SetPlayerAbilityAvailable(Player(i),Status__ABIL_RESISTANT_SKIN,false)
-                call SetPlayerAbilityAvailable(Player(i),Status__ABIL_REFLECT_PIERCING,false)
+                call SetPlayerAbilityAvailable(Player(i),Status___ABIL_RESISTANT_SKIN,false)
+                call SetPlayerAbilityAvailable(Player(i),Status___ABIL_REFLECT_PIERCING,false)
                 exitwhen i==0
             endloop
         endmethod
     endmodule
     
-    module Status__TwoPowArray
+    module Status___TwoPowArray
         readonly static integer array twoPow
         private static method onInit takes nothing returns nothing
             local integer i=0
@@ -9918,8 +10046,8 @@ exitwhen i==30
     
     struct Status extends array
         private method AIDS_onCreate takes nothing returns nothing
-            static if Status__PERMENANTLY_REVEAL then
-                call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+            static if Status___PERMENANTLY_REVEAL then
+                call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
             endif
             
             set this.disableLevel=0
@@ -10039,8 +10167,8 @@ exitwhen i==30
         private static unit dummyCaster2=null
         private static unit dummyCaster3=null
         
-        implement Status__StatusInit
-        implement Status__TwoPowArray
+        implement Status___StatusInit
+        implement Status___TwoPowArray
         
         ////////////////////
         // Status Effects //
@@ -10051,19 +10179,19 @@ exitwhen i==30
         method addStun takes nothing returns nothing
             set this.stunLevel=this.stunLevel+1
             if this.stunLevel>0 then
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                 endif
-                call IssueTargetOrderById(thistype.dummyCaster,Status__OID_STUN,this.unit)
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                call IssueTargetOrderById(thistype.dummyCaster,Status___OID_STUN,this.unit)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                 endif
             endif
         endmethod
         method removeStun takes nothing returns nothing
             set this.stunLevel=this.stunLevel-1
             if this.stunLevel==0 then
-                call UnitRemoveAbility(this.unit,Status__BUFF_STUN)
+                call UnitRemoveAbility(this.unit,Status___BUFF_STUN)
             endif
         endmethod
         method isStunned takes nothing returns boolean
@@ -10075,19 +10203,19 @@ exitwhen i==30
         method addDisable takes nothing returns nothing
             set this.disableLevel=this.disableLevel+1
             if this.disableLevel>0 then
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                 endif
-                call IssueTargetOrderById(thistype.dummyCaster,Status__OID_DISABLE,this.unit)
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                call IssueTargetOrderById(thistype.dummyCaster,Status___OID_DISABLE,this.unit)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                 endif
             endif
         endmethod
         method removeDisable takes nothing returns nothing
             set this.disableLevel=this.disableLevel-1
             if this.disableLevel==0 then
-                call UnitRemoveAbility(this.unit,Status__BUFF_DISABLE)
+                call UnitRemoveAbility(this.unit,Status___BUFF_DISABLE)
             endif
         endmethod
         method isDisabled takes nothing returns boolean
@@ -10099,19 +10227,19 @@ exitwhen i==30
         method addSilence takes nothing returns nothing
             set this.silenceLevel=this.silenceLevel+1
             if this.silenceLevel>0 then
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                 endif
-                call IssueTargetOrderById(thistype.dummyCaster,Status__OID_SILENCE,this.unit)
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                call IssueTargetOrderById(thistype.dummyCaster,Status___OID_SILENCE,this.unit)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                 endif
             endif
         endmethod
         method removeSilence takes nothing returns nothing
             set this.silenceLevel=this.silenceLevel-1
             if this.silenceLevel==0 then
-                call UnitRemoveAbility(this.unit,Status__BUFF_SILENCE)
+                call UnitRemoveAbility(this.unit,Status___BUFF_SILENCE)
             endif
         endmethod
         method isSilenced takes nothing returns boolean
@@ -10122,19 +10250,19 @@ exitwhen i==30
         method addDoom takes nothing returns nothing
             set this.doomLevel=this.doomLevel+1
             if this.doomLevel>0 then
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                 endif
-                call IssueTargetOrderById(thistype.dummyCaster,Status__OID_DOOM,this.unit)
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                call IssueTargetOrderById(thistype.dummyCaster,Status___OID_DOOM,this.unit)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                 endif
             endif
         endmethod
         method removeDoom takes nothing returns nothing
             set this.doomLevel=this.doomLevel-1
             if this.doomLevel==0 then
-                call UnitRemoveAbility(this.unit,Status__BUFF_DOOM)
+                call UnitRemoveAbility(this.unit,Status___BUFF_DOOM)
             endif
         endmethod
         method isDoomed takes nothing returns boolean
@@ -10147,34 +10275,34 @@ exitwhen i==30
         method addDisarmMelee takes nothing returns nothing
             set this.disarmMeleeLevel=this.disarmMeleeLevel+1
             if this.disarmMeleeLevel>0 then
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                 endif
                 if this.disarmRangeLevel>0 then
-                    call UnitRemoveAbility(this.unit,Status__BUFF_DISARM_RANGE)
-                    call IssueTargetOrderById(Status__CASTER_DISARM_BOTH,Status__OID_DISARM,this.unit)
+                    call UnitRemoveAbility(this.unit,Status___BUFF_DISARM_RANGE)
+                    call IssueTargetOrderById(Status___CASTER_DISARM_BOTH,Status___OID_DISARM,this.unit)
                 else
-                    call IssueTargetOrderById(Status__CASTER_DISARM_MELEE,Status__OID_DISARM,this.unit)
+                    call IssueTargetOrderById(Status___CASTER_DISARM_MELEE,Status___OID_DISARM,this.unit)
                 endif
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                 endif
             endif
         endmethod
         method addDisarmRange takes nothing returns nothing
             set this.disarmRangeLevel=this.disarmRangeLevel+1
             if this.disarmRangeLevel>0 then
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                 endif
                 if this.disarmMeleeLevel>0 then
-                    call UnitRemoveAbility(this.unit,Status__BUFF_DISARM_MELEE)
-                    call IssueTargetOrderById(Status__CASTER_DISARM_BOTH,Status__OID_DISARM,this.unit)
+                    call UnitRemoveAbility(this.unit,Status___BUFF_DISARM_MELEE)
+                    call IssueTargetOrderById(Status___CASTER_DISARM_BOTH,Status___OID_DISARM,this.unit)
                 else
-                    call IssueTargetOrderById(Status__CASTER_DISARM_RANGE,Status__OID_DISARM,this.unit)
+                    call IssueTargetOrderById(Status___CASTER_DISARM_RANGE,Status___OID_DISARM,this.unit)
                 endif
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                 endif
             endif
         endmethod
@@ -10182,27 +10310,27 @@ exitwhen i==30
             set this.disarmMeleeLevel=this.disarmMeleeLevel+1
             set this.disarmRangeLevel=this.disarmRangeLevel+1
             if this.disarmMeleeLevel>0 then
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                 endif
                 if this.disarmRangeLevel>0 then
-                    call UnitRemoveAbility(this.unit,Status__BUFF_DISARM_RANGE)
-                    call UnitRemoveAbility(this.unit,Status__BUFF_DISARM_MELEE)
-                    call IssueTargetOrderById(Status__CASTER_DISARM_BOTH,Status__OID_DISARM,this.unit)
+                    call UnitRemoveAbility(this.unit,Status___BUFF_DISARM_RANGE)
+                    call UnitRemoveAbility(this.unit,Status___BUFF_DISARM_MELEE)
+                    call IssueTargetOrderById(Status___CASTER_DISARM_BOTH,Status___OID_DISARM,this.unit)
                 else
-                    call IssueTargetOrderById(Status__CASTER_DISARM_MELEE,Status__OID_DISARM,this.unit)
+                    call IssueTargetOrderById(Status___CASTER_DISARM_MELEE,Status___OID_DISARM,this.unit)
                 endif
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                 endif
             else
                 if this.disarmRangeLevel>0 then
-                    static if not Status__PERMENANTLY_REVEAL then
-                        call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                    static if not Status___PERMENANTLY_REVEAL then
+                        call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                     endif
-                    call IssueTargetOrderById(Status__CASTER_DISARM_RANGE,Status__OID_DISARM,this.unit)
-                    static if not Status__PERMENANTLY_REVEAL then
-                        call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                    call IssueTargetOrderById(Status___CASTER_DISARM_RANGE,Status___OID_DISARM,this.unit)
+                    static if not Status___PERMENANTLY_REVEAL then
+                        call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                     endif
                 endif
             endif
@@ -10211,16 +10339,16 @@ exitwhen i==30
             set this.disarmMeleeLevel=this.disarmMeleeLevel-1
             if this.disarmMeleeLevel==0 then
                 if this.disarmRangeLevel>0 then
-                    call UnitRemoveAbility(this.unit,Status__BUFF_DISARM_BOTH)
-                    static if not Status__PERMENANTLY_REVEAL then
-                        call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                    call UnitRemoveAbility(this.unit,Status___BUFF_DISARM_BOTH)
+                    static if not Status___PERMENANTLY_REVEAL then
+                        call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                     endif
-                    call IssueTargetOrderById(Status__CASTER_DISARM_RANGE,Status__OID_DISARM,this.unit)
-                    static if not Status__PERMENANTLY_REVEAL then
-                        call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                    call IssueTargetOrderById(Status___CASTER_DISARM_RANGE,Status___OID_DISARM,this.unit)
+                    static if not Status___PERMENANTLY_REVEAL then
+                        call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                     endif
                 else
-                    call UnitRemoveAbility(this.unit,Status__BUFF_DISARM_MELEE)
+                    call UnitRemoveAbility(this.unit,Status___BUFF_DISARM_MELEE)
                 endif
             endif
         endmethod
@@ -10228,16 +10356,16 @@ exitwhen i==30
             set this.disarmRangeLevel=this.disarmRangeLevel-1
             if this.disarmRangeLevel==0 then
                 if this.disarmMeleeLevel>0 then
-                    call UnitRemoveAbility(this.unit,Status__BUFF_DISARM_BOTH)
-                    static if not Status__PERMENANTLY_REVEAL then
-                        call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                    call UnitRemoveAbility(this.unit,Status___BUFF_DISARM_BOTH)
+                    static if not Status___PERMENANTLY_REVEAL then
+                        call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                     endif
-                    call IssueTargetOrderById(Status__CASTER_DISARM_MELEE,Status__OID_DISARM,this.unit)
-                    static if not Status__PERMENANTLY_REVEAL then
-                        call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                    call IssueTargetOrderById(Status___CASTER_DISARM_MELEE,Status___OID_DISARM,this.unit)
+                    static if not Status___PERMENANTLY_REVEAL then
+                        call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                     endif
                 else
-                    call UnitRemoveAbility(this.unit,Status__BUFF_DISARM_RANGE)
+                    call UnitRemoveAbility(this.unit,Status___BUFF_DISARM_RANGE)
                 endif
             endif
         endmethod
@@ -10245,27 +10373,27 @@ exitwhen i==30
             set this.disarmMeleeLevel=this.disarmMeleeLevel-1
             set this.disarmRangeLevel=this.disarmRangeLevel-1
             if this.disarmMeleeLevel==0 then
-                call UnitRemoveAbility(this.unit,Status__BUFF_DISARM_BOTH)
-                call UnitRemoveAbility(this.unit,Status__BUFF_DISARM_MELEE)
+                call UnitRemoveAbility(this.unit,Status___BUFF_DISARM_BOTH)
+                call UnitRemoveAbility(this.unit,Status___BUFF_DISARM_MELEE)
                 if this.disarmRangeLevel>0 then
-                    static if not Status__PERMENANTLY_REVEAL then
-                        call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                    static if not Status___PERMENANTLY_REVEAL then
+                        call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                     endif
-                    call IssueTargetOrderById(Status__CASTER_DISARM_RANGE,Status__OID_DISARM,this.unit)
-                    static if not Status__PERMENANTLY_REVEAL then
-                        call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                    call IssueTargetOrderById(Status___CASTER_DISARM_RANGE,Status___OID_DISARM,this.unit)
+                    static if not Status___PERMENANTLY_REVEAL then
+                        call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                     endif
                 endif
             elseif this.disarmRangeLevel==0 then
-                call UnitRemoveAbility(this.unit,Status__BUFF_DISARM_BOTH)
-                call UnitRemoveAbility(this.unit,Status__BUFF_DISARM_RANGE)
+                call UnitRemoveAbility(this.unit,Status___BUFF_DISARM_BOTH)
+                call UnitRemoveAbility(this.unit,Status___BUFF_DISARM_RANGE)
                 if this.disarmMeleeLevel>0 then
-                    static if not Status__PERMENANTLY_REVEAL then
-                        call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                    static if not Status___PERMENANTLY_REVEAL then
+                        call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                     endif
-                    call IssueTargetOrderById(Status__CASTER_DISARM_MELEE,Status__OID_DISARM,this.unit)
-                    static if not Status__PERMENANTLY_REVEAL then
-                        call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                    call IssueTargetOrderById(Status___CASTER_DISARM_MELEE,Status___OID_DISARM,this.unit)
+                    static if not Status___PERMENANTLY_REVEAL then
+                        call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                     endif
                 endif
             endif
@@ -10285,20 +10413,20 @@ exitwhen i==30
         method addImmobolise takes nothing returns nothing
             set this.immoboliseLevel=this.immoboliseLevel+1
             if this.immoboliseLevel>0 then
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                 endif
-                call IssueTargetOrderById(thistype.dummyCaster,Status__OID_IMMOBOLISE,this.unit)
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                call IssueTargetOrderById(thistype.dummyCaster,Status___OID_IMMOBOLISE,this.unit)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                 endif
             endif
         endmethod
         method removeImmobolise takes nothing returns nothing
             set this.immoboliseLevel=this.immoboliseLevel-1
             if this.immoboliseLevel==0 then
-                call UnitRemoveAbility(this.unit,Status__BUFF_IMMOBOLISE_GROUND)
-                call UnitRemoveAbility(this.unit,Status__BUFF_IMMOBOLISE_AIR)
+                call UnitRemoveAbility(this.unit,Status___BUFF_IMMOBOLISE_GROUND)
+                call UnitRemoveAbility(this.unit,Status___BUFF_IMMOBOLISE_AIR)
             endif
         endmethod
         method isImmobolised takes nothing returns boolean
@@ -10310,15 +10438,15 @@ exitwhen i==30
         method addInvisible takes nothing returns nothing
             set this.invisibleLevel=this.invisibleLevel+1
             if this.invisibleLevel>0 then
-                call UnitAddAbility(this.unit,Status__ABIL_INVISIBLE)
-                call UnitMakeAbilityPermanent(this.unit,true,Status__ABIL_INVISIBLE)
+                call UnitAddAbility(this.unit,Status___ABIL_INVISIBLE)
+                call UnitMakeAbilityPermanent(this.unit,true,Status___ABIL_INVISIBLE)
             endif
         endmethod
         method removeInvisible takes nothing returns nothing
             set this.invisibleLevel=this.invisibleLevel-1
             if this.invisibleLevel==0 then
-                call UnitMakeAbilityPermanent(this.unit,false,Status__ABIL_INVISIBLE)
-                call UnitRemoveAbility(this.unit,Status__ABIL_INVISIBLE)
+                call UnitMakeAbilityPermanent(this.unit,false,Status___ABIL_INVISIBLE)
+                call UnitRemoveAbility(this.unit,Status___ABIL_INVISIBLE)
             endif
         endmethod
         method isInvisible takes nothing returns boolean
@@ -10330,15 +10458,15 @@ exitwhen i==30
         method addGhost takes nothing returns nothing
             set this.ghostLevel=this.ghostLevel+1
             if this.ghostLevel>0 then
-                call UnitAddAbility(this.unit,Status__ABIL_GHOST)
-                call UnitMakeAbilityPermanent(this.unit,true,Status__ABIL_GHOST)
+                call UnitAddAbility(this.unit,Status___ABIL_GHOST)
+                call UnitMakeAbilityPermanent(this.unit,true,Status___ABIL_GHOST)
             endif
         endmethod
         method removeGhost takes nothing returns nothing
             set this.ghostLevel=this.ghostLevel-1
             if this.ghostLevel==0 then
-                call UnitMakeAbilityPermanent(this.unit,false,Status__ABIL_GHOST)
-                call UnitRemoveAbility(this.unit,Status__ABIL_GHOST)
+                call UnitMakeAbilityPermanent(this.unit,false,Status___ABIL_GHOST)
+                call UnitRemoveAbility(this.unit,Status___ABIL_GHOST)
             endif
         endmethod
         method isGhost takes nothing returns boolean
@@ -10368,15 +10496,15 @@ exitwhen i==30
         method addImmunity takes nothing returns nothing
             set this.immunityLevel=this.immunityLevel+1
             if this.immunityLevel>0 then
-                call UnitAddAbility(this.unit,Status__ABIL_IMMUNITY)
-                call UnitMakeAbilityPermanent(this.unit,true,Status__ABIL_IMMUNITY)
+                call UnitAddAbility(this.unit,Status___ABIL_IMMUNITY)
+                call UnitMakeAbilityPermanent(this.unit,true,Status___ABIL_IMMUNITY)
             endif
         endmethod
         method removeImmunity takes nothing returns nothing
             set this.immunityLevel=this.immunityLevel-1
             if this.immunityLevel==0 then
-                call UnitMakeAbilityPermanent(this.unit,false,Status__ABIL_IMMUNITY)
-                call UnitRemoveAbility(this.unit,Status__ABIL_IMMUNITY)
+                call UnitMakeAbilityPermanent(this.unit,false,Status___ABIL_IMMUNITY)
+                call UnitRemoveAbility(this.unit,Status___ABIL_IMMUNITY)
             endif
         endmethod
         method isImmune takes nothing returns boolean
@@ -10442,19 +10570,19 @@ exitwhen i==30
         method addHex takes nothing returns nothing
             set this.hexLevel=this.hexLevel+1
             if this.hexLevel>0 then
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                 endif
-                call IssueTargetOrderById(thistype.dummyCaster,Status__OID_HEX,this.unit)
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                call IssueTargetOrderById(thistype.dummyCaster,Status___OID_HEX,this.unit)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                 endif
             endif
         endmethod
         method removeHex takes nothing returns nothing
             set this.hexLevel=this.hexLevel-1
             if this.hexLevel==0 then
-                call UnitRemoveAbility(this.unit,Status__BUFF_HEX)
+                call UnitRemoveAbility(this.unit,Status___BUFF_HEX)
             endif
         endmethod
         method isHexed takes nothing returns boolean
@@ -10477,11 +10605,11 @@ exitwhen i==30
                 call UnitMakeAbilityPermanent(this.unit,false,'Aloc')
                 call UnitRemoveAbility(this.unit,'Aloc')
                 call ShowUnit(this.unit,true)
-                call UnitAddAbility(this.unit,Status__ABIL_UNLOCUST)
-                call UnitMakeAbilityPermanent(this.unit,true,Status__ABIL_UNLOCUST)
-                call IssueImmediateOrderById(this.unit,Status__OID_UNLOCUST)
-                call UnitMakeAbilityPermanent(this.unit,false,Status__ABIL_UNLOCUST)
-                call UnitRemoveAbility(this.unit,Status__ABIL_UNLOCUST)
+                call UnitAddAbility(this.unit,Status___ABIL_UNLOCUST)
+                call UnitMakeAbilityPermanent(this.unit,true,Status___ABIL_UNLOCUST)
+                call IssueImmediateOrderById(this.unit,Status___OID_UNLOCUST)
+                call UnitMakeAbilityPermanent(this.unit,false,Status___ABIL_UNLOCUST)
+                call UnitRemoveAbility(this.unit,Status___ABIL_UNLOCUST)
             endif
         endmethod
         method isLocust takes nothing returns boolean
@@ -10493,15 +10621,15 @@ exitwhen i==30
         method addNeverMiss takes nothing returns nothing
             set this.neverMissLevel=this.neverMissLevel+1
             if this.neverMissLevel>0 then
-                call UnitAddAbility(this.unit,Status__ABIL_NEVER_MISS)
-                call UnitMakeAbilityPermanent(this.unit,true,Status__ABIL_NEVER_MISS)
+                call UnitAddAbility(this.unit,Status___ABIL_NEVER_MISS)
+                call UnitMakeAbilityPermanent(this.unit,true,Status___ABIL_NEVER_MISS)
             endif
         endmethod
         method removeNeverMiss takes nothing returns nothing
             set this.neverMissLevel=this.neverMissLevel-1
             if this.neverMissLevel==0 then
-                call UnitMakeAbilityPermanent(this.unit,false,Status__ABIL_NEVER_MISS)
-                call UnitRemoveAbility(this.unit,Status__ABIL_NEVER_MISS)
+                call UnitMakeAbilityPermanent(this.unit,false,Status___ABIL_NEVER_MISS)
+                call UnitRemoveAbility(this.unit,Status___ABIL_NEVER_MISS)
             endif
         endmethod
         method isNeverMiss takes nothing returns boolean
@@ -10513,15 +10641,15 @@ exitwhen i==30
         method addAlwaysMiss takes nothing returns nothing
             set this.alwaysMissLevel=this.alwaysMissLevel+1
             if this.alwaysMissLevel>0 then
-                call UnitAddAbility(this.unit,Status__ABIL_ALWAYS_MISS)
-                call UnitMakeAbilityPermanent(this.unit,true,Status__ABIL_ALWAYS_MISS)
+                call UnitAddAbility(this.unit,Status___ABIL_ALWAYS_MISS)
+                call UnitMakeAbilityPermanent(this.unit,true,Status___ABIL_ALWAYS_MISS)
             endif
         endmethod
         method alwaysNeverMiss takes nothing returns nothing
             set this.alwaysMissLevel=this.alwaysMissLevel-1
             if this.alwaysMissLevel==0 then
-                call UnitMakeAbilityPermanent(this.unit,false,Status__ABIL_ALWAYS_MISS)
-                call UnitRemoveAbility(this.unit,Status__ABIL_ALWAYS_MISS)
+                call UnitMakeAbilityPermanent(this.unit,false,Status___ABIL_ALWAYS_MISS)
+                call UnitRemoveAbility(this.unit,Status___ABIL_ALWAYS_MISS)
             endif
         endmethod
         method isAlwaysMiss takes nothing returns boolean
@@ -10533,15 +10661,15 @@ exitwhen i==30
         method addUntouchable takes nothing returns nothing
             set this.untouchableLevel=this.untouchableLevel+1
             if this.untouchableLevel>0 then
-                call UnitAddAbility(this.unit,Status__ABIL_UNTOUCHABLE)
-                call UnitMakeAbilityPermanent(this.unit,true,Status__ABIL_UNTOUCHABLE)
+                call UnitAddAbility(this.unit,Status___ABIL_UNTOUCHABLE)
+                call UnitMakeAbilityPermanent(this.unit,true,Status___ABIL_UNTOUCHABLE)
             endif
         endmethod
         method removeUntouchable takes nothing returns nothing
             set this.untouchableLevel=this.untouchableLevel-1
             if this.untouchableLevel==0 then
-                call UnitMakeAbilityPermanent(this.unit,false,Status__ABIL_UNTOUCHABLE)
-                call UnitRemoveAbility(this.unit,Status__ABIL_UNTOUCHABLE)
+                call UnitMakeAbilityPermanent(this.unit,false,Status___ABIL_UNTOUCHABLE)
+                call UnitRemoveAbility(this.unit,Status___ABIL_UNTOUCHABLE)
             endif
         endmethod
         method isUntouchable takes nothing returns boolean
@@ -10553,19 +10681,19 @@ exitwhen i==30
         method addBanish takes nothing returns nothing
             set this.banishLevel=this.banishLevel+1
             if this.banishLevel>0 then
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,true)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,true)
                 endif
-                call IssueTargetOrderById(thistype.dummyCaster,Status__OID_BANISH,this.unit)
-                static if not Status__PERMENANTLY_REVEAL then
-                    call UnitShareVision(this.unit,Status__DUMMY_CASTER_OWNER,false)
+                call IssueTargetOrderById(thistype.dummyCaster,Status___OID_BANISH,this.unit)
+                static if not Status___PERMENANTLY_REVEAL then
+                    call UnitShareVision(this.unit,Status___DUMMY_CASTER_OWNER,false)
                 endif
             endif
         endmethod
         method removeBanish takes nothing returns nothing
             set this.banishLevel=this.banishLevel-1
             if this.banishLevel==0 then
-                call UnitRemoveAbility(this.unit,Status__BUFF_BANISH)
+                call UnitRemoveAbility(this.unit,Status___BUFF_BANISH)
             endif
         endmethod
         method isBanished takes nothing returns boolean
@@ -10577,18 +10705,18 @@ exitwhen i==30
         method addPhase takes nothing returns nothing
             set this.phaseLevel=this.phaseLevel+1
             if this.phaseLevel>0 then
-                call SetPlayerAbilityAvailable(GetOwningPlayer(this.unit),Status__ABIL_PHASE,true)
-                if UnitAddAbility(this.unit,Status__ABIL_PHASE) then
-                    call UnitMakeAbilityPermanent(this.unit,true,Status__ABIL_PHASE)
+                call SetPlayerAbilityAvailable(GetOwningPlayer(this.unit),Status___ABIL_PHASE,true)
+                if UnitAddAbility(this.unit,Status___ABIL_PHASE) then
+                    call UnitMakeAbilityPermanent(this.unit,true,Status___ABIL_PHASE)
                 endif
-                call IssueImmediateOrderById(this.unit,Status__OID_PHASE)
-                call SetPlayerAbilityAvailable(GetOwningPlayer(this.unit),Status__ABIL_PHASE,false)
+                call IssueImmediateOrderById(this.unit,Status___OID_PHASE)
+                call SetPlayerAbilityAvailable(GetOwningPlayer(this.unit),Status___ABIL_PHASE,false)
             endif
         endmethod
         method removePhase takes nothing returns nothing
             set this.phaseLevel=this.phaseLevel-1
             if this.phaseLevel==0 then
-                call UnitRemoveAbility(this.unit,Status__BUFF_PHASE)
+                call UnitRemoveAbility(this.unit,Status___BUFF_PHASE)
             endif
         endmethod
         method isPhased takes nothing returns boolean
@@ -10600,15 +10728,15 @@ exitwhen i==30
         method addResistantSkin takes nothing returns nothing
             set this.resistantSkinLevel=this.resistantSkinLevel+1
             if this.resistantSkinLevel>0 then
-                call UnitAddAbility(this.unit,Status__ABIL_RESISTANT_SKIN)
-                call UnitMakeAbilityPermanent(this.unit,true,Status__ABIL_RESISTANT_SKIN)
+                call UnitAddAbility(this.unit,Status___ABIL_RESISTANT_SKIN)
+                call UnitMakeAbilityPermanent(this.unit,true,Status___ABIL_RESISTANT_SKIN)
             endif
         endmethod
         method removeResistantSkin takes nothing returns nothing
             set this.resistantSkinLevel=this.resistantSkinLevel-1
             if this.resistantSkinLevel==0 then
-                call UnitMakeAbilityPermanent(this.unit,false,Status__ABIL_RESISTANT_SKIN)
-                call UnitRemoveAbility(this.unit,Status__ABIL_RESISTANT_SKIN)
+                call UnitMakeAbilityPermanent(this.unit,false,Status___ABIL_RESISTANT_SKIN)
+                call UnitRemoveAbility(this.unit,Status___ABIL_RESISTANT_SKIN)
             endif
         endmethod
         method isResistantSkin takes nothing returns boolean
@@ -10620,15 +10748,15 @@ exitwhen i==30
         method addReflectPiercing takes nothing returns nothing
             set this.reflectPiercingLevel=this.reflectPiercingLevel+1
             if this.reflectPiercingLevel>0 then
-                call UnitAddAbility(this.unit,Status__ABIL_REFLECT_PIERCING)
-                call UnitMakeAbilityPermanent(this.unit,true,Status__ABIL_REFLECT_PIERCING)
+                call UnitAddAbility(this.unit,Status___ABIL_REFLECT_PIERCING)
+                call UnitMakeAbilityPermanent(this.unit,true,Status___ABIL_REFLECT_PIERCING)
             endif
         endmethod
         method removeReflectPiercing takes nothing returns nothing
             set this.reflectPiercingLevel=this.reflectPiercingLevel-1
             if this.reflectPiercingLevel==0 then
-                call UnitMakeAbilityPermanent(this.unit,false,Status__ABIL_REFLECT_PIERCING)
-                call UnitRemoveAbility(this.unit,Status__ABIL_REFLECT_PIERCING)
+                call UnitMakeAbilityPermanent(this.unit,false,Status___ABIL_REFLECT_PIERCING)
+                call UnitRemoveAbility(this.unit,Status___ABIL_REFLECT_PIERCING)
             endif
         endmethod
         method isReflectPiercing takes nothing returns boolean
@@ -10676,7 +10804,7 @@ exitwhen i==30
         private integer armorBonus
         method modArmorBonus takes integer amount returns nothing
             set this.armorBonus=this.armorBonus+amount
-            call thistype.setBonus(this.unit,Status__ABIL_ARMOR,Status__LEVELS_ARMOR,this.armorBonus)
+            call thistype.setBonus(this.unit,Status___ABIL_ARMOR,Status___LEVELS_ARMOR,this.armorBonus)
         endmethod
         method getArmorBonus takes nothing returns integer
             return this.armorBonus
@@ -10685,7 +10813,7 @@ exitwhen i==30
         private integer damageBonus
         method modDamageBonus takes integer amount returns nothing
             set this.damageBonus=this.damageBonus+amount
-            call thistype.setBonus(this.unit,Status__ABIL_DAMAGE,Status__LEVELS_DAMAGE,this.damageBonus)
+            call thistype.setBonus(this.unit,Status___ABIL_DAMAGE,Status___LEVELS_DAMAGE,this.damageBonus)
         endmethod
         method getDamageBonus takes nothing returns integer
             return this.damageBonus
@@ -10694,7 +10822,7 @@ exitwhen i==30
         private integer strBonus
         method modStrBonus takes integer amount returns nothing
             set this.strBonus=this.strBonus+amount
-            call thistype.setBonus(this.unit,Status__ABIL_STR,Status__LEVELS_STR,this.strBonus)
+            call thistype.setBonus(this.unit,Status___ABIL_STR,Status___LEVELS_STR,this.strBonus)
         endmethod
         method getStrBonus takes nothing returns integer
             return this.strBonus
@@ -10703,7 +10831,7 @@ exitwhen i==30
         private integer agiBonus
         method modAgiBonus takes integer amount returns nothing
             set this.agiBonus=this.agiBonus+amount
-            call thistype.setBonus(this.unit,Status__ABIL_AGI,Status__LEVELS_AGI,this.agiBonus)
+            call thistype.setBonus(this.unit,Status___ABIL_AGI,Status___LEVELS_AGI,this.agiBonus)
         endmethod
         method getAgiBonus takes nothing returns integer
             return this.agiBonus
@@ -10712,7 +10840,7 @@ exitwhen i==30
         private integer intBonus
         method modIntBonus takes integer amount returns nothing
             set this.intBonus=this.intBonus+amount
-            call thistype.setBonus(this.unit,Status__ABIL_INT,Status__LEVELS_INT,this.intBonus)
+            call thistype.setBonus(this.unit,Status___ABIL_INT,Status___LEVELS_INT,this.intBonus)
         endmethod
         method getIntBonus takes nothing returns integer
             return this.intBonus
@@ -10721,7 +10849,7 @@ exitwhen i==30
         private integer attackSpeedBonus
         method modAttackSpeedBonus takes integer amount returns nothing
             set this.attackSpeedBonus=this.attackSpeedBonus+amount
-            call thistype.setBonus(this.unit,Status__ABIL_ATTACK_SPEED,Status__LEVELS_ATTACK_SPEED,this.attackSpeedBonus)
+            call thistype.setBonus(this.unit,Status___ABIL_ATTACK_SPEED,Status___LEVELS_ATTACK_SPEED,this.attackSpeedBonus)
         endmethod
         method getAttackSpeedBonus takes nothing returns integer
             return this.attackSpeedBonus
@@ -10730,7 +10858,7 @@ exitwhen i==30
         private integer healthBonus
         method modHealthBonus takes integer amount returns nothing
             set this.healthBonus=this.healthBonus+amount
-            call thistype.setBonus(this.unit,Status__ABIL_HEALTH,Status__LEVELS_HEALTH,this.healthBonus)
+            call thistype.setBonus(this.unit,Status___ABIL_HEALTH,Status___LEVELS_HEALTH,this.healthBonus)
         endmethod
         method getHealthBonus takes nothing returns integer
             return this.healthBonus
@@ -10739,7 +10867,7 @@ exitwhen i==30
         private integer manaBonus
         method modManaBonus takes integer amount returns nothing
             set this.manaBonus=this.manaBonus+amount
-            call thistype.setBonus(this.unit,Status__ABIL_MANA,Status__LEVELS_MANA,this.manaBonus)
+            call thistype.setBonus(this.unit,Status___ABIL_MANA,Status___LEVELS_MANA,this.manaBonus)
         endmethod
         method getManaBonus takes nothing returns integer
             return this.manaBonus
@@ -10757,7 +10885,7 @@ exitwhen i==30
         endmethod
         private real healthRegenBonus
         method modHealthRegenBonus takes real amount returns nothing
-            set this.healthRegenBonus=this.healthRegenBonus+amount*Status__PERIOD
+            set this.healthRegenBonus=this.healthRegenBonus+amount*Status___PERIOD
             if this.healthRegenBonus==0 then
                 call GroupRemoveUnit(thistype.healthRegenGroup,this.unit)
             else
@@ -10765,7 +10893,7 @@ exitwhen i==30
             endif
         endmethod
         method getHealthRegenBonus takes nothing returns real
-            return this.healthRegenBonus/Status__PERIOD
+            return this.healthRegenBonus/Status___PERIOD
         endmethod
         
         private static group manaRegenGroup=CreateGroup()
@@ -10777,7 +10905,7 @@ exitwhen i==30
         endmethod
         private real manaRegenBonus
         method modManaRegenBonus takes real amount returns nothing
-            set this.manaRegenBonus=this.manaRegenBonus+amount*Status__PERIOD
+            set this.manaRegenBonus=this.manaRegenBonus+amount*Status___PERIOD
             if this.manaRegenBonus==0 then
                 call GroupRemoveUnit(thistype.manaRegenGroup,this.unit)
             else
@@ -10785,7 +10913,7 @@ exitwhen i==30
             endif
         endmethod
         method getManaRegenBonus takes nothing returns real
-            return this.manaRegenBonus/Status__PERIOD
+            return this.manaRegenBonus/Status___PERIOD
         endmethod
         
         private static group healthRegenPercentGroup=CreateGroup()
@@ -10797,7 +10925,7 @@ exitwhen i==30
         endmethod
         private real healthRegenPercentBonus
         method modHealthRegenPercentBonus takes real amount returns nothing
-            set this.healthRegenPercentBonus=this.healthRegenPercentBonus+amount*Status__PERIOD*0.01
+            set this.healthRegenPercentBonus=this.healthRegenPercentBonus+amount*Status___PERIOD*0.01
             if this.healthRegenPercentBonus==0 then
                 call GroupRemoveUnit(thistype.healthRegenPercentGroup,this.unit)
             else
@@ -10805,7 +10933,7 @@ exitwhen i==30
             endif
         endmethod
         method getHealthRegenPercentBonus takes nothing returns real
-            return this.healthRegenPercentBonus/Status__PERIOD/0.01
+            return this.healthRegenPercentBonus/Status___PERIOD/0.01
         endmethod
         
         private static group manaRegenPercentGroup=CreateGroup()
@@ -10817,7 +10945,7 @@ exitwhen i==30
         endmethod
         private real manaRegenPercentBonus
         method modManaRegenPercentBonus takes real amount returns nothing
-            set this.manaRegenPercentBonus=this.manaRegenPercentBonus+amount*Status__PERIOD*0.01
+            set this.manaRegenPercentBonus=this.manaRegenPercentBonus+amount*Status___PERIOD*0.01
             if this.manaRegenPercentBonus==0 then
                 call GroupRemoveUnit(thistype.manaRegenPercentGroup,this.unit)
             else
@@ -10825,7 +10953,7 @@ exitwhen i==30
             endif
         endmethod
         method getManaRegenPercentBonus takes nothing returns real
-            return this.manaRegenPercentBonus/Status__PERIOD/0.01
+            return this.manaRegenPercentBonus/Status___PERIOD/0.01
         endmethod
         
         // Links periodic effects.
@@ -10835,7 +10963,7 @@ exitwhen i==30
             call ForGroup(thistype.healthRegenPercentGroup,function thistype.healthRegenPercentPeriodic)
             call ForGroup(thistype.manaRegenPercentGroup,function thistype.manaRegenPercentPeriodic)
         endmethod
-        implement Status__StaticPeriodic
+        implement Status___StaticPeriodic
         
         ////////////////////
         // Movement Speed //
@@ -10905,6 +11033,64 @@ exitwhen i==30
     endstruct
 
 //library Status ends
+//library TransportBuffer:
+struct TransportBuffer extends DefaultBufferStruct
+    lightning te
+    effect e1
+    effect e2
+    unit target
+    method addBuffer takes nothing returns nothing
+        local real r = DistanceTwoUnits(u, target)
+        if (not EquipmentData[u].heroData.transport) and (r < 1200) and (GetUnitState(u, UNIT_STATE_MANA) > 0 and (GetUnitState(target, UNIT_STATE_MANA) < GetUnitState(target, UNIT_STATE_MAX_MANA))) then
+            set te=AddLightningEx( "DRAM", false, GetUnitX(u),GetUnitY(u),getUnitHeight(u), GetUnitX(target), GetUnitY(target),getUnitHeight(target) )
+            set e1 = AddSpecialEffectTarget("Abilities\\Spells\\Other\\Drain\\ManaDrainTarget.mdl", u, "origin")
+            set e2 = AddSpecialEffectTarget("Abilities\\Spells\\Other\\Drain\\ManaDrainCaster.mdl", target, "origin")
+            call PlaySoundOnUnitBJ(gg_snd_transport,80, u)
+            set EquipmentData[u].heroData.transport = true
+        else
+            set count = -1
+            call DisplayInfo(GetOwningPlayer(u), "浼犺緭澶辫触")
+        endif
+    endmethod
+    method action takes nothing returns nothing
+        local real r
+        call MoveLightningEx( te, false, GetUnitX(u),GetUnitY(u),getUnitHeight(u), GetUnitX(target), GetUnitY(target),getUnitHeight(target))
+        if ModuloInteger(count, 25) == 0 then
+            set r = DistanceTwoUnits(u, target)
+            if (r < 1200) and (GetUnitState(u, UNIT_STATE_MANA) > 0 and (GetUnitState(target, UNIT_STATE_MANA) < GetUnitState(target, UNIT_STATE_MAX_MANA))) then
+                call SetUnitState(u, UNIT_STATE_MANA, GetUnitState(u, UNIT_STATE_MANA) - 5)
+                call SetUnitState(target, UNIT_STATE_MANA, GetUnitState(target, UNIT_STATE_MANA) + 5)
+                call DisplayManaCost(u, 5)
+            else
+                set count = -1
+            endif
+        endif
+    endmethod
+    method removeBuffer takes nothing returns nothing
+        set EquipmentData[u].heroData.transport = false
+        if te != null then
+            call DestroyLightning(te)
+            set te = null
+        endif
+        if e1 != null then
+            call DestroyEffect(e1)
+            set e1 = null
+        endif
+        set target = null
+        if e2 != null then
+            call DestroyEffect(e2)
+            set e2 = null
+        endif
+    endmethod
+    
+    static method create takes unit u, unit target, integer count returns TransportBuffer
+        local TransportBuffer m = TransportBuffer.allocate(u, count)
+        set m.target = target
+        return m
+    endmethod
+endstruct
+
+//library TransportBuffer ends
 //library VectorLib:
 
 //library VectorLib ends
@@ -12777,8 +12963,9 @@ function BladeDamage takes unit source, unit target, real damage returns nothing
     //local real finalDamage = damage
     //local real kill_mana = damage * EquipmentData[source].heroData.kill_mana_percent
     call MyDamage(source,target,damage)
-    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", target, "chest"))
-    if GetRandomReal(0, 1) < 0.1 then
+    call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", GetUnitX(target), GetUnitY(target)))
+    //call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", target, "chest"))
+    if false and GetRandomReal(0, 1) < 2 then
         call DestroyEffect(AddSpecialEffectTarget("Objects\\Spawnmodels\\Human\\HumanBlood\\BloodElfSpellThiefBlood.mdl", target, "chest"))
     endif
 endfunction
@@ -12827,12 +13014,12 @@ function InitMonsterTargetGroup takes nothing returns nothing
 endfunction
 function BeMonsterTarget takes unit u returns nothing
     call GroupAddUnit(MonsterTargetGroup,u)
-    call BJDebugMsg("BeMonsterTarget " + I2S(CountUnitsInGroup(MonsterTargetGroup)))
+    //call BJDebugMsg("BeMonsterTarget " + I2S(CountUnitsInGroup(MonsterTargetGroup)))
 endfunction
 function NotMonsterTarget takes unit u returns nothing
     call GroupRemoveUnit(MonsterTargetGroup,u)
     call GroupRefresh(MonsterTargetGroup)
-    call BJDebugMsg("NotMonsterTarget")
+    //call BJDebugMsg("NotMonsterTarget")
 endfunction
 struct MonsterTargetGroupManager
 implement T32x
@@ -13102,7 +13289,7 @@ struct BoundUnitEffectStruct extends DefaultBufferStruct
     real z
     
     method addBuffer takes nothing returns nothing
-        set eu = CreateUnit(GetOwningPlayer(u), uid, GetUnitX(u), GetUnitY(u), GetUnitFacing(u) + bais)
+        set eu = CreateUnit(GetOwningPlayer(u), uid, GetUnitX(u), GetUnitY(u), bais)
         call SetUnitFlyHeight(eu,GetUnitFlyHeight(u) + z,0)
         call SetUnitAnimation( eu, animate )
     endmethod
@@ -13253,6 +13440,36 @@ endfunction
 function SetupStage1 takes nothing returns nothing
     
 endfunction
+function Stage1Clear takes nothing returns nothing
+    local unit ydl_unit
+    //clear wall1
+    call GroupEnumUnitsInRect(ENUM_GROUP, gg_rct_stage1_wall1,null)
+    loop
+        set ydl_unit = FirstOfGroup(ENUM_GROUP)
+        exitwhen ydl_unit == null
+        call GroupRemoveUnit(ENUM_GROUP, ydl_unit)
+        if GetUnitTypeId(ydl_unit) == 'h006' then
+            call KillUnit(ydl_unit)
+        endif
+    endloop
+    call RegionAddRect(playable_region, gg_rct_stage1_exit)
+    call RegionAddRect(playable_region, gg_rct_stage2_1)
+    call RegionAddRect(playable_region, gg_rct_stage2_2)
+    call RegionAddRect(playable_region, gg_rct_stage2_3)
+    call RegionAddRect(playable_region, gg_rct_stage2_4)
+    call RegionAddRect(playable_region, gg_rct_stage2_5)
+    call RegionAddRect(playable_region, gg_rct_stage2_6)
+    call RegionAddRect(playable_region, gg_rct_stage2_7)
+    call RegionAddRect(playable_region, gg_rct_stage2_8)
+    call RegionAddRect(playable_region, gg_rct_stage2_fire1)
+    call RegionAddRect(playable_region, gg_rct_stage2_fire2)
+    call RegionAddRect(playable_region, gg_rct_stage2_fire3)
+    set ydl_unit = null
+    set fire_region = CreateRegion()
+    call RegionAddRect(fire_region, gg_rct_stage2_fire1)
+    call RegionAddRect(fire_region, gg_rct_stage2_fire2)
+    call RegionAddRect(fire_region, gg_rct_stage2_fire3)
+endfunction
 function Stage1Wave3 takes nothing returns nothing
     //call BJDebugMsg("s1w3c " + I2S(s1w3c))
     if s1w3c > 0 then
@@ -13273,14 +13490,24 @@ function Stage1Wave3 takes nothing returns nothing
 endfunction
 function Stage1Wave2 takes nothing returns nothing
     //call BJDebugMsg("s1w2c " + I2S(s1w2c))
+    local real r
     if s1w2c > 0 then
         set s1w2c = s1w2c - 1
-        call SummonMonster('u000', gg_rct_stage1)
+        set r = GetRandomReal(0, 1)
+        if r <= 0.1 then
+            call SummonMonster('u006', gg_rct_stage1)
+        //elseif r <= 0.15 then
+            //call SummonMonster('u007', gg_rct_stage1)
+        else
+            call SummonMonster('u000', gg_rct_stage1)
+        endif
         //call SummonMonster('u000', gg_rct_stage1)
     else
         if GetPlayerState(Player(11), PLAYER_STATE_RESOURCE_FOOD_USED) == 0 then
             //call TimerStart(CreateTimer(), 1, true, function Stage1Wave3)
             call DestroyTimer(GetExpiredTimer())
+            set g_ge = false
+            call Stage1Clear()
         endif
     endif
 endfunction
@@ -13288,7 +13515,7 @@ function Stage1Wave1 takes nothing returns nothing
     //call BJDebugMsg("s1w1c " + I2S(s1w1c))
     if s1w1c > 0 then
         set s1w1c = s1w1c - 1
-        call SummonMonster('u000', gg_rct_stage1)
+        call SummonMonster('u006', gg_rct_stage1)
     else
         if GetPlayerState(Player(11), PLAYER_STATE_RESOURCE_FOOD_USED) == 0 then
             call TimerStart(CreateTimer(), 1, true, function Stage1Wave2)
@@ -13319,7 +13546,7 @@ function Stage1Mission takes nothing returns nothing
             endif
             call BeMonsterTarget(hero)
             call EquipGunV2(hero)
-            call SetCameraBoundsToRectForPlayerBJ( Player(i), gg_rct_stage1)
+            //call SetCameraBoundsToRectForPlayerBJ( Player(i), gg_rct_stage1)
             call PanCameraToTimedForPlayer(Player(i), GetLocationX(l), GetLocationY(l), 0)
         endif
         set i = i + 1
@@ -13327,8 +13554,8 @@ function Stage1Mission takes nothing returns nothing
     set hero = null
     set l = null
     call PlaySoundBJ( gg_snd_alicebeep )
-    call DisplayInfoAll("鏂颁换鍔★細娓呯悊鍖哄煙")
-    call CinematicFadeBJ( bj_CINEFADETYPE_FADEIN, 2, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 0 )
+    call DisplayInfoAll("鏂颁换鍔★細娓呯悊涓€鍙峰尯鍩?)
+    //call CinematicFadeBJ( bj_CINEFADETYPE_FADEIN, 2, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 0 )
     call TimerStart(CreateTimer(), 1, true, function Stage1Wave1)
     set g_gr2 = CreateRegion()
     call RegionAddRect(g_gr2, gg_rct_stage1)
@@ -13338,6 +13565,8 @@ function Stage1Mission takes nothing returns nothing
     set g_gy2 = GetRectMaxY(gg_rct_stage1)
     set r_m_yaocao = 10
     set g_ge = true
+    set playable_region = CreateRegion()
+    call RegionAddRect(playable_region, gg_rct_stage1)
 endfunction
 function EquipSound takes nothing returns nothing
     call PlaySoundBJ( gg_snd_equip1 )
@@ -13346,10 +13575,11 @@ function EquipSound2 takes nothing returns nothing
     call PlaySoundBJ( gg_snd_equip2 )
 endfunction
 function StartStage1 takes nothing returns nothing
-    call CinematicFadeBJ( bj_CINEFADETYPE_FADEOUT, 2, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 0 )
-    call TimerStart(CreateTimer(), 3, false, function EquipSound)
-    call TimerStart(CreateTimer(), 5, false, function EquipSound2)
-    call TimerStart(CreateTimer(), 10, false, function Stage1Mission)
+    //call CinematicFadeBJ( bj_CINEFADETYPE_FADEOUT, 2, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 0 )
+    //call TimerStart(CreateTimer(), 3, false, function EquipSound)
+    //call TimerStart(CreateTimer(), 5, false, function EquipSound2)
+    //call TimerStart(CreateTimer(), 10, false, function Stage1Mission)
+    call Stage1Mission()
 endfunction
 function InitStage1 takes nothing returns nothing
     local trigger trg = CreateTrigger()
@@ -13364,7 +13594,7 @@ function InitStage1 takes nothing returns nothing
     call CreateFogModifierRectBJ( true, Player(1), FOG_OF_WAR_VISIBLE, gg_rct_pick_hero )
     call CreateFogModifierRectBJ( true, Player(2), FOG_OF_WAR_VISIBLE, gg_rct_pick_hero )
     //call TriggerAddAction(trg, function PickHeroActions)
-    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h009', 1282, -1784, 0)
+    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'h009', 1278, -1770, 0)
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n001', GetRectCenterX(gg_rct_pow0), GetRectCenterY(gg_rct_pow0), 0)
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n001', GetRectCenterX(gg_rct_pow1), GetRectCenterY(gg_rct_pow1), 0)
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n001', GetRectCenterX(gg_rct_pow2), GetRectCenterY(gg_rct_pow2), 0)
@@ -13374,9 +13604,9 @@ function InitStage1 takes nothing returns nothing
     //call TriggerRegisterUnitManaEvent( gg_trg_ManaGrow, t, GREATER_THAN, 2)
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'H00B', 5626, 6151, -pi/2 * bj_RADTODEG)
     call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'H00C', 6142, 6151, -pi/2 * bj_RADTODEG)
-    call SetCameraBoundsToRectForPlayerBJ( Player(0), gg_rct_pick_hero )
-    call SetCameraBoundsToRectForPlayerBJ( Player(1), gg_rct_pick_hero )
-    call SetCameraBoundsToRectForPlayerBJ( Player(2), gg_rct_pick_hero )
+    //call SetCameraBoundsToRectForPlayerBJ( Player(0), gg_rct_pick_hero )
+    //call SetCameraBoundsToRectForPlayerBJ( Player(1), gg_rct_pick_hero )
+    //call SetCameraBoundsToRectForPlayerBJ( Player(2), gg_rct_pick_hero )
     loop
         exitwhen i >= PLAYER_COUNT
         if CurrentPlaying(Player(i)) then
@@ -13406,13 +13636,18 @@ function RemoveForce takes unit u, vector a returns nothing
     call Velocity[u].a.subtract(a)
 endfunction
 function Push takes unit u, real dir, real d, real h, integer s returns nothing
-    local vector a = vector.create(d*Cos(dir),d*Sin(dir), h)
+    local real d2 = (1 - Material[u].pushris) * d
+    local vector a = vector.create(d2*Cos(dir),d2*Sin(dir), h)
     local PushForceStruct pfs = PushForceStruct.create(u, s, a)
     call pfs.start()
 endfunction
 struct PushForceStruct extends DefaultBufferStruct
     vector fc
-    
+    method condition takes nothing returns boolean
+        set count = count - 1
+        call action()
+        return count >= 0
+    endmethod
     method addBuffer takes nothing returns nothing
         call AddForce(u, fc)
     endmethod
@@ -13567,6 +13802,9 @@ struct EquipmentData extends array
         set this.heroData.melee_interval = 38
         set this.heroData.reload_cost = 10
         set this.heroData.energy_consum = 1
+        set this.heroData.speedup = false
+        set this.heroData.jump_refresh = false
+        set this.heroData.transport= false
         loop
             exitwhen i >=5
             set this.heroData.smartDarts[i] = 0
@@ -13600,7 +13838,7 @@ struct EquipmentData extends array
         if GetUnitAbilityLevel(.unit, 'A026') > 0 and IsUnitAliveBJ(.unit) and GetUnitAbilityLevel(.unit, 'A02H') == 0 then
             if EquipmentData[.unit].heroData.melee_cooldown <= 0 then
                 set target = GetNearestEnemy(.unit, 350)
-                if target != null then
+                if target != null and RAbsBJ(getUnitHeight(target) - getUnitHeight(.unit)) <= 100 and (not IsUnitInvisible(target, GetOwningPlayer(.unit))) then
                     set dir=Atan2(GetUnitY(target) - GetUnitY(.unit), GetUnitX(target) - GetUnitX(.unit))
                     set x=GetUnitX(.unit) + 100 * Cos(dir)
                     set y=GetUnitY(.unit) + 100 * Sin(dir)
@@ -13612,7 +13850,7 @@ struct EquipmentData extends array
                         set ydl_unit = FirstOfGroup(ENUM_GROUP)
                         exitwhen ydl_unit == null
                         call GroupRemoveUnit(ENUM_GROUP, ydl_unit) 
-                        if IsLiveEnemyUnit(.unit,ydl_unit) then
+                        if IsLiveEnemyUnit(.unit,ydl_unit) and RAbsBJ(getUnitHeight(ydl_unit) - getUnitHeight(.unit)) <= 100 then
                             call Push(ydl_unit, getTargetDir(.unit, ydl_unit), 5.5, 0, 5)
                             //call PlaySoundOnUnitBJ(gg_snd_togglemeele, 100, .unit)
                             call BladeDamage(.unit, ydl_unit, 120)
@@ -13626,6 +13864,23 @@ struct EquipmentData extends array
         set target = null
         set ydl_unit = null
     endmethod
+    private method FireLoop takes nothing returns nothing
+        if ModuloInteger(Tick,10) == 0 then
+            if this.heroData.fe != null then
+                call DestroyEffect(this.heroData.fe)
+                set this.heroData.fe = null
+            endif
+            if GetUnitAbilityLevel(.unit, 'A02H') == 0 and IsPointInRegion(fire_region, GetUnitX(.unit), GetUnitY(.unit)) and getUnitHeight(.unit) < -200 then
+                set this.heroData.fe = AddSpecialEffectTarget("Environment\\LargeBuildingFire\\LargeBuildingFire0.mdl",.unit,"chest")
+                call SetUnitLifeBJ(.unit, RMaxBJ(1, GetUnitState(.unit, UNIT_STATE_LIFE) - 5))
+            endif
+        endif
+    endmethod
+    private method HitWallLoop takes nothing returns nothing
+        if Material[.unit].nohitwall > 0 then
+            set Material[.unit].nohitwall = Material[.unit].nohitwall - 1
+        endif
+    endmethod
     private method EnergyLoop takes nothing returns nothing
         if ModuloInteger(Tick,50) == 0 then
             if this.heroData.ee != null then
@@ -13635,7 +13890,7 @@ struct EquipmentData extends array
             if GetUnitAbilityLevel(.unit, 'A02H') == 0 then
                 if ModuloInteger(Tick,200) == 0 and GetUnitState(.unit, UNIT_STATE_MANA) <= 0 then
                     set this.heroData.ee = AddSpecialEffectTarget("Abilities\\Spells\\Orc\\Purge\\PurgeBuffTarget.mdl",.unit,"origin")
-                    call SetUnitLifeBJ(.unit, RMaxBJ(1, GetUnitState(.unit, UNIT_STATE_LIFE) - 10))
+                    call SetUnitLifeBJ(.unit, RMaxBJ(1, GetUnitState(.unit, UNIT_STATE_LIFE) - 20))
                     call DisplayWarning(GetOwningPlayer(.unit), "缁寸敓绯荤粺宸插仠姝㈣繍浣滐紝璇峰敖蹇ˉ鍏呰兘閲?)
                 else
                     call SetUnitManaBJ(.unit, GetUnitState(.unit, UNIT_STATE_MANA) - EquipmentData[.unit].heroData.energy_consum)
@@ -13664,7 +13919,7 @@ struct EquipmentData extends array
             else
                 set aiintervel = 3
             endif
-            call BJDebugMsg("AI interval " + I2S(aiintervel))
+            //call BJDebugMsg("AI interval " + I2S(aiintervel))
         endif
     endmethod
     private method PredictMoveDirection takes nothing returns nothing
@@ -13724,6 +13979,8 @@ struct EquipmentData extends array
         call PredictMoveDirection()
         call AdjustAiIntervel()
         call MeleeLoop()
+        call FireLoop()
+        call HitWallLoop()
     endmethod 
     
 endstruct
@@ -14191,7 +14448,7 @@ struct LeaveDartsV2 extends TroughMissle
         //call DestroyEffect( AddSpecialEffect(BLADE_BLOOD, GetUnitX(target), GetUnitY(target)) )
     endmethod
     method getFinalDamage takes nothing returns real
-        return 100.0
+        return 1000.0
     endmethod
     
     method troughDamage takes unit target returns nothing
@@ -14248,7 +14505,7 @@ struct GuardDarts extends TroughMissle
         //call DestroyEffect( AddSpecialEffect(BLADE_BLOOD, GetUnitX(target), GetUnitY(target)) )
     endmethod
     method getFinalDamage takes nothing returns real
-        return 500.0
+        return 350.0
     endmethod
     method troughDamage takes unit target returns nothing
         call BladeDamage(owner, target, getFinalDamage())
@@ -15281,29 +15538,27 @@ struct Velocity extends array
         local vector gravity
         local boolean unitHitWall = false
         local real addon = 0
+        local real dir
         if IsUnitAliveBJ(.unit) or Material[.unit].deadcnt > 0 then
             if not IsUnitAliveBJ(.unit) and Material[.unit].deadcnt > 0 then
                 set Material[.unit].deadcnt = Material[.unit].deadcnt - 1
-                set this.v.x = 5;
             endif
             set fz = GetUnitFlyHeight(.unit)
             if fz > 0.1 then
                 if clazz == MC_UNIT or clazz == MC_STONE or clazz == MC_MINE then
-                    //set gravity = vector.create(0,0,-2)
-                    set gravity = vector.create(0,0,Material[.unit].g)
-                    call this.v.add(gravity)
+                    //fly unit
+                    if GetUnitTypeId(.unit) != 'u009' then
+                        //set gravity = vector.create(0,0,-2)
+                        set gravity = vector.create(0,0,Material[.unit].g)
+                        call this.v.add(gravity)
+                    endif
                 endif
             endif
             set v = this.v.getLength()
-            if GetUnitTypeId(.unit) == 'u000' then
-                call BJDebugMsg("deadcng " + I2S(Material[.unit].deadcnt))
-                call BJDebugMsg("v length " + R2S(this.v.getLength()))
-                if this.a.getLength() > 0 then
-                    call BJDebugMsg("a length " + R2S(this.a.getLength()))
-                endif
-            endif
             if v > 0 or clazz == MC_ARROW then
+                //if GetUnitTypeId(.unit) == 'u000' then
                 //call BJDebugMsg("velocity "+R2S(v) + R2S(this.v.x)+ " " + R2S(this.v.y)+ " " + R2S(this.v.z))
+                //endif
                 //call BJDebugMsg("v " + R2S(v))
                 //call BJDebugMsg("f1 " + R2S(f1))
                 //call BJDebugMsg("f2 " + R2S(f2))
@@ -15316,6 +15571,7 @@ struct Velocity extends array
                 call MoveUnit(.unit, tx, ty, tz)
                 //hit ground
                 if fz < 0.1 and this.v.z < 0 then
+                    //set this.v.z = 0
                     if Material[.unit].ground_action == GROUND_DESTROY then
                         call missleStruct.destroy()
                     elseif Material[.unit].ground_action == GROUND_STICK then
@@ -15338,13 +15594,14 @@ struct Velocity extends array
                     endif
                 endif
                 //hit wall
-                if getTerrianHeight(tx,ty) > z + 5 then
+                set dir = Atan2(this.v.y, this.v.x)
+                if getTerrianHeight(x + 10 * Cos(dir),y + 10 * Sin(dir)) > z + 5 then
                     //call BJDebugMsg("prepare hit wall")
                     if clazz == MC_BULLET or clazz == MC_STONE then
                         call missleStruct.destroy()
                     elseif clazz == MC_ARROW then
                     elseif clazz == MC_UNIT then
-                        if v > DAMAGE_SPEED then
+                        if v > DAMAGE_SPEED and Material[.unit].nohitwall <= 0 then
                             call UnitHitWall(.unit, .unit,v,getDir(x,y,tx,ty),true)
                         endif
                         set unitHitWall = true
@@ -15422,7 +15679,7 @@ endstruct
 // 
 //   Warcraft III map script
 //   Generated by the Warcraft III World Editor
-//   Date: Tue Oct 06 20:11:16 2020
+//   Date: Sat Oct 17 18:58:35 2020
 //   Map Author: abcdnned
 // 
 //===========================================================================
@@ -15503,6 +15760,23 @@ function InitSounds takes nothing returns nothing
     call SetSoundChannel( gg_snd_equip1, 0 )
     call SetSoundVolume( gg_snd_equip1, 127 )
     call SetSoundPitch( gg_snd_equip1, 1.0 )
+    set gg_snd_transport = CreateSound( "Abilities\\Spells\\Human\\ManaShield\\ManaShieldCaster1.wav", false, true, true, 10, 10, "SpellsEAX" )
+    call SetSoundParamsFromLabel( gg_snd_transport, "ManaShieldCastSound" )
+    call SetSoundDuration( gg_snd_transport, 2554 )
+    set gg_snd_opengate = CreateSound( "Sound\\Ambient\\DoodadEffects\\LargeCityGateOpen1.wav", false, false, false, 10, 10, "DefaultEAXON" )
+    call SetSoundParamsFromLabel( gg_snd_opengate, "GateOpenSound" )
+    call SetSoundDuration( gg_snd_opengate, 1445 )
+endfunction
+//***************************************************************************
+//*
+//*  Destructable Objects
+//*
+//***************************************************************************
+function CreateAllDestructables takes nothing returns nothing
+    local destructable d
+    local trigger t
+    local real life
+    set gg_dest_DTg5_0047 = CreateDestructable( 'DTg5', -9472.0, 12288.0, 270.000, 0.900, 0 )
 endfunction
 //***************************************************************************
 //*
@@ -15511,42 +15785,118 @@ endfunction
 //***************************************************************************
 function CreateAllItems takes nothing returns nothing
     local integer itemID
-    call CreateItem( 'I00T', 660.6, -861.5 )
-    call CreateItem( 'I00T', 652.2, -779.4 )
-    call CreateItem( 'I00T', 652.4, -709.8 )
-    call CreateItem( 'I00T', 727.4, -785.5 )
-    call CreateItem( 'I00T', 728.3, -847.8 )
-    call CreateItem( 'I00T', 709.3, -701.2 )
-    call CreateItem( 'I015', 847.6, -683.8 )
-    call CreateItem( 'I015', 856.0, -775.2 )
-    call CreateItem( 'I015', 851.1, -859.5 )
-    call CreateItem( 'I015', 928.5, -696.8 )
-    call CreateItem( 'I015', 948.3, -809.9 )
-    call CreateItem( 'I015', 962.9, -898.0 )
-    call CreateItem( 'gold', 331.9, -852.1 )
-    call CreateItem( 'gold', 348.4, -823.9 )
-    call CreateItem( 'gold', 369.3, -697.2 )
-    call CreateItem( 'gold', 189.5, -708.3 )
-    call CreateItem( 'gold', 320.2, -763.1 )
-    call CreateItem( 'gold', 233.2, -907.5 )
-    call CreateItem( 'gold', 232.4, -806.2 )
-    call CreateItem( 'gold', 276.0, -708.3 )
-    call CreateItem( 'gold', 174.2, -795.4 )
-    call CreateItem( 'gold', 165.7, -866.0 )
-    call CreateItem( 'lmbr', 2358.3, -753.7 )
-    call CreateItem( 'lmbr', 2326.4, -850.9 )
-    call CreateItem( 'lmbr', 2237.1, -762.3 )
-    call CreateItem( 'lmbr', 2243.9, -604.1 )
-    call CreateItem( 'lmbr', 2324.8, -653.3 )
-    call CreateItem( 'lmbr', 2175.4, -653.3 )
-    call CreateItem( 'lmbr', 2414.1, -749.4 )
-    call CreateItem( 'lmbr', 2443.7, -572.4 )
+    call CreateItem( 'I015', -13571.4, 6279.9 )
+    call CreateItem( 'I015', -14336.7, 6278.0 )
+    call CreateItem( 'I015', 5368.8, 10000.3 )
+    call CreateItem( 'I015', 5760.2, 13452.4 )
+    call CreateItem( 'I015', 4992.3, 13444.1 )
+    call CreateItem( 'I015', 5755.4, 12680.2 )
+    call CreateItem( 'I015', -10896.3, 10879.6 )
+    call CreateItem( 'I015', -8520.4, 10192.2 )
+    call CreateItem( 'I015', -11196.4, 7098.0 )
+    call CreateItem( 'I015', 5759.3, 10379.1 )
+    call CreateItem( 'I015', 5763.1, 9600.4 )
+    call CreateItem( 'I015', 4992.1, 12680.2 )
+    call CreateItem( 'I015', -8653.6, 8977.5 )
+    call CreateItem( 'I015', -7981.3, 5824.1 )
+    call CreateItem( 'I015', -9755.6, 6461.8 )
+    call CreateItem( 'I015', 4991.0, 9608.1 )
+    call CreateItem( 'I015', 4988.7, 10379.1 )
+    call CreateItem( 'I015', 5371.9, 13061.3 )
+    call CreateItem( 'I018', -9216.7, 12808.3 )
+    call CreateItem( 'I018', -11180.5, 5174.8 )
+    call CreateItem( 'I018', -11427.6, 6763.5 )
+    call CreateItem( 'I018', -8453.0, 5958.0 )
+    call CreateItem( 'I018', -9468.7, 772.8 )
+    call CreateItem( 'I018', -9985.9, 776.0 )
+    call CreateItem( 'I018', -8701.4, 13325.8 )
+    call CreateItem( 'I018', -9472.5, -766.6 )
+    call CreateItem( 'I018', -8723.8, 5500.3 )
+    call CreateItem( 'I018', -9981.9, -759.7 )
+    call CreateItem( 'I018', -9722.5, 2298.6 )
+    call CreateItem( 'I018', -10244.6, 13830.9 )
+    call CreateItem( 'I018', -10391.9, 6630.8 )
+    call CreateItem( 'I018', -8702.5, 13828.7 )
+    call CreateItem( 'I018', -9731.6, 12811.7 )
+    call CreateItem( 'I018', -10241.9, 13318.8 )
+    call CreateItem( 'I018', -9988.3, 2308.9 )
+    call CreateItem( 'I018', -9470.5, 2308.9 )
+    call CreateItem( 'I018', -9725.9, 776.0 )
+    call CreateItem( 'I018', -8130.7, 7282.5 )
+    call CreateItem( 'I018', -8796.0, 8812.5 )
+    call CreateItem( 'I018', -9605.5, 9362.2 )
+    call CreateItem( 'I018', -10428.2, 10913.3 )
+    call CreateItem( 'I018', -11048.9, 10668.0 )
+    call CreateItem( 'I018', -10964.5, 8432.0 )
+    call CreateItem( 'I018', -10763.5, 8264.3 )
+    call CreateItem( 'I018', -10897.5, 5911.5 )
+    call CreateItem( 'I018', -11086.8, 7543.7 )
+    call CreateItem( 'I018', -9086.7, 9367.1 )
+    call CreateItem( 'I018', -10817.6, 9682.7 )
+    call CreateItem( 'I018', -10752.7, 9563.3 )
+    call CreateItem( 'I018', -8782.9, 10338.1 )
+    call CreateItem( 'I018', -9215.5, 14340.6 )
+    call CreateItem( 'I018', -9730.0, 14336.7 )
+    call CreateItem( 'I018', -9727.0, -763.1 )
+    call CreateItem( 'I019', -6910.9, -2296.2 )
+    call CreateItem( 'I019', -6910.9, -1272.2 )
+    call CreateItem( 'I019', -6910.9, -1528.2 )
+    call CreateItem( 'I019', 8189.5, 12291.9 )
+    call CreateItem( 'I019', 8699.2, 12308.0 )
+    call CreateItem( 'I019', -6910.9, -1784.2 )
+    call CreateItem( 'I019', -6910.9, -2040.2 )
+    call CreateItem( 'I019', 8698.9, 11786.1 )
+    call CreateItem( 'I019', -8705.0, 12803.3 )
+    call CreateItem( 'I019', -10244.5, 12809.9 )
+    call CreateItem( 'I019', -10241.3, 14343.7 )
+    call CreateItem( 'I019', -8700.5, 14347.5 )
+    call CreateItem( 'I019', 8706.0, 11271.3 )
+    call CreateItem( 'I019', 8701.7, 10754.9 )
+    call CreateItem( 'I019', 8192.6, 10754.9 )
+    call CreateItem( 'I019', 7676.4, 10761.7 )
+    call CreateItem( 'I019', 7168.9, 10751.5 )
+    call CreateItem( 'I019', 7173.7, 11271.3 )
+    call CreateItem( 'I019', 7163.6, 11786.1 )
+    call CreateItem( 'I019', 7169.0, 12308.0 )
+    call CreateItem( 'I019', 7679.5, 12302.6 )
 endfunction
 //***************************************************************************
 //*
 //*  Unit Creation
 //*
 //***************************************************************************
+//===========================================================================
+function CreateUnitsForPlayer11 takes nothing returns nothing
+    local player p = Player(11)
+    local unit u
+    local integer unitID
+    local trigger t
+    local real life
+    set u = CreateUnit( p, 'z002', -10029.1, 11729.1, 290.081 )
+    set u = CreateUnit( p, 'z002', -9679.5, 11733.1, 192.190 )
+    set u = CreateUnit( p, 'z002', -9272.6, 11725.1, 0.176 )
+    set u = CreateUnit( p, 'z002', -8928.7, 11725.1, 68.809 )
+    set u = CreateUnit( p, 'z002', -10394.8, 11759.3, 260.219 )
+    set u = CreateUnit( p, 'z002', -8587.2, 11694.6, 34.894 )
+    set u = CreateUnit( p, 'u008', -8209.6, 4455.3, 22.171 )
+    set u = CreateUnit( p, 'u008', -8431.4, 4307.1, 118.667 )
+    set u = CreateUnit( p, 'u008', -8232.9, 3935.8, 255.923 )
+    set u = CreateUnit( p, 'u008', -8129.0, 4229.3, 10.218 )
+    set u = CreateUnit( p, 'u008', -8350.8, 4165.8, 231.170 )
+    set u = CreateUnit( p, 'u008', -8201.5, 4116.6, 218.514 )
+    set u = CreateUnit( p, 'u008', -8000.9, 3923.4, 177.039 )
+    set u = CreateUnit( p, 'u008', -7962.4, 4126.3, 31.268 )
+    set u = CreateUnit( p, 'u008', -11107.9, 4400.9, 334.764 )
+    set u = CreateUnit( p, 'u008', -11393.2, 4313.2, 209.966 )
+    set u = CreateUnit( p, 'u008', -11261.3, 4017.7, 193.464 )
+    set u = CreateUnit( p, 'u008', -11212.6, 4236.4, 4.307 )
+    set u = CreateUnit( p, 'u008', -11341.0, 4158.0, 43.024 )
+    set u = CreateUnit( p, 'u008', -11074.1, 4102.0, 263.548 )
+    set u = CreateUnit( p, 'u008', -11132.7, 3862.6, 309.516 )
+    set u = CreateUnit( p, 'u008', -11003.3, 4243.5, 209.768 )
+    set u = CreateUnit( p, 'u008', -11328.5, 4482.3, 260.505 )
+    set u = CreateUnit( p, 'u008', -8023.2, 4473.7, 171.436 )
+endfunction
 //===========================================================================
 function CreateNeutralPassiveBuildings takes nothing returns nothing
     local player p = Player(PLAYER_NEUTRAL_PASSIVE)
@@ -15556,31 +15906,75 @@ function CreateNeutralPassiveBuildings takes nothing returns nothing
     local real life
     set u = CreateUnit( p, 'ncop', 5632.0, 6144.0, 270.000 )
     set u = CreateUnit( p, 'ncop', 6144.0, 6144.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -3904.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -3776.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -3648.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -3520.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -3392.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -3264.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -3136.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -3008.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -2880.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -2752.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -2624.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -2496.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -2368.0, 4288.0, 270.000 )
-    set u = CreateUnit( p, 'h006', -2240.0, 4288.0, 270.000 )
+    set u = CreateUnit( p, 'h009', -1792.0, 11520.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3136.0, -1216.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3136.0, -1088.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3136.0, -1344.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3136.0, -1472.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3136.0, -1600.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3136.0, -1728.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3136.0, -1856.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3136.0, -1984.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3136.0, -2112.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3136.0, -2240.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3136.0, -2368.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3136.0, -2496.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3264.0, -1216.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3264.0, -1088.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3264.0, -1344.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3264.0, -1472.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3264.0, -1600.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3264.0, -1728.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3264.0, -1856.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3264.0, -1984.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3264.0, -2112.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3264.0, -2240.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3264.0, -2368.0, 270.000 )
+    set u = CreateUnit( p, 'h006', -3264.0, -2496.0, 270.000 )
+    set u = CreateUnit( p, 'h006', 3392.0, 11712.0, 270.000 )
+    set u = CreateUnit( p, 'h006', 3392.0, 11584.0, 270.000 )
+    set u = CreateUnit( p, 'h006', 3392.0, 11456.0, 270.000 )
+    set u = CreateUnit( p, 'h006', 3392.0, 11328.0, 270.000 )
+    set u = CreateUnit( p, 'h006', 3264.0, 11712.0, 270.000 )
+    set u = CreateUnit( p, 'h006', 3264.0, 11584.0, 270.000 )
+    set u = CreateUnit( p, 'h006', 3264.0, 11456.0, 270.000 )
+    set u = CreateUnit( p, 'h006', 3264.0, 11328.0, 270.000 )
+    set u = CreateUnit( p, 'nwgt', 7936.0, 11520.0, 270.000 )
+    set u = CreateUnit( p, 'nwgt', -6400.0, -1792.0, 270.000 )
+    call WaygateSetDestination( u, GetRectCenterX(gg_rct_stage2_start), GetRectCenterY(gg_rct_stage2_start) )
+    call WaygateActivate( u, true )
+    set u = CreateUnit( p, 'nwgt', -9472.0, 13568.0, 270.000 )
+    call WaygateSetDestination( u, GetRectCenterX(gg_rct_stage3_start), GetRectCenterY(gg_rct_stage3_start) )
+    call WaygateActivate( u, true )
+    set u = CreateUnit( p, 'nwgt', -9728.0, -2816.0, 270.000 )
+    call WaygateSetDestination( u, GetRectCenterX(gg_rct_stage1_hero), GetRectCenterY(gg_rct_stage1_hero) )
+    call WaygateActivate( u, true )
+    set u = CreateUnit( p, 'h006', 3136.0, 11712.0, 270.000 )
+    set u = CreateUnit( p, 'h006', 3136.0, 11584.0, 270.000 )
+    set u = CreateUnit( p, 'h006', 3136.0, 11456.0, 270.000 )
+    set u = CreateUnit( p, 'h006', 3136.0, 11328.0, 270.000 )
+endfunction
+//===========================================================================
+function CreateNeutralPassive takes nothing returns nothing
+    local player p = Player(PLAYER_NEUTRAL_PASSIVE)
+    local unit u
+    local integer unitID
+    local trigger t
+    local real life
+    set gg_unit_h00G_0050 = CreateUnit( p, 'h00G', -13951.2, 6275.1, 201.536 )
 endfunction
 //===========================================================================
 function CreatePlayerBuildings takes nothing returns nothing
 endfunction
 //===========================================================================
 function CreatePlayerUnits takes nothing returns nothing
+    call CreateUnitsForPlayer11( )
 endfunction
 //===========================================================================
 function CreateAllUnits takes nothing returns nothing
     call CreateNeutralPassiveBuildings( )
     call CreatePlayerBuildings( )
+    call CreateNeutralPassive( )
     call CreatePlayerUnits( )
 endfunction
 //***************************************************************************
@@ -15609,10 +16003,69 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_tech = Rect( -3232.0, 4992.0, -2368.0, 5760.0 )
     set gg_rct_stage1_start = Rect( 1056.0, -1952.0, 1536.0, -1568.0 )
     set gg_rct_pick_hero = Rect( 4736.0, 5024.0, 7040.0, 7008.0 )
-    set gg_rct_stage1 = Rect( -3072.0, -6144.0, 5632.0, 2560.0 )
+    set gg_rct_stage1 = Rect( -2976.0, -6048.0, 5536.0, 2464.0 )
     set gg_rct_stage1_tlcannon = Rect( -1248.0, 1056.0, -1152.0, 1152.0 )
     set gg_rct_mancome = Rect( 5568.0, 5440.0, 6208.0, 5696.0 )
     set gg_rct_stage1_hero = Rect( 960.0, -2272.0, 1664.0, -2112.0 )
+    set gg_rct_stag1_speed1 = Rect( -3776.0, -1472.0, -3520.0, -1120.0 )
+    set gg_rct_stag1_speed2 = Rect( -3776.0, -1984.0, -3520.0, -1632.0 )
+    set gg_rct_stag1_speed3 = Rect( -3776.0, -2496.0, -3520.0, -2144.0 )
+    set gg_rct_stage1_wall1 = Rect( -3424.0, -2752.0, -2976.0, -896.0 )
+    set gg_rct_stage2_start = Rect( -10048.0, -2944.0, -9376.0, -2688.0 )
+    set gg_rct_stage1_exit = Rect( -7040.0, -2528.0, -2976.0, -1024.0 )
+    set gg_rct_stage2_1 = Rect( -10656.0, -3488.0, -8800.0, -2144.0 )
+    set gg_rct_stage2_2 = Rect( -10272.0, -2176.0, -9184.0, 3712.0 )
+    set gg_rct_stage2_3 = Rect( -11680.0, 3680.0, -7776.0, 11328.0 )
+    set gg_rct_stage2_jump1 = Rect( -9888.0, 5056.0, -9568.0, 5280.0 )
+    set gg_rct_stage2_fire1 = Rect( -11680.0, 5728.0, -7776.0, 11328.0 )
+    set gg_rct_stage2_fire2 = Rect( -11680.0, 4768.0, -10304.0, 5856.0 )
+    set gg_rct_stage2_fire3 = Rect( -9152.0, 4896.0, -7776.0, 5824.0 )
+    set gg_rct_stage2_refresh1 = Rect( -10304.0, 8544.0, -10080.0, 8736.0 )
+    set gg_rct_stage2_refresh2 = Rect( -10272.0, 9184.0, -10048.0, 9376.0 )
+    set gg_rct_stage2_refresh3 = Rect( -10272.0, 9824.0, -10080.0, 10016.0 )
+    set gg_rct_stage2_refresh4 = Rect( -9632.0, 9824.0, -9440.0, 10016.0 )
+    set gg_rct_stage2_refresh5 = Rect( -10944.0, 9824.0, -10720.0, 10016.0 )
+    set gg_rct_stage2_refresh6 = Rect( -9632.0, 10464.0, -9440.0, 10688.0 )
+    set gg_rct_stage2_refresh7 = Rect( -9856.0, -96.0, -9600.0, 96.0 )
+    set gg_rct_stage2_refresh8 = Rect( -9856.0, 1440.0, -9600.0, 1632.0 )
+    set gg_rct_stage2_refresh9 = Rect( -9856.0, 2976.0, -9600.0, 3168.0 )
+    set gg_rct_stage2_4 = Rect( -14208.0, 9728.0, -11328.0, 10112.0 )
+    set gg_rct_stage2_5 = Rect( -10624.0, 11168.0, -8320.0, 12096.0 )
+    set gg_rct_stage2_6 = Rect( -10560.0, 12512.0, -8384.0, 14656.0 )
+    set gg_rct_stage2_speed1 = Rect( -14144.0, 9120.0, -13760.0, 9408.0 )
+    set gg_rct_stage2_speed2 = Rect( -14720.0, 8256.0, -13632.0, 8640.0 )
+    set gg_rct_stage2_speed3 = Rect( -14272.0, 7488.0, -13184.0, 7872.0 )
+    set gg_rct_stage2_speed4 = Rect( -14720.0, 6720.0, -13632.0, 7104.0 )
+    set gg_rct_stage2_7 = Rect( -14208.0, 8512.0, -13696.0, 9856.0 )
+    set gg_rct_stage2_8 = Rect( -14720.0, 5920.0, -13184.0, 8832.0 )
+    set gg_rct_stage2_gate = Rect( -9920.0, 11904.0, -9056.0, 12640.0 )
+    set gg_rct_stage2_9 = Rect( -9632.0, 12064.0, -9344.0, 12544.0 )
+    set gg_rct_stage3_jump_up = Rect( -2016.0, 12800.0, -1568.0, 13152.0 )
+    set gg_rct_stage3_jump_down = Rect( -2016.0, 9888.0, -1568.0, 10240.0 )
+    set gg_rct_stage3_jump_right = Rect( -480.0, 11296.0, -128.0, 11744.0 )
+    set gg_rct_stage3_jump_left = Rect( -3456.0, 11296.0, -3104.0, 11744.0 )
+    set gg_rct_stage3_start = Rect( -2144.0, 10944.0, -1440.0, 11200.0 )
+    set gg_rct_stage3 = Rect( -6432.0, 6880.0, 2848.0, 16160.0 )
+    set gg_rct_stage3_pow_ul = Rect( -5440.0, 14016.0, -5312.0, 14144.0 )
+    set gg_rct_stage3_pow_ur = Rect( 704.0, 15040.0, 832.0, 15168.0 )
+    set gg_rct_stage3_pow_dr = Rect( 1728.0, 8896.0, 1856.0, 9024.0 )
+    set gg_rct_stage3_pow_dl = Rect( -4416.0, 7872.0, -4288.0, 8000.0 )
+    set gg_rct_stage3_center = Rect( -4128.0, 9216.0, 512.0, 13824.0 )
+    set gg_rct_stage3_way = Rect( 2752.0, 11296.0, 7040.0, 11776.0 )
+    set gg_rct_stage3_end = Rect( 6880.0, 10464.0, 8992.0, 12576.0 )
+    set gg_rct_stage3_speeddown = Rect( -5568.0, 12864.0, -5184.0, 13120.0 )
+    set gg_rct_stage3_speedright = Rect( -3392.0, 7744.0, -3136.0, 8128.0 )
+    set gg_rct_stage3_speedup = Rect( 1600.0, 9920.0, 1984.0, 10176.0 )
+    set gg_rct_stage3_speedleft = Rect( -448.0, 14912.0, -192.0, 15264.0 )
+    set gg_rct_stage3_sr2 = Rect( 4512.0, 11328.0, 4800.0, 11712.0 )
+    set gg_rct_stage3_sr1 = Rect( 3488.0, 11328.0, 3776.0, 11712.0 )
+    set gg_rct_stage3_sr3 = Rect( 5536.0, 11328.0, 5824.0, 11712.0 )
+    set gg_rct_stage3_sr4 = Rect( 6560.0, 11328.0, 6848.0, 11712.0 )
+    set gg_rct_stage3_hide5 = Rect( 4736.0, 12416.0, 6016.0, 13696.0 )
+    set gg_rct_stage3_hide4 = Rect( 3200.0, 13056.0, 4800.0, 13184.0 )
+    set gg_rct_stage3_hide1 = Rect( 3200.0, 9856.0, 3360.0, 13088.0 )
+    set gg_rct_stage3_hide2 = Rect( 3264.0, 9856.0, 4832.0, 9984.0 )
+    set gg_rct_stage3_hide3 = Rect( 4736.0, 9344.0, 6016.0, 10592.0 )
 endfunction
 //***************************************************************************
 //*
@@ -15696,16 +16149,46 @@ endfunction
 //*
 //***************************************************************************
 //===========================================================================
-// Trigger: Stage1
+// Trigger: Stage2Gate
 //===========================================================================
-//TESH.scrollpos=15
+//TESH.scrollpos=2
+//TESH.alwaysfold=0
+function OpenGate takes nothing returns nothing
+    call ModifyGateBJ( bj_GATEOPERATION_OPEN, gg_dest_DTg5_0047 )
+    call PlaySoundBJ(gg_snd_opengate)
+endfunction
+function Trig_Stage2GateActions takes nothing returns nothing
+    local integer i = 0
+    call SetUnitAnimation( gg_unit_h00G_0050, "death" )
+    loop
+        exitwhen i > 2
+        call CreateFogModifierRectBJ( true, Player(i), FOG_OF_WAR_VISIBLE, gg_rct_stage2_gate )
+        call RegionAddRect(playable_region, gg_rct_stage2_9)
+        call RegionAddRect(playable_region, gg_rct_stage3)
+        call PanCameraToTimedForPlayer(Player(i), -9476, 12178, 1.5)
+        set i = i + 1
+    endloop
+    call TimerStart(CreateTimer(), 2, false, function OpenGate)
+endfunction
+//===========================================================================
+function InitTrig_Stage2Gate takes nothing returns nothing
+    set gg_trg_Stage2Gate = CreateTrigger()
+    call TriggerRegisterUnitManaEvent( gg_trg_Stage2Gate, gg_unit_h00G_0050, GREATER_THAN_OR_EQUAL, 9.90 )
+    call TriggerAddAction(gg_trg_Stage2Gate, function Trig_Stage2GateActions)
+endfunction
+//===========================================================================
+// Trigger: Stage1
+//
+// 33638103 鐢佃瘽
+//===========================================================================
+//TESH.scrollpos=161
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: Stage1T
 //
 // Abilities\Spells\Items\TomeOfRetraining\TomeOfRetrainingCaster.mdl
 //===========================================================================
-//TESH.scrollpos=7
+//TESH.scrollpos=0
 //TESH.alwaysfold=0
 function Trig_Stage1TActions takes nothing returns nothing
     local unit tg = GetTriggerUnit()
@@ -15716,7 +16199,7 @@ function Trig_Stage1TActions takes nothing returns nothing
     local real d
     local real r
     local unit ydl_unit
-    if IsHero(tg) then
+    if IsHero(tg) the
         //call BJDebugMsg("enger")
         call GroupEnumUnitsInRange(ENUM_GROUP, GetUnitX(tg), GetUnitY(tg), 500,null) 
         loop
@@ -15762,7 +16245,7 @@ endfunction
 //===========================================================================
 // Trigger: Resources
 //===========================================================================
-//TESH.scrollpos=53
+//TESH.scrollpos=12
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: InitJobData
@@ -15774,6 +16257,28 @@ endfunction
 //===========================================================================
 //TESH.scrollpos=4
 //TESH.alwaysfold=0
+//===========================================================================
+// Trigger: TransportEnergy
+//===========================================================================
+//TESH.scrollpos=0
+//TESH.alwaysfold=0
+struct TransportEnergy extends SpellStruct
+    implement SpellStruct
+    
+    private static method onInit takes nothing returns nothing
+        set thistype.abil='A02N'
+    endmethod
+    
+    method onEffect takes nothing returns nothing
+        //local real dis
+        //set dis = DistanceTwoUnits(caster, targetUnit)
+        //if dis < 400 or (IsHero(targetUnit) and dis < 800) then
+            call TransportBuffer.create(caster, targetUnit, 250).start()
+        //else
+            //call DisplayInfo(GetOwningPlayer(caster), "璺濈澶繙")
+        //endif
+    endmethod
+endstruct
 //===========================================================================
 // Trigger: HolyLight
 //===========================================================================
@@ -15787,7 +16292,9 @@ struct HolyLight extends SpellStruct
     endmethod
     
     method onEffect takes nothing returns nothing
-        call EnergyDamage(caster, targetUnit, 970)
+        if IsLiveEnemy(caster, targetUnit) then
+            call EnergyDamage(caster, targetUnit, 970)
+        endif
     endmethod
 endstruct
 //===========================================================================
@@ -16032,7 +16539,7 @@ endstruct
 //===========================================================================
 // Trigger: Jump
 //===========================================================================
-//TESH.scrollpos=0
+//TESH.scrollpos=4
 //TESH.alwaysfold=0
 struct Jump extends SpellStruct
     implement SpellStruct
@@ -16050,13 +16557,17 @@ struct Jump extends SpellStruct
         local vector v = vector.create(d*Cos(facing),d*Sin(facing),h)
         //call IssueImmediateOrder( caster, "stop" )
         if GetUnitState(caster, UNIT_STATE_MANA) >= 3 then
-            set u = CreateUnit(GetOwningPlayer(caster), 'e00N', casterX, casterY, 0)
-            call SetUnitFlyHeight(u, GetUnitFlyHeight(caster),0)
-            call KillUnit(u)
-            call AddVelocity(caster, v)
             call SetUnitState(caster, UNIT_STATE_MANA, GetUnitState(caster, UNIT_STATE_MANA) - 5)
             call DisplayManaCost(caster, 5)
+        else
+            call DisplayWarning(GetOwningPlayer(caster), "寮鸿璺宠穬锛岀敓鍛藉€?10")
+            call SetUnitState(caster, UNIT_STATE_LIFE, RMaxBJ(1, GetUnitState(caster, UNIT_STATE_LIFE) - 10))
         endif
+        set u = CreateUnit(GetOwningPlayer(caster), 'e00N', casterX, casterY, 0)
+        call SetUnitFlyHeight(u, GetUnitFlyHeight(caster),0)
+        call KillUnit(u)
+        call AddVelocity(caster, v)
+        set Material[caster].nohitwall = 99
         set u = null
     endmethod
     
@@ -16106,7 +16617,7 @@ struct InjectionSpeedUp extends SpellStruct
         local real facing = getFacing(caster)
         local real speed = 3 + f1.lv
         call Push(caster, facing, speed, 0, 30)
-        call BoundUnitEffectStruct.create(caster, 30, 'e001', -90, "stand", 70).start()
+        call BoundUnitEffectStruct.create(caster, 30, 'e001', GetUnitFacing(caster) - 90, "stand", 70).start()
         if f2.lv > 0 then
             call SetUnitAbilityLevel(caster, 'A00C', 1 + f2.lv)
         endif
@@ -16681,6 +17192,126 @@ function InitTrig_RegisterFly takes nothing returns nothing
     call TriggerAddAction(gg_trg_RegisterFly, function Trig_RegisterFlyActions)
 endfunction
 //===========================================================================
+// Trigger: FireRegion
+//===========================================================================
+//TESH.scrollpos=0
+//TESH.alwaysfold=0
+//===========================================================================
+// Trigger: SpeedUp
+//===========================================================================
+//TESH.scrollpos=82
+//TESH.alwaysfold=0
+function Trig_SpeedUpActions takes nothing returns nothing
+    if IsHero(GetTriggerUnit()) then
+        if not EquipmentData[GetTriggerUnit()].heroData.speedup and GetUnitFlyHeight(GetTriggerUnit()) < 1 then
+            call IssueImmediateOrder( GetTriggerUnit(), "stop" )
+            call Push(GetTriggerUnit(), 180*bj_DEGTORAD, 5, 0, 30)
+            call SpeedStateBuffer.create(GetTriggerUnit(), 30).start()
+            call BoundUnitEffectStruct.create(GetTriggerUnit(), 30, 'e001', 90, "stand", 70).start()
+        endif
+    endif
+endfunction
+function SpeedDown takes nothing returns nothing
+    if IsHero(GetTriggerUnit()) then
+        if not EquipmentData[GetTriggerUnit()].heroData.speedup and GetUnitFlyHeight(GetTriggerUnit()) < 1 then
+            call IssueImmediateOrder( GetTriggerUnit(), "stop" )
+            call Push(GetTriggerUnit(), 270*bj_DEGTORAD, 5, 0, 30)
+            call SpeedStateBuffer.create(GetTriggerUnit(), 30).start()
+            call BoundUnitEffectStruct.create(GetTriggerUnit(), 30, 'e001', 180, "stand", 70).start()
+        endif
+    endif
+endfunction
+function SpeedUp takes nothing returns nothing
+    if IsHero(GetTriggerUnit()) then
+        if not EquipmentData[GetTriggerUnit()].heroData.speedup and GetUnitFlyHeight(GetTriggerUnit()) < 1 then
+            call IssueImmediateOrder( GetTriggerUnit(), "stop" )
+            call Push(GetTriggerUnit(), 90*bj_DEGTORAD, 5, 0, 30)
+            call SpeedStateBuffer.create(GetTriggerUnit(), 30).start()
+            call BoundUnitEffectStruct.create(GetTriggerUnit(), 30, 'e001', 0, "stand", 70).start()
+        endif
+    endif
+endfunction
+function SpeedRight takes nothing returns nothing
+    if IsHero(GetTriggerUnit()) then
+        if not EquipmentData[GetTriggerUnit()].heroData.speedup and GetUnitFlyHeight(GetTriggerUnit()) < 1 then
+            call IssueImmediateOrder( GetTriggerUnit(), "stop" )
+            call Push(GetTriggerUnit(), 0*bj_DEGTORAD, 5, 0, 30)
+            call SpeedStateBuffer.create(GetTriggerUnit(), 30).start()
+            call BoundUnitEffectStruct.create(GetTriggerUnit(), 30, 'e001', -90, "stand", 70).start()
+        endif
+    endif
+endfunction
+function Stage2Jump1 takes nothing returns nothing
+    if IsHero(GetTriggerUnit()) then
+        if not EquipmentData[GetTriggerUnit()].heroData.speedup and GetUnitFlyHeight(GetTriggerUnit()) < 1 then
+            call IssueImmediateOrder( GetTriggerUnit(), "stop" )
+            call Push(GetTriggerUnit(), 90*bj_DEGTORAD, 160, 70, 1)
+            call SpeedStateBuffer.create(GetTriggerUnit(), 30).start()
+            call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\NightElf\\Blink\\BlinkTarget.mdl", GetUnitX(GetTriggerUnit()), GetUnitY(GetTriggerUnit())))
+        endif
+    endif
+endfunction
+function JumpRefresh takes nothing returns nothing
+    if IsHero(GetTriggerUnit()) then
+        if not EquipmentData[GetTriggerUnit()].heroData.jump_refresh then
+            if refresh_tip[GetPlayerId(GetOwningPlayer(GetTriggerUnit()))] == false then
+                call DisplayInfo(GetOwningPlayer(GetTriggerUnit()), "钃濊壊绗︽枃鍙互鍒锋柊璺宠穬鎶€鑳?)
+                set refresh_tip[GetPlayerId(GetOwningPlayer(GetTriggerUnit()))] = true
+            endif
+            call UnitRemoveAbility(GetTriggerUnit(), 'A027')
+            call UnitAddAbility(GetTriggerUnit(), 'A027')
+            call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Undead\\ReplenishMana\\ReplenishManaCasterOverhead.mdl", GetUnitX(GetTriggerUnit()), GetUnitY(GetTriggerUnit())))
+            call JumpRefreshStateBuffer.create(GetTriggerUnit(), 100).start()
+        endif
+    endif
+endfunction
+//===========================================================================
+function InitTrig_SpeedUp takes nothing returns nothing
+    local trigger trg_stage2_jump1 = CreateTrigger()
+    local trigger trg_jump_refresh = CreateTrigger()
+    local trigger trg_speed_down = CreateTrigger()
+    local trigger trg_speed_up = CreateTrigger()
+    local trigger trg_speed_right = CreateTrigger()
+    set gg_trg_SpeedUp = CreateTrigger()
+    //left
+    call YDWETriggerRegisterEnterRectSimpleNull( gg_trg_SpeedUp, gg_rct_stag1_speed1 )
+    call YDWETriggerRegisterEnterRectSimpleNull( gg_trg_SpeedUp, gg_rct_stag1_speed2 )
+    call YDWETriggerRegisterEnterRectSimpleNull( gg_trg_SpeedUp, gg_rct_stag1_speed3 )
+    call YDWETriggerRegisterEnterRectSimpleNull( gg_trg_SpeedUp, gg_rct_stage2_speed3 )
+    call YDWETriggerRegisterEnterRectSimpleNull( gg_trg_SpeedUp, gg_rct_stage3_speedleft )
+    call TriggerAddAction(gg_trg_SpeedUp, function Trig_SpeedUpActions)
+    //up
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_speed_up, gg_rct_stage2_speed1 )
+    call YDWETriggerRegisterEnterRectSimpleNull( gg_trg_SpeedUp, gg_rct_stage3_speedup )
+    call TriggerAddAction(trg_speed_up, function SpeedUp)
+    //down
+    call YDWETriggerRegisterEnterRectSimpleNull( gg_trg_SpeedUp, gg_rct_stage3_speeddown )
+    call TriggerAddAction(trg_speed_down, function SpeedDown)
+    //right
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_speed_right, gg_rct_stage2_speed2 )
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_speed_right, gg_rct_stage2_speed4 )
+    call YDWETriggerRegisterEnterRectSimpleNull( gg_trg_SpeedUp, gg_rct_stage3_speedright )
+    call YDWETriggerRegisterEnterRectSimpleNull( gg_trg_SpeedUp, gg_rct_stage3_sr1 )
+    call YDWETriggerRegisterEnterRectSimpleNull( gg_trg_SpeedUp, gg_rct_stage3_sr2 )
+    call YDWETriggerRegisterEnterRectSimpleNull( gg_trg_SpeedUp, gg_rct_stage3_sr3 )
+    call YDWETriggerRegisterEnterRectSimpleNull( gg_trg_SpeedUp, gg_rct_stage3_sr4 )
+    call TriggerAddAction(trg_speed_right, function SpeedRight)
+    //stage2
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_stage2_jump1, gg_rct_stage2_jump1 )
+    call TriggerAddAction(trg_stage2_jump1, function Stage2Jump1)
+    //jump refresh
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_jump_refresh, gg_rct_stage2_refresh1 )
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_jump_refresh, gg_rct_stage2_refresh2 )
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_jump_refresh, gg_rct_stage2_refresh3 )
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_jump_refresh, gg_rct_stage2_refresh4 )
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_jump_refresh, gg_rct_stage2_refresh5 )
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_jump_refresh, gg_rct_stage2_refresh6 )
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_jump_refresh, gg_rct_stage2_refresh7 )
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_jump_refresh, gg_rct_stage2_refresh8 )
+    call YDWETriggerRegisterEnterRectSimpleNull( trg_jump_refresh, gg_rct_stage2_refresh9 )
+    call TriggerAddAction(trg_jump_refresh, function JumpRefresh)
+endfunction
+//===========================================================================
 // Trigger: SummonUtil
 //===========================================================================
 //TESH.scrollpos=0
@@ -17024,8 +17655,40 @@ endfunction
 //===========================================================================
 // Trigger: Buffer
 //===========================================================================
-//TESH.scrollpos=63
+//TESH.scrollpos=143
 //TESH.alwaysfold=0
+//===========================================================================
+// Trigger: TransportBuffer
+//
+// AddLightningEx( "CLPB", false, GetUnitX(source),GetUnitY(source),getUnitHeight(source), GetUnitX(u), GetUnitY(u),getUnitHeight(u) )
+// MoveLightningEx( l, false,  GetUnitX(source),GetUnitY(source),getUnitHeight(source), GetUnitX(u), GetUnitY(u),getUnitHeight(u))
+//===========================================================================
+//TESH.scrollpos=0
+//TESH.alwaysfold=0
+// Trigger: SpeedStateBuffer
+//===========================================================================
+//TESH.scrollpos=0
+//TESH.alwaysfold=0
+struct SpeedStateBuffer extends DefaultBufferStruct
+    method addBuffer takes nothing returns nothing
+        set EquipmentData[u].heroData.speedup = true
+    endmethod
+    
+    method removeBuffer takes nothing returns nothing
+        set EquipmentData[u].heroData.speedup = false
+    endmethod
+    
+endstruct
+struct JumpRefreshStateBuffer extends DefaultBufferStruct
+    method addBuffer takes nothing returns nothing
+        set EquipmentData[u].heroData.jump_refresh = true
+    endmethod
+    
+    method removeBuffer takes nothing returns nothing
+        set EquipmentData[u].heroData.jump_refresh = false
+    endmethod
+    
+endstruct
 //===========================================================================
 // Trigger: NetBuffer
 //===========================================================================
@@ -17157,7 +17820,7 @@ endstruct//=====================================================================
 //     
 // //! runtextmacro EndBuff()
 //===========================================================================
-//TESH.scrollpos=0
+//TESH.scrollpos=11
 //TESH.alwaysfold=0
 struct BurnBuffer extends DefaultBufferStruct
     
@@ -17505,7 +18168,7 @@ endstruct//=====================================================================
 // endfunction
 // endlibrary
 //===========================================================================
-//TESH.scrollpos=16
+//TESH.scrollpos=0
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: FocuseHero
@@ -17553,7 +18216,7 @@ endfunction
 // |cFFFFFDC4鑳藉浣跨敤鎰忓康鎺у埗鐨勯纰燂紝杈圭紭寮傚父閿嬪埄銆倈r|n|n|cFFFFFF66鈫撳彲寮哄寲椤光啌|r|n|n|cFFFF6666浼ゅ澧炲箙|r|n|cFF0099cc姣忕骇澧炲姞10%鍒囧壊浼ゅ銆倈r|n|cFFFF6666澶嶆暟椋炵|r|n|cFF0099cc鍙戝皠澶氭灇椋炵鑰屼笉鏄竴鏋氾紝姣忕骇澧炲姞涓ゆ灇銆倈r|n|cFFFF6666鑷垎椋炵|r|n|cFF0099cc鎺у埗椋炶涓殑椋炵鑷垎锛岄€犳垚宸ㄥぇ浼ゅ銆傜垎鐐镐激瀹抽殢绛夌骇鎻愬崌銆倈r|n|cFFFF6666椋炶缁埅|r|n|cFF0099cc寤堕暱椋炵椋炶鏃堕棿锛屾瘡绾у闀?绉掋€?
 // //! runtextmacro InitWeaponTypeData("'I00Y'", "鐏姏鍘嬪埗", "'A01T'", "0","0","0","AB2")
 //===========================================================================
-//TESH.scrollpos=173
+//TESH.scrollpos=215
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: ItemEquip
@@ -17596,25 +18259,28 @@ endfunction
 //===========================================================================
 // Trigger: MonsterTypeData
 //===========================================================================
-//TESH.scrollpos=0
+//TESH.scrollpos=8
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: MonsterBonus
 //===========================================================================
-//TESH.scrollpos=2
+//TESH.scrollpos=0
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: MonsterTargetGroup
 //===========================================================================
-//TESH.scrollpos=51
+//TESH.scrollpos=0
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: DeathEffect
+//
+// Objects\\Spawnmodels\\Undead\\UndeadBlood\\UndeadBloodGhoul.mdl
 //===========================================================================
 //TESH.scrollpos=0
 //TESH.alwaysfold=0
 function Trig_DeathEffectActions takes nothing returns nothing
     //call DestroyEffect( AddSpecialEffect("Objects\\Spawnmodels\\Human\\HumanBlood\\HumanBloodFootman.mdl", GetUnitX(GetTriggerUnit()), GetUnitY(GetTriggerUnit())) )
+    call DestroyEffect( AddSpecialEffect("Objects\\Spawnmodels\\Undead\\UndeadBlood\\UndeadBloodGhoul.mdl", GetUnitX(GetTriggerUnit()), GetUnitY(GetTriggerUnit())) )
 endfunction
 //===========================================================================
 function InitTrig_DeathEffect takes nothing returns nothing
@@ -17651,11 +18317,11 @@ endfunction
 //             endif
 // function rangeExplodeDamage takes unit source ,real x ,real y ,real radius, real damage returns nothing
 //===========================================================================
-//TESH.scrollpos=480
+//TESH.scrollpos=474
 //TESH.alwaysfold=0
 // Trigger: MissleFactory
 //===========================================================================
-//TESH.scrollpos=23
+//TESH.scrollpos=18
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: Gun
@@ -17721,7 +18387,7 @@ endfunction
 //===========================================================================
 // Trigger: HeroData
 //===========================================================================
-//TESH.scrollpos=45
+//TESH.scrollpos=47
 //TESH.alwaysfold=0
         
         
@@ -17759,7 +18425,7 @@ endfunction
 //     set t=null
 // endfunction
 //===========================================================================
-//TESH.scrollpos=0
+//TESH.scrollpos=80
 //TESH.alwaysfold=0
     
 //===========================================================================
@@ -17783,21 +18449,22 @@ endfunction
 //===========================================================================
 // Trigger: Velocity
 //===========================================================================
-//TESH.scrollpos=197
+//TESH.scrollpos=237
 //TESH.alwaysfold=0
     
 //===========================================================================
 // Trigger: Material
 //
 // //! textmacro RegisterMaterial takes ID,CLAZZ,HARDNESS,BOUNCE,VOLUME,WEIGHT,AIRK,FKL,GOUND_ACTION
+// //! runtextmacro RegisterMaterial("'u006'","MC_UNIT","10","0.2","150","10000","0.75","LV_ACTIVE","GROUND_BOUNCE")
 //===========================================================================
-//TESH.scrollpos=117
+//TESH.scrollpos=126
 //TESH.alwaysfold=0
     
 //===========================================================================
 // Trigger: PhysicsSystem
 //===========================================================================
-//TESH.scrollpos=0
+//TESH.scrollpos=11
 //TESH.alwaysfold=0
     //===========================================================================
 // Trigger: bordercontrol
@@ -18308,11 +18975,11 @@ endfunction
 //TESH.alwaysfold=0
 // Trigger: Move
 //===========================================================================
-//TESH.scrollpos=24
+//TESH.scrollpos=22
 //TESH.alwaysfold=0
 // Trigger: Vector
 //===========================================================================
-//TESH.scrollpos=69
+//TESH.scrollpos=57
 //TESH.alwaysfold=0
 // Trigger: FloatText
 //===========================================================================
@@ -18892,7 +19559,7 @@ endfunction
 // (1 - colris2) * (pvd * (1 + coldmg1))
 // "Objects\\Spawnmodels\\Human\\HumanBlood\\BloodElfSpellThiefBlood.mdl"
 //===========================================================================
-//TESH.scrollpos=117
+//TESH.scrollpos=87
 //TESH.alwaysfold=0
 //===========================================================================
 // Trigger: Custom Congregation
@@ -18978,48 +19645,6 @@ function InitTrig_cantmove takes nothing returns nothing
     call TriggerAddAction(gg_trg_cantmove, function Trig_cantmoveActions)
 endfunction
 //===========================================================================
-// Trigger: 3 澶嶅埗 4 澶嶅埗 4
-//===========================================================================
-function Trig_3________4________4Actions takes nothing returns nothing
-endfunction
-//===========================================================================
-function InitTrig_3________4________4 takes nothing returns nothing
-    set gg_trg_3________4________4 = CreateTrigger()
-    call TriggerRegisterPlayerUnitEventSimple( gg_trg_3________4________4, Player(0), EVENT_PLAYER_UNIT_DEATH )
-    call TriggerAddAction(gg_trg_3________4________4, function Trig_3________4________4Actions)
-endfunction
-//===========================================================================
-// Trigger: 3 澶嶅埗 4 澶嶅埗 4 澶嶅埗
-//===========================================================================
-function Trig_3________4________4_______uActions takes nothing returns nothing
-endfunction
-//===========================================================================
-function InitTrig_3________4________4_______u takes nothing returns nothing
-    set gg_trg_3________4________4_______u = CreateTrigger()
-    call TriggerAddAction(gg_trg_3________4________4_______u, function Trig_3________4________4_______uActions)
-endfunction
-//===========================================================================
-// Trigger: 3 澶嶅埗 4 澶嶅埗 4 澶嶅埗 2
-//===========================================================================
-function Trig_3________4________4________2Actions takes nothing returns nothing
-endfunction
-//===========================================================================
-function InitTrig_3________4________4________2 takes nothing returns nothing
-    set gg_trg_3________4________4________2 = CreateTrigger()
-    call TriggerAddAction(gg_trg_3________4________4________2, function Trig_3________4________4________2Actions)
-endfunction
-//===========================================================================
-// Trigger: 3 澶嶅埗 4 澶嶅埗 4 澶嶅埗 3
-//===========================================================================
-function Trig_3________4________4________3Actions takes nothing returns nothing
-    call IssuePointOrderById( GetTriggerUnit(), 852591, 0, 0 )
-endfunction
-//===========================================================================
-function InitTrig_3________4________4________3 takes nothing returns nothing
-    set gg_trg_3________4________4________3 = CreateTrigger()
-    call TriggerAddAction(gg_trg_3________4________4________3, function Trig_3________4________4________3Actions)
-endfunction
-//===========================================================================
 // Trigger: InitFloatText
 //===========================================================================
 function Trig_InitFloatTextActions takes nothing returns nothing
@@ -19030,6 +19655,20 @@ endfunction
 function InitTrig_InitFloatText takes nothing returns nothing
     set gg_trg_InitFloatText = CreateTrigger()
     call TriggerAddAction(gg_trg_InitFloatText, function Trig_InitFloatTextActions)
+endfunction
+//===========================================================================
+// Trigger: 3
+//===========================================================================
+function Trig_3Conditions takes nothing returns boolean
+    return ((IsUnitInvisible(GetTriggerUnit(), Player(0)) == true))
+endfunction
+function Trig_3Actions takes nothing returns nothing
+endfunction
+//===========================================================================
+function InitTrig_3 takes nothing returns nothing
+    set gg_trg_3 = CreateTrigger()
+    call TriggerAddCondition(gg_trg_3, Condition(function Trig_3Conditions))
+    call TriggerAddAction(gg_trg_3, function Trig_3Actions)
 endfunction
 //===========================================================================
 // Trigger: camera
@@ -19053,7 +19692,7 @@ endfunction
 //     call CreateUnit( Player(11), 'u000', 950, 1350, bj_UNIT_FACING )
 //     call CreateUnit( Player(11), 'u000', 950, 1340, bj_UNIT_FACING )
 //===========================================================================
-//TESH.scrollpos=18
+//TESH.scrollpos=0
 //TESH.alwaysfold=0
 function Trig_inittestActions takes nothing returns nothing
     local unit u
@@ -19064,7 +19703,8 @@ function Trig_inittestActions takes nothing returns nothing
     local integer i = 0
     local IDialog d
     
-    call CreateFogModifierRectBJ( true, Player(0), FOG_OF_WAR_VISIBLE, GetPlayableMapRect() )
+    //call CreateFogModifierRectBJ( true, Player(0), FOG_OF_WAR_VISIBLE, GetPlayableMapRect() )
+    call CreateFogModifierRectBJ( true, Player(11), FOG_OF_WAR_VISIBLE, GetPlayableMapRect() )
     //set hero = CreateHero(0,x, y )
     //set hero = CreateHero(0,0, 0 )
     //call UnitAddItem(hero, CreateItemEx('I001',0,0))
@@ -19118,11 +19758,13 @@ function InitTrig_inittest takes nothing returns nothing
 endfunction
 //===========================================================================
 function InitCustomTriggers takes nothing returns nothing
+    call InitTrig_Stage2Gate( )
     call InitTrig_Stage1( )
     call InitTrig_Stage1T( )
     call InitTrig_Resources( )
     call InitTrig_InitJobData( )
     call InitTrig_Strong( )
+    call InitTrig_TransportEnergy( )
     call InitTrig_HolyLight( )
     call InitTrig_ReviveSpell( )
     call InitTrig_DawnHammer( )
@@ -19157,6 +19799,8 @@ function InitCustomTriggers takes nothing returns nothing
     call InitTrig_TeckLock( )
     call InitTrig_Register( )
     call InitTrig_RegisterFly( )
+    call InitTrig_FireRegion( )
+    call InitTrig_SpeedUp( )
     call InitTrig_SummonUtil( )
     call InitTrig_Revive( )
     call InitTrig_ManaChange( )
@@ -19182,6 +19826,8 @@ function InitCustomTriggers takes nothing returns nothing
     call InitTrig_Transform( )
     call InitTrig_DialogSystem( )
     call InitTrig_Buffer( )
+    call InitTrig_TransportBuffer( )
+    call InitTrig_SpeedStateBuffer( )
     call InitTrig_NetBuffer( )
     call InitTrig_ShootBostBuffer( )
     call InitTrig_SpeedColBuffer( )
@@ -19261,11 +19907,8 @@ function InitCustomTriggers takes nothing returns nothing
     call InitTrig_ItmTest( )
     call InitTrig_CreateItem( )
     call InitTrig_cantmove( )
-    call InitTrig_3________4________4( )
-    call InitTrig_3________4________4_______u( )
-    call InitTrig_3________4________4________2( )
-    call InitTrig_3________4________4________3( )
     call InitTrig_InitFloatText( )
+    call InitTrig_3( )
     call InitTrig_camera( )
     call InitTrig_inittest( )
 endfunction
@@ -19354,12 +19997,9 @@ endfunction
 //***************************************************************************
 //===========================================================================
 function main takes nothing returns nothing
-    local weathereffect we
-    call SetCameraBounds( -9472.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -9728.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 9472.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 9216.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -9472.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 9216.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 9472.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -9728.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM) )
+    call SetCameraBounds( -29952.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -9728.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 9472.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 29696.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -29952.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 29696.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 9472.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -9728.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM) )
     call SetDayNightModels( "Environment\\DNC\\DNCDalaran\\DNCDalaranTerrain\\DNCDalaranTerrain.mdl", "Environment\\DNC\\DNCDalaran\\DNCDalaranUnit\\DNCDalaranUnit.mdl" )
     call SetTerrainFogEx( 0, 0.0, 10000.0, 0.100, 0.000, 0.000, 0.000 )
-    set we = AddWeatherEffect( Rect(-10240.0,-10240.0,10240.0,10240.0), 'RAhr' )
-    call EnableWeatherEffect( we, true )
     call NewSoundEnvironment( "Default" )
     call SetAmbientDaySound( "DalaranDay" )
     call SetAmbientNightSound( "DalaranNight" )
@@ -19367,6 +20007,7 @@ function main takes nothing returns nothing
     call InitSounds( )
     call CreateRegions( )
     call CreateCameras( )
+    call CreateAllDestructables( )
     call CreateAllItems( )
     call CreateAllUnits( )
     call InitBlizzard( )
@@ -19439,12 +20080,12 @@ function config takes nothing returns nothing
     call InitCustomTeams( )
     call InitAllyPriorities( )
 endfunction
-//===========================================================================
-//系统-TimerSystem
-//===========================================================================
 //===========================================================================  
 //===========================================================================  
 //自定义事件 
 //===========================================================================
 //===========================================================================   
+//===========================================================================
+//系统-TimerSystem
+//===========================================================================
 
